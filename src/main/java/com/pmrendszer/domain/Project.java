@@ -1,17 +1,15 @@
 package com.pmrendszer.domain;
 
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity
-@Table(name = "Projects")
+@Entity(name = "Projects")
 public class Project {
 	@GeneratedValue
 	@Column(columnDefinition = "serial")
@@ -34,6 +32,7 @@ public class Project {
 	private Status status;
 	@Column(columnDefinition = "text")
 	private String description;
+	@JsonIgnore
 	@ManyToMany(mappedBy = "projects")
 	private List<Team> teams;
 

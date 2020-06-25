@@ -5,10 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "Team_memberships")
+@Entity(name = "Team_memberships")
 public class TeamMembership {
 	@EmbeddedId
 	TeamMembershipKey id;

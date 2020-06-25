@@ -5,10 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "Tasks")
+@Entity(name = "Tasks")
 public class Task {
 	@GeneratedValue
 	@Column(columnDefinition = "serial")

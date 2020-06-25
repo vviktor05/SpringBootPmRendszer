@@ -11,10 +11,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "Teams")
+@Entity(name = "Teams")
 public class Team {
 	@GeneratedValue
 	@Column(columnDefinition = "serial")
