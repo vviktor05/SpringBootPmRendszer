@@ -1,6 +1,7 @@
 package com.pmrendszer.repository;
 
 import java.util.List;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import com.pmrendszer.domain.Project;
@@ -10,4 +11,6 @@ public interface ProjectRepo extends CrudRepository<Project, Integer> {
 	List<Project> findAll();
 	List<Project> findByStatusId(int id);
 	List<Project> findByNameContainingOrderByName(String name);
+	@Query(value = "SELECT * FROM projects", nativeQuery = true)
+	List<Project> detailedSearch();
 }
