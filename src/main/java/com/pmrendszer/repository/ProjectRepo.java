@@ -9,4 +9,5 @@ import com.pmrendszer.domain.Project;
 public interface ProjectRepo extends CrudRepository<Project, Integer> {
 	List<Project> findAll();
 	List<Project> findByStatusId(int id);
+	List<Project> findByNameContainingOrderByName(String name);
 }

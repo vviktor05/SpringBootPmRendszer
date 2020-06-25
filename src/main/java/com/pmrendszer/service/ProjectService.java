@@ -19,6 +19,10 @@ public class ProjectService {
 		return projectRepo.findByStatusId(ACTIVE_STATUS_ID);
 	}
 	
+	public List<Project> getProjectsByName(String name){
+		return projectRepo.findByNameContainingOrderByName(name);
+	}
+	
 	@Autowired
 	public void setProjectRepo(ProjectRepo projectRepo) {
 		this.projectRepo = projectRepo;
