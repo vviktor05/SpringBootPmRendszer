@@ -20,45 +20,62 @@ public class ProjectApiController {
 	public List<Project> getAllProjects() {
 		return projectService.getAllProjects();
 	}
-	
+
 	@RequestMapping("/active")
 	public List<Project> getActiveProjects() {
 		return projectService.getActiveProjects();
 	}
-	
-	@RequestMapping("/search/{name}")
+
+	@RequestMapping("/search/name/{name}")
 	public ResponseEntity<List<Project>> getProjectsByName(@PathVariable("name") String name) {
 		List<Project> result = projectService.getProjectsByName(name);
-		
+
 		return getResponseEntity(result);
 	}
-	
+
 	@GetMapping("/search")
 	public ResponseEntity<List<Project>> getProjectsByDetailedSearch(
-			@RequestParam(value = "customerId", defaultValue = "-1") int customerId, 
-			@RequestParam(value = "developmentAreaId", defaultValue = "-1") int developmentAreaId, 
-			@RequestParam(value = "orderDateMin", defaultValue = "-1") String orderDateMin, 
-			@RequestParam(value = "orderDateMax", defaultValue = "-1") String orderDateMax, 
-			@RequestParam(value = "projectStatusId", defaultValue = "-1") int projectStatusId, 
-			@RequestParam(value = "priorityId", defaultValue = "-1") int priorityId, 
-			@RequestParam(value = "projectLeaderId", defaultValue = "-1") int projectLeaderId, 
+			@RequestParam(value = "customerId", defaultValue = "-1") int customerId,
+			@RequestParam(value = "developmentAreaId", defaultValue = "-1") int developmentAreaId,
+			@RequestParam(value = "orderDateMin", defaultValue = "-1") String orderDateMin,
+			@RequestParam(value = "orderDateMax", defaultValue = "-1") String orderDateMax,
+			@RequestParam(value = "projectStatusId", defaultValue = "-1") int projectStatusId,
+			@RequestParam(value = "priorityId", defaultValue = "-1") int priorityId,
+			@RequestParam(value = "projectLeaderId", defaultValue = "-1") int projectLeaderId,
 			@RequestParam(value = "statusId", defaultValue = "-1") int statusId) {
-		List<Project> result = projectService.getProcjetsByDetailedSearch(customerId, developmentAreaId, orderDateMin, 
+		List<Project> result = projectService.getProcjetsByDetailedSearch(customerId, developmentAreaId, orderDateMin,
 				orderDateMax, projectStatusId, priorityId, projectLeaderId, statusId);
-		
+
 		return getResponseEntity(result);
 	}
-	
-	public ResponseEntity<List<Project>> getResponseEntity(List<Project> result){
+
+	@RequestMapping("/search/id/{id}")
+	public ResponseEntity<Project> getProjectById(@PathVariable("id") int id) {
+		Project result = projectService.getProjectById(id);
+
+		return getResponseEntity(result);
+	}
+
+	public ResponseEntity<List<Project>> getResponseEntity(List<Project> result) {
 		ResponseEntity<List<Project>> response;
-		if(result.isEmpty()) {
+		if (result.isEmpty()) {
 			response = ResponseEntity.notFound().build();
-		}else {
+		} else {
 			response = ResponseEntity.ok().body(result);
 		}
 		return response;
 	}
-	
+
+	public ResponseEntity<Project> getResponseEntity(Project result) {
+		ResponseEntity<Project> response;
+		if (result == null) {
+			response = ResponseEntity.notFound().build();
+		} else {
+			response = ResponseEntity.ok().body(result);
+		}
+		return response;
+	}
+
 	@Autowired
 	public void setProjectService(ProjectService projectService) {
 		this.projectService = projectService;

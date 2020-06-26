@@ -29,6 +29,10 @@ public class ProjectService {
 				orderDateMax, projectStatusId, priorityId, projectLeaderId, statusId);
 	}
 	
+	public Project getProjectById(int id) {
+		return projectRepo.findById(id);
+	}
+	
 	@Autowired
 	public void setProjectRepo(ProjectRepo projectRepo) {
 		this.projectRepo = projectRepo;
