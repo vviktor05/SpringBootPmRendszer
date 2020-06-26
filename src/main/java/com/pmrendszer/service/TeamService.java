@@ -14,6 +14,10 @@ public class TeamService {
 		return teamRepo.findAll();
 	}
 	
+	public Team getTeamById(int id) {
+		return teamRepo.findById(id);
+	}
+	
 	public List<Team> getTeamsWorkingOnProject(int id) {
 		return teamRepo.findTeamsWorkingOnProject(id);
 	}

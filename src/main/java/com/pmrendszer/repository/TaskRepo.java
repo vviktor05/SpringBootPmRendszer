@@ -9,6 +9,6 @@ import com.pmrendszer.domain.Task;
 public interface TaskRepo extends CrudRepository<Task, Integer> {
 	List<Task> findAll();
 	List<Task> findByStatusId(int id);
-	List<Task> findByTopicContainingOrderByTopic(String topic);
 	Task findById(int id);
+	List<Task> findByTopicContainingOrderByTopic(String topic);
 }

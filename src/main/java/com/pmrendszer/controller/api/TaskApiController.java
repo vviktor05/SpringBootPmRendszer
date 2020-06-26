@@ -17,20 +17,20 @@ public class TaskApiController {
 	public List<Task> getAllTasks() {
 		return taskService.getAllTasks();
 	}
-
+	
 	@RequestMapping("/active")
 	public List<Task> getActiveTasks() {
 		return taskService.getActiveTasks();
 	}
 
-	@RequestMapping("/search/name/{topic}")
-	public List<Task> getTasksByTopic(@PathVariable("topic") String topic) {
-		return taskService.getTasksByTopic(topic);
-	}
-	
 	@RequestMapping("/search/id/{id}")
 	public Task getTaskById(@PathVariable("id") int id) {
 		return taskService.getTaskById(id);
+	}
+	
+	@RequestMapping("/search/name/{topic}")
+	public List<Task> getTasksByTopic(@PathVariable("topic") String topic) {
+		return taskService.getTasksByTopic(topic);
 	}
 	
 	@Autowired

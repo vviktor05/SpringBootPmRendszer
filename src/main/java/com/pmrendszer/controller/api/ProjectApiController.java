@@ -24,6 +24,11 @@ public class ProjectApiController {
 	public List<Project> getActiveProjects() {
 		return projectService.getActiveProjects();
 	}
+	
+	@RequestMapping("/search/id/{id}")
+	public Project getProjectById(@PathVariable("id") int id) {
+		return projectService.getProjectById(id);
+	}
 
 	@RequestMapping("/search/name/{name}")
 	public List<Project> getProjectsByName(@PathVariable("name") String name) {
@@ -43,11 +48,6 @@ public class ProjectApiController {
 
 		return projectService.getProcjetsByDetailedSearch(customerId, developmentAreaId, orderDateMin,
 				orderDateMax, projectStatusId, priorityId, projectLeaderId, statusId);
-	}
-
-	@RequestMapping("/search/id/{id}")
-	public Project getProjectById(@PathVariable("id") int id) {
-		return projectService.getProjectById(id);
 	}
 
 	@Autowired

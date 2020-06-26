@@ -19,12 +19,12 @@ public class TaskService {
 		return taskRepo.findByStatusId(ACTIVE_STATUS_ID);
 	}
 	
-	public List<Task> getTasksByTopic(String topic){
-		return taskRepo.findByTopicContainingOrderByTopic(topic);
-	}
-	
 	public Task getTaskById(int id) {
 		return taskRepo.findById(id);
+	}
+	
+	public List<Task> getTasksByTopic(String topic){
+		return taskRepo.findByTopicContainingOrderByTopic(topic);
 	}
 	
 	@Autowired

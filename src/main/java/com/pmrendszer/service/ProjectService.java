@@ -19,6 +19,10 @@ public class ProjectService {
 		return projectRepo.findByStatusId(ACTIVE_STATUS_ID);
 	}
 	
+	public Project getProjectById(int id) {
+		return projectRepo.findById(id);
+	}
+	
 	public List<Project> getProjectsByName(String name){
 		return projectRepo.findByNameContainingOrderByName(name);
 	}
@@ -27,10 +31,6 @@ public class ProjectService {
 			int projectStatusId, int priorityId, int projectLeaderId, int statusId){
 		return projectRepo.detailedSearch(customerId, developmentAreaId, orderDateMin, 
 				orderDateMax, projectStatusId, priorityId, projectLeaderId, statusId);
-	}
-	
-	public Project getProjectById(int id) {
-		return projectRepo.findById(id);
 	}
 	
 	@Autowired
