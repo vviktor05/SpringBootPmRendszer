@@ -13,6 +13,14 @@ public class TeamService {
 	public List<Team> getAllTeams() {
 		return teamRepo.findAll();
 	}
+	
+	public List<Team> getTeamsWorkingOnProject(int id) {
+		return teamRepo.findTeamsWorkingOnProject(id);
+	}
+	
+	public List<Team> getTeamsNotWorkingOnProject(int id) {
+		return teamRepo.findTeamsNotWorkingOnProject(id);
+	}
 
 	@Autowired
 	public void setTeamRepo(TeamRepo teamRepo) {
