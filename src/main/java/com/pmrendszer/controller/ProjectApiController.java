@@ -17,7 +17,7 @@ public class ProjectApiController {
 	private ProjectService projectService;
 
 	@RequestMapping("")
-	public List<Project> getAllProjects1() {
+	public List<Project> getAllProjects() {
 		return projectService.getAllProjects();
 	}
 	
