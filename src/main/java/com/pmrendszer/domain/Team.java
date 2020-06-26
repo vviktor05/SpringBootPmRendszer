@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -11,6 +12,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "Teams")
 public class Team {
@@ -22,11 +27,13 @@ public class Team {
 	@OneToOne
 	private Employee teamLeader;
 	@OneToMany(mappedBy = "team")
+	@JsonIgnore
 	private List<TeamMembership> teamMemberships;
-	@ManyToMany
+	@ManyToMany()
 	@JoinTable(name = "Projects_teams", 
 	joinColumns = @JoinColumn(name = "team_id"), 
 	inverseJoinColumns = @JoinColumn(name = "project_id"))
+	@JsonIgnore
 	private List<Project> projects;
 
 	public Team() {

@@ -7,7 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "Projects")
 public class Project {
@@ -32,8 +35,8 @@ public class Project {
 	private Status status;
 	@Column(columnDefinition = "text")
 	private String description;
-	@JsonIgnore
 	@ManyToMany(mappedBy = "projects")
+	@JsonIgnore
 	private List<Team> teams;
 
 	public Project() {

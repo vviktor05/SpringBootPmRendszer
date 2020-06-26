@@ -12,7 +12,7 @@ import com.pmrendszer.domain.Project;
 import com.pmrendszer.service.ProjectService;
 
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("/api/projects")
 public class ProjectApiController {
 	private ProjectService projectService;
 

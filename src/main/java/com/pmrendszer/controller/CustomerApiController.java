@@ -8,7 +8,7 @@ import com.pmrendszer.domain.Customer;
 import com.pmrendszer.service.CustomerService;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/api/customers")
 public class CustomerApiController {
 	private CustomerService customerService;
 

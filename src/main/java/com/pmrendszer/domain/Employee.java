@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name = "Employees")
 public class Employee {
 	@GeneratedValue
@@ -26,6 +28,7 @@ public class Employee {
 	private String phoneNumber;
 	private String lastLoginDate;
 	@OneToMany(mappedBy = "employee")
+	@JsonIgnore
 	private List<TeamMembership> teamMemberships;
 
 	public Employee() {
