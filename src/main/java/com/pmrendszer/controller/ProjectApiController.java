@@ -16,8 +16,8 @@ import com.pmrendszer.service.ProjectService;
 public class ProjectApiController {
 	private ProjectService projectService;
 
-	@RequestMapping("/")
-	public List<Project> getAllProjects() {
+	@RequestMapping("")
+	public List<Project> getAllProjects1() {
 		return projectService.getAllProjects();
 	}
 	
@@ -28,15 +28,9 @@ public class ProjectApiController {
 	
 	@RequestMapping("/search/{name}")
 	public ResponseEntity<List<Project>> getProjectsByName(@PathVariable("name") String name) {
-		ResponseEntity<List<Project>> response;
 		List<Project> result = projectService.getProjectsByName(name);
 		
-		if(result.isEmpty()) {
-			response = ResponseEntity.notFound().build();
-		}else {
-			response = ResponseEntity.ok().body(result);
-		}
-		return response;
+		return getResponseEntity(result);
 	}
 	
 	@GetMapping("/search")
@@ -49,10 +43,14 @@ public class ProjectApiController {
 			@RequestParam(value = "priorityId", defaultValue = "-1") int priorityId, 
 			@RequestParam(value = "projectLeaderId", defaultValue = "-1") int projectLeaderId, 
 			@RequestParam(value = "statusId", defaultValue = "-1") int statusId) {
-		ResponseEntity<List<Project>> response;
 		List<Project> result = projectService.getProcjetsByDetailedSearch(customerId, developmentAreaId, orderDateMin, 
 				orderDateMax, projectStatusId, priorityId, projectLeaderId, statusId);
 		
+		return getResponseEntity(result);
+	}
+	
+	public ResponseEntity<List<Project>> getResponseEntity(List<Project> result){
+		ResponseEntity<List<Project>> response;
 		if(result.isEmpty()) {
 			response = ResponseEntity.notFound().build();
 		}else {
