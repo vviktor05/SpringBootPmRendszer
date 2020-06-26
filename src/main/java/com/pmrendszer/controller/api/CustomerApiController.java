@@ -1,4 +1,4 @@
-package com.pmrendszer.controller;
+package com.pmrendszer.controller.api;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
