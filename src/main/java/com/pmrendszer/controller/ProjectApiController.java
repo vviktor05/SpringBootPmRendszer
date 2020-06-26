@@ -2,7 +2,6 @@ package com.pmrendszer.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,14 +26,12 @@ public class ProjectApiController {
 	}
 
 	@RequestMapping("/search/name/{name}")
-	public ResponseEntity<List<Project>> getProjectsByName(@PathVariable("name") String name) {
-		List<Project> result = projectService.getProjectsByName(name);
-
-		return getResponseEntity(result);
+	public List<Project> getProjectsByName(@PathVariable("name") String name) {
+		return projectService.getProjectsByName(name);
 	}
 
 	@GetMapping("/search")
-	public ResponseEntity<List<Project>> getProjectsByDetailedSearch(
+	public List<Project> getProjectsByDetailedSearch(
 			@RequestParam(value = "customerId", defaultValue = "-1") int customerId,
 			@RequestParam(value = "developmentAreaId", defaultValue = "-1") int developmentAreaId,
 			@RequestParam(value = "orderDateMin", defaultValue = "-1") String orderDateMin,
@@ -43,37 +40,14 @@ public class ProjectApiController {
 			@RequestParam(value = "priorityId", defaultValue = "-1") int priorityId,
 			@RequestParam(value = "projectLeaderId", defaultValue = "-1") int projectLeaderId,
 			@RequestParam(value = "statusId", defaultValue = "-1") int statusId) {
-		List<Project> result = projectService.getProcjetsByDetailedSearch(customerId, developmentAreaId, orderDateMin,
-				orderDateMax, projectStatusId, priorityId, projectLeaderId, statusId);
 
-		return getResponseEntity(result);
+		return projectService.getProcjetsByDetailedSearch(customerId, developmentAreaId, orderDateMin,
+				orderDateMax, projectStatusId, priorityId, projectLeaderId, statusId);
 	}
 
 	@RequestMapping("/search/id/{id}")
-	public ResponseEntity<Project> getProjectById(@PathVariable("id") int id) {
-		Project result = projectService.getProjectById(id);
-
-		return getResponseEntity(result);
-	}
-
-	public ResponseEntity<List<Project>> getResponseEntity(List<Project> result) {
-		ResponseEntity<List<Project>> response;
-		if (result.isEmpty()) {
-			response = ResponseEntity.notFound().build();
-		} else {
-			response = ResponseEntity.ok().body(result);
-		}
-		return response;
-	}
-
-	public ResponseEntity<Project> getResponseEntity(Project result) {
-		ResponseEntity<Project> response;
-		if (result == null) {
-			response = ResponseEntity.notFound().build();
-		} else {
-			response = ResponseEntity.ok().body(result);
-		}
-		return response;
+	public Project getProjectById(@PathVariable("id") int id) {
+		return projectService.getProjectById(id);
 	}
 
 	@Autowired

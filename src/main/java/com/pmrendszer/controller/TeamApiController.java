@@ -2,6 +2,7 @@ package com.pmrendszer.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.pmrendszer.domain.Team;
@@ -15,6 +16,16 @@ public class TeamApiController {
 	@RequestMapping("")
 	public List<Team> getAllTeams(){
 		return teamService.getAllTeams();
+	}
+	
+	@RequestMapping("/search/working_on/project_id/{id}")
+	public List<Team> getTeamsWorkingOnProject(@PathVariable(value = "id") int id){
+		return teamService.getTeamsWorkingOnProject(id);
+	}
+	
+	@RequestMapping("/search/not_working_on/project_id/{id}")
+	public List<Team> getTeamsNotWorkingOnProject(@PathVariable(value = "id") int id){
+		return teamService.getTeamsNotWorkingOnProject(id);
 	}
 	
 	@Autowired
