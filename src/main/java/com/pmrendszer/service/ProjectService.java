@@ -23,6 +23,12 @@ public class ProjectService {
 		return projectRepo.findByNameContainingOrderByName(name);
 	}
 	
+	public List<Project> getProcjetsByDetailedSearch(int customerId, int developmentAreaId, String orderDateMin, String orderDateMax, 
+			int projectStatusId, int priorityId, int projectLeaderId, int statusId){
+		return projectRepo.detailedSearch(customerId, developmentAreaId, orderDateMin, 
+				orderDateMax, projectStatusId, priorityId, projectLeaderId, statusId);
+	}
+	
 	@Autowired
 	public void setProjectRepo(ProjectRepo projectRepo) {
 		this.projectRepo = projectRepo;
