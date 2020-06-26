@@ -14,17 +14,17 @@ public class TaskApiController {
 	private TaskService taskService;
 
 	@RequestMapping("")
-	public List<Task> getAllProjects() {
+	public List<Task> getAllTasks() {
 		return taskService.getAllTasks();
 	}
 
 	@RequestMapping("/active")
-	public List<Task> getActiveProjects() {
+	public List<Task> getActiveTasks() {
 		return taskService.getActiveTasks();
 	}
 
 	@RequestMapping("/search/name/{topic}")
-	public List<Task> getProjectsByTopic(@PathVariable("topic") String topic) {
+	public List<Task> getTasksByTopic(@PathVariable("topic") String topic) {
 		return taskService.getTasksByTopic(topic);
 	}
 	
