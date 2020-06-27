@@ -11,33 +11,51 @@ public class ProjectService {
 	private ProjectRepo projectRepo;
 	private final int ACTIVE_STATUS_ID = 3;
 
-	public List<Project> getAllProjects(){
+	public List<Project> getAllProjects() {
 		return projectRepo.findAll();
 	}
-	
-	public List<Project> getActiveProjects(){
+
+	public List<Project> getActiveProjects() {
 		return projectRepo.findByStatusId(ACTIVE_STATUS_ID);
 	}
-	
+
 	public Project getProjectById(int id) {
 		return projectRepo.findById(id);
 	}
-	
-	public List<Project> getProjectsByName(String name){
+
+	public List<Project> getProjectsByName(String name) {
 		return projectRepo.findByNameContainingOrderByName(name);
 	}
-	
-	public List<Project> getProcjetsByDetailedSearch(int customerId, int developmentAreaId, String orderDateMin, String orderDateMax, 
-			int projectStatusId, int priorityId, int projectLeaderId, int statusId){
-		
-		return projectRepo.detailedSearch(customerId, developmentAreaId, orderDateMin, 
-				orderDateMax, projectStatusId, priorityId, projectLeaderId, statusId);
+
+	public List<Project> getProcjetsByDetailedSearch(int customerId, int developmentAreaId, String orderDateMin,
+			String orderDateMax, int projectStatusId, int priorityId, int projectLeaderId, int statusId) {
+
+		return projectRepo.detailedSearch(customerId, developmentAreaId, orderDateMin, orderDateMax, projectStatusId,
+				priorityId, projectLeaderId, statusId);
 	}
-	
+
 	public void addProject(Project project) {
 		projectRepo.save(project);
 	}
-	
+
+	public void updateProject(Project project, Project projectDetails) {
+		project.setName(projectDetails.getName());
+		project.setCustomer(projectDetails.getCustomer());
+		project.setDevelopmentArea(projectDetails.getDevelopmentArea());
+		project.setOrderDate(projectDetails.getOrderDate());
+		project.setDeadline(projectDetails.getDeadline());
+		project.setProjectStatus(projectDetails.getProjectStatus());
+		project.setPriority(projectDetails.getPriority());
+		project.setProjectLeader(projectDetails.getProjectLeader());
+		project.setStatus(projectDetails.getStatus());
+		project.setDescription(projectDetails.getDescription());
+		projectRepo.save(project);
+	}
+
+	public void deleteProject(Project project) {
+		projectRepo.delete(project);
+	}
+
 	@Autowired
 	public void setProjectRepo(ProjectRepo projectRepo) {
 		this.projectRepo = projectRepo;

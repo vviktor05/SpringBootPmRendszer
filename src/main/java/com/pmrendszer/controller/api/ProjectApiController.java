@@ -3,13 +3,17 @@ package com.pmrendszer.controller.api;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import com.pmrendszer.domain.Project;
 import com.pmrendszer.service.ProjectService;
 
@@ -27,7 +31,7 @@ public class ProjectApiController {
 	public List<Project> getActiveProjects() {
 		return projectService.getActiveProjects();
 	}
-	
+
 	@GetMapping("/id/{id}")
 	public Project getProjectById(@PathVariable("id") int id) {
 		return projectService.getProjectById(id);
@@ -49,13 +53,31 @@ public class ProjectApiController {
 			@RequestParam(value = "projectLeaderId", defaultValue = "-1") int projectLeaderId,
 			@RequestParam(value = "statusId", defaultValue = "-1") int statusId) {
 
-		return projectService.getProcjetsByDetailedSearch(customerId, developmentAreaId, orderDateMin,
-				orderDateMax, projectStatusId, priorityId, projectLeaderId, statusId);
+		return projectService.getProcjetsByDetailedSearch(customerId, developmentAreaId, orderDateMin, orderDateMax,
+				projectStatusId, priorityId, projectLeaderId, statusId);
 	}
-	
+
 	@PostMapping("")
 	public void addProject(@Valid @RequestBody Project project) {
 		projectService.addProject(project);
+	}
+
+	@PutMapping("/{id}")
+	public void updateProject(@PathVariable(value = "id") int id, @Valid @RequestBody Project projectDetails) {
+		Project project = projectService.getProjectById(id);
+		if (project == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nincs ilyen azonosítóval projekt: " + id);
+		}
+		projectService.updateProject(project, projectDetails);
+	}
+
+	@DeleteMapping("/{id}")
+	public void deleteProject(@PathVariable(value = "id") int id) {
+		Project project = projectService.getProjectById(id);
+		if (project == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nincs ilyen azonosítóval projekt: " + id);
+		}
+		projectService.deleteProject(project);
 	}
 
 	@Autowired
