@@ -3,13 +3,14 @@ package com.pmrendszer.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name = "Customers")
 public class Customer {
-	@GeneratedValue
-	@Column(columnDefinition = "serial")
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "serial")
 	private int id;
 	private String name;
 	private String phone;
@@ -22,7 +23,7 @@ public class Customer {
 	public Customer() {
 		;
 	}
-
+	
 	public Customer(int id, String name, String phone, String email, String website, String zipCode, String locality,
 			String streetAddress) {
 		this.id = id;
@@ -98,5 +99,4 @@ public class Customer {
 	public void setStreetAddress(String streetAddress) {
 		this.streetAddress = streetAddress;
 	}
-
 }

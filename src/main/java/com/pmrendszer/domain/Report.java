@@ -3,17 +3,19 @@ package com.pmrendszer.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity(name = "Reports")
 public class Report {
-	@GeneratedValue
-	@Column(columnDefinition = "serial")
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "serial")
 	private int id;
 	@ManyToOne
 	private Project project;
+	@Column(columnDefinition = "timestamp")
 	private String recordingDate;
 	@ManyToOne
 	private Employee employee;
@@ -71,5 +73,4 @@ public class Report {
 	public void setText(String text) {
 		this.text = text;
 	}
-
 }

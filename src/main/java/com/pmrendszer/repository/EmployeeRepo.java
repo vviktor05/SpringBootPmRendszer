@@ -12,10 +12,10 @@ public interface EmployeeRepo extends CrudRepository<Employee, Integer> {
 	List<Employee> findAll();
 	@Query(value = "SELECT * FROM employees WHERE job_id=" + JOB_DEVELOPER_ID + " AND id IN "
 					+ "(SELECT employee_id FROM team_memberships "
-					+ "WHERE team_id = ?1 AND end_date IS NULL)", nativeQuery = true)
+					+ "WHERE team_id = ?1)", nativeQuery = true)
 	List<Employee> findTeamMembers(int id);
 	@Query(value = "SELECT * FROM employees WHERE job_id=" + JOB_DEVELOPER_ID + " AND id NOT IN "
 					+ "(SELECT employee_id FROM team_memberships "
-					+ "WHERE team_id = ?1 AND end_date IS NULL)", nativeQuery = true)
+					+ "WHERE team_id = ?1)", nativeQuery = true)
 	List<Employee> findNotTeamMembers(int id);
 }

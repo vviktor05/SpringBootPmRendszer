@@ -1,22 +1,17 @@
 package com.pmrendszer.domain;
 
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "Projects")
 public class Project {
-	@GeneratedValue
-	@Column(columnDefinition = "serial")
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "serial")
 	private int id;
 	private String name;
 	@ManyToOne
@@ -35,9 +30,6 @@ public class Project {
 	private Status status;
 	@Column(columnDefinition = "text")
 	private String description;
-	@ManyToMany(mappedBy = "projects")
-	@JsonIgnore
-	private List<Team> teams;
 
 	public Project() {
 		;
@@ -45,7 +37,7 @@ public class Project {
 
 	public Project(int id, String name, Customer customer, DevelopmentArea developmentArea, String orderDate,
 			String deadline, ProjectStatus projectStatus, Priority priority, Employee projectLeader, Status status,
-			String description, List<Team> teams) {
+			String description) {
 		this.id = id;
 		this.name = name;
 		this.customer = customer;
@@ -57,7 +49,6 @@ public class Project {
 		this.projectLeader = projectLeader;
 		this.status = status;
 		this.description = description;
-		this.teams = teams;
 	}
 
 	public int getId() {
@@ -146,13 +137,5 @@ public class Project {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public List<Team> getTeams() {
-		return teams;
-	}
-
-	public void setTeams(List<Team> teams) {
-		this.teams = teams;
 	}
 }

@@ -3,16 +3,18 @@ package com.pmrendszer.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity(name = "Tasks")
 public class Task {
-	@GeneratedValue
-	@Column(columnDefinition = "serial")
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "serial")
 	private int id;
 	private String topic;
+	@Column(columnDefinition = "timestamp")
 	private String deadline;
 	@ManyToOne
 	private Employee teamLeader;
@@ -93,5 +95,4 @@ public class Task {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 }

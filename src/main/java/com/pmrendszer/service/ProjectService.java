@@ -29,8 +29,13 @@ public class ProjectService {
 	
 	public List<Project> getProcjetsByDetailedSearch(int customerId, int developmentAreaId, String orderDateMin, String orderDateMax, 
 			int projectStatusId, int priorityId, int projectLeaderId, int statusId){
+		
 		return projectRepo.detailedSearch(customerId, developmentAreaId, orderDateMin, 
 				orderDateMax, projectStatusId, priorityId, projectLeaderId, statusId);
+	}
+	
+	public void addProject(Project project) {
+		projectRepo.save(project);
 	}
 	
 	@Autowired

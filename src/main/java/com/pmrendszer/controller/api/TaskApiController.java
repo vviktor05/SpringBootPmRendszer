@@ -23,12 +23,12 @@ public class TaskApiController {
 		return taskService.getActiveTasks();
 	}
 
-	@RequestMapping("/search/id/{id}")
+	@RequestMapping("/id/{id}")
 	public Task getTaskById(@PathVariable("id") int id) {
 		return taskService.getTaskById(id);
 	}
 	
-	@RequestMapping("/search/name/{topic}")
+	@RequestMapping("/name/{topic}")
 	public List<Task> getTasksByTopic(@PathVariable("topic") String topic) {
 		return taskService.getTasksByTopic(topic);
 	}

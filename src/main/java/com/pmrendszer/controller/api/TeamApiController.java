@@ -18,17 +18,17 @@ public class TeamApiController {
 		return teamService.getAllTeams();
 	}
 	
-	@RequestMapping("/search/id/{id}")
+	@RequestMapping("/id/{id}")
 	public Team getTeamById(@PathVariable(value = "id") int id) {
 		return teamService.getTeamById(id);
 	}
 	
-	@RequestMapping("/search/working_on/project_id/{id}")
+	@RequestMapping("/working_on/project_id/{id}")
 	public List<Team> getTeamsWorkingOnProject(@PathVariable(value = "id") int id){
 		return teamService.getTeamsWorkingOnProject(id);
 	}
 	
-	@RequestMapping("/search/not_working_on/project_id/{id}")
+	@RequestMapping("/not_working_on/project_id/{id}")
 	public List<Team> getTeamsNotWorkingOnProject(@PathVariable(value = "id") int id){
 		return teamService.getTeamsNotWorkingOnProject(id);
 	}

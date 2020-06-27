@@ -1,20 +1,17 @@
 package com.pmrendszer.domain;
 
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "Employees")
 public class Employee {
-	@GeneratedValue
-	@Column(columnDefinition = "serial")
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "serial")
 	private int id;
 	private String name;
 	private String password;
@@ -24,19 +21,18 @@ public class Employee {
 	private DevelopmentArea developmentArea;
 	@ManyToOne
 	private Skill skill;
+	@Column(columnDefinition = "date")
 	private String startDate;
 	private String phoneNumber;
+	@Column(columnDefinition = "timestamp")
 	private String lastLoginDate;
-	@OneToMany(mappedBy = "employee")
-	@JsonIgnore
-	private List<TeamMembership> teamMemberships;
 
 	public Employee() {
 		;
 	}
 
 	public Employee(int id, String name, String password, Job job, DevelopmentArea developmentArea, Skill skill,
-			String startDate, String phoneNumber, String lastLoginDate, List<TeamMembership> teamMemberships) {
+			String startDate, String phoneNumber, String lastLoginDate) {
 		this.id = id;
 		this.name = name;
 		this.password = password;
@@ -46,7 +42,6 @@ public class Employee {
 		this.startDate = startDate;
 		this.phoneNumber = phoneNumber;
 		this.lastLoginDate = lastLoginDate;
-		this.teamMemberships = teamMemberships;
 	}
 
 	public int getId() {
@@ -119,13 +114,5 @@ public class Employee {
 
 	public void setLastLoginDate(String lastLoginDate) {
 		this.lastLoginDate = lastLoginDate;
-	}
-
-	public List<TeamMembership> getTeamMemberships() {
-		return teamMemberships;
-	}
-
-	public void setTeamMemberships(List<TeamMembership> teamMemberships) {
-		this.teamMemberships = teamMemberships;
 	}
 }

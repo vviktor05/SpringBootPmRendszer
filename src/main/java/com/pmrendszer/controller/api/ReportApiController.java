@@ -18,7 +18,7 @@ public class ReportApiController {
 		return reportService.getAllReports();
 	}
 	
-	@RequestMapping("/search/id/{id}")
+	@RequestMapping("/id/{id}")
 	public Report getReportById(@PathVariable("id") int id) {
 		return reportService.getReportById(id);
 	}

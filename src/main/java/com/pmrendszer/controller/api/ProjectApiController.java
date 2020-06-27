@@ -1,9 +1,12 @@
 package com.pmrendszer.controller.api;
 
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,22 +18,22 @@ import com.pmrendszer.service.ProjectService;
 public class ProjectApiController {
 	private ProjectService projectService;
 
-	@RequestMapping("")
+	@GetMapping("")
 	public List<Project> getAllProjects() {
 		return projectService.getAllProjects();
 	}
 
-	@RequestMapping("/active")
+	@GetMapping("/active")
 	public List<Project> getActiveProjects() {
 		return projectService.getActiveProjects();
 	}
 	
-	@RequestMapping("/search/id/{id}")
+	@GetMapping("/id/{id}")
 	public Project getProjectById(@PathVariable("id") int id) {
 		return projectService.getProjectById(id);
 	}
 
-	@RequestMapping("/search/name/{name}")
+	@GetMapping("/name/{name}")
 	public List<Project> getProjectsByName(@PathVariable("name") String name) {
 		return projectService.getProjectsByName(name);
 	}
@@ -48,6 +51,11 @@ public class ProjectApiController {
 
 		return projectService.getProcjetsByDetailedSearch(customerId, developmentAreaId, orderDateMin,
 				orderDateMax, projectStatusId, priorityId, projectLeaderId, statusId);
+	}
+	
+	@PostMapping("")
+	public void addProject(@Valid @RequestBody Project project) {
+		projectService.addProject(project);
 	}
 
 	@Autowired

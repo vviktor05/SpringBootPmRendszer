@@ -18,12 +18,12 @@ public class EmployeeApiController {
 		return employeeService.getAllEmployees();
 	}
 	
-	@RequestMapping("/search/in_team/team_id/{id}")
+	@RequestMapping("/in_team/team_id/{id}")
 	public List<Employee> getTeamMembers(@PathVariable(value = "id") int id){
 		return employeeService.getTeamMembers(id);
 	}
 	
-	@RequestMapping("/search/not_in_team/team_id/{id}")
+	@RequestMapping("/not_in_team/team_id/{id}")
 	public List<Employee> getNotTeamMembers(@PathVariable(value = "id") int id){
 		return employeeService.getNotTeamMembers(id);
 	}

@@ -1,37 +1,30 @@
 package com.pmrendszer.domain;
 
-import javax.persistence.EmbeddedId;
+import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "Team_memberships")
-public class TeamMembership {
-	@EmbeddedId
-	TeamMembershipKey id;
-	
+@IdClass(TeamMembership.class)
+public class TeamMembership implements Serializable{
+	@Id
 	@ManyToOne
-	@MapsId("employee_id")
-    @JoinColumn(name = "employee_id")
+	@JoinColumn(insertable=false, updatable=false)
 	private Employee employee;
-	private String startDate;
-	private String endDate;
+	@Id
 	@ManyToOne
-	@MapsId("team_id")
-    @JoinColumn(name = "team_id")
+	@JoinColumn(insertable=false, updatable=false)
 	private Team team;
 
 	public TeamMembership() {
 		;
 	}
 
-	public TeamMembership(Employee employee, String startDate, String endDate, Team team) {
+	public TeamMembership(Employee employee, Team team) {
 		this.employee = employee;
-		this.startDate = startDate;
-		this.endDate = endDate;
 		this.team = team;
 	}
 
@@ -41,22 +34,6 @@ public class TeamMembership {
 
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
-	}
-
-	public String getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-
-	public String getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
 	}
 
 	public Team getTeam() {
