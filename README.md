@@ -51,11 +51,14 @@ http://localhost:8080/api/employees/not_in_team/team_id/{id}
 
 http://localhost:8080/api/team_memberships
 
-POST
+- POST
+
 http://localhost:8080/api/projects
 
-DELETE
+- DELETE
+
 http://localhost:8080/api/projects/{id}
 
-PUT
+- PUT
+
 http://localhost:8080/api/projects/{id}
