@@ -55,7 +55,11 @@ http://localhost:8080/api/employees/not_in_team/team_id/{id}
 
 http://localhost:8080/api/team_memberships
 
+http://localhost:8080/api/team_memberships/team_id/{teamId}/employee_id/{employeeId}
+
 http://localhost:8080/api/projects_teams
+
+http://localhost:8080/api/projects_teams/project_id/{projectId}/team_id/{teamId}
 
 - POST
 
@@ -71,9 +75,9 @@ http://localhost:8080/api/employees
 
 http://localhost:8080/api/teams
 
-http://localhost:8080/api/team_memberships/team_id/{id}/employee_id/{id}
+http://localhost:8080/api/team_memberships
 
-http://localhost:8080/api/projects_teams/
+http://localhost:8080/api/projects_teams
 
 - DELETE
 
@@ -89,9 +93,9 @@ http://localhost:8080/api/employees/{id}
 
 http://localhost:8080/api/teams/{id}
 
-http://localhost:8080/api/team_memberships/team_id/{id}/employee_id/{id}
+http://localhost:8080/api/team_memberships/team_id/{teamId}/employee_id/{employeeId}
 
-http://localhost:8080/api/projects_teams/
+http://localhost:8080/api/projects_teams/project_id/{projectId}/team_id/{teamId}
 
 - PUT
 
@@ -107,6 +111,6 @@ http://localhost:8080/api/employees/{id}
 
 http://localhost:8080/api/teams/{id}
 
-http://localhost:8080/api/team_memberships/team_id/{id}/employee_id/{id}
+http://localhost:8080/api/team_memberships/team_id/{teamId}/employee_id/{employeeId}
 
-http://localhost:8080/api/projects_teams/
+http://localhost:8080/api/projects_teams/project_id/{projectId}/team_id/{teamId}

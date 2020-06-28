@@ -8,4 +8,5 @@ import com.pmrendszer.domain.TeamMembership;
 @Repository
 public interface TeamMembershipRepo extends CrudRepository<TeamMembership, Integer> {
 	List<TeamMembership> findAll();
+	TeamMembership findByTeamIdAndEmployeeId(int teamId, int EmployeeId);
 }
