@@ -8,4 +8,5 @@ import com.pmrendszer.domain.Customer;
 @Repository
 public interface CustomerRepo extends CrudRepository<Customer, Integer> {
 	List<Customer> findAll();
+	Customer findById(int id);
 }

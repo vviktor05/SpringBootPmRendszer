@@ -29,6 +29,8 @@ http://localhost:8080/api/teams/not_working_on/project_id/{id}
 
 http://localhost:8080/api/customers
 
+http://localhost:8080/api/customers/{id}
+
 http://localhost:8080/api/tasks
 
 http://localhost:8080/api/tasks/active
@@ -54,11 +56,14 @@ http://localhost:8080/api/team_memberships
 - POST
 
 http://localhost:8080/api/projects
+http://localhost:8080/api/customers
 
 - DELETE
 
 http://localhost:8080/api/projects/{id}
+http://localhost:8080/api/customers/{id}
 
 - PUT
 
 http://localhost:8080/api/projects/{id}
+http://localhost:8080/api/customers/{id}
