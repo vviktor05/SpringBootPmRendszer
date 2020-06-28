@@ -3,6 +3,8 @@ package com.pmrendszer.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.pmrendszer.controller.api.error.EntityNotFoundException;
 import com.pmrendszer.domain.Project;
 import com.pmrendszer.repository.ProjectRepo;
 
@@ -19,26 +21,39 @@ public class ProjectService {
 		return projectRepo.findByStatusId(ACTIVE_STATUS_ID);
 	}
 
-	public Project getProjectById(int id) {
-		return projectRepo.findById(id);
+	public Project getProjectById(int id) throws EntityNotFoundException {
+		Project project = projectRepo.findById(id);
+		CheckerClass.ifEmptyThrowException(project);
+
+		return project;
 	}
 
-	public List<Project> getProjectsByName(String name) {
-		return projectRepo.findByNameContainingOrderByName(name);
+	public List<Project> getProjectsByName(String name) throws EntityNotFoundException {
+		List<Project> projects = projectRepo.findByNameContainingOrderByName(name);
+		CheckerClass.ifEmptyThrowException(projects);
+
+		return projects;
 	}
 
 	public List<Project> getProcjetsByDetailedSearch(int customerId, int developmentAreaId, String orderDateMin,
-			String orderDateMax, int projectStatusId, int priorityId, int projectLeaderId, int statusId) {
+			String orderDateMax, int projectStatusId, int priorityId, int projectLeaderId, int statusId)
+			throws EntityNotFoundException {
 
-		return projectRepo.detailedSearch(customerId, developmentAreaId, orderDateMin, orderDateMax, projectStatusId,
-				priorityId, projectLeaderId, statusId);
+		List<Project> projects = projectRepo.detailedSearch(customerId, developmentAreaId, orderDateMin, orderDateMax,
+				projectStatusId, priorityId, projectLeaderId, statusId);
+		CheckerClass.ifEmptyThrowException(projects);
+
+		return projects;
 	}
 
 	public void addProject(Project project) {
 		projectRepo.save(project);
 	}
 
-	public void updateProject(Project project, Project projectDetails) {
+	public void updateProject(int id, Project projectDetails) throws EntityNotFoundException {
+		Project project = projectRepo.findById(id);
+		CheckerClass.ifEmptyThrowException(project);
+
 		project.setName(projectDetails.getName());
 		project.setCustomer(projectDetails.getCustomer());
 		project.setDevelopmentArea(projectDetails.getDevelopmentArea());
@@ -52,7 +67,10 @@ public class ProjectService {
 		projectRepo.save(project);
 	}
 
-	public void deleteProject(Project project) {
+	public void deleteProject(int id) throws EntityNotFoundException {
+		Project project = projectRepo.findById(id);
+		CheckerClass.ifEmptyThrowException(project);
+		
 		projectRepo.delete(project);
 	}
 

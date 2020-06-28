@@ -9,11 +9,11 @@ import com.pmrendszer.repository.TeamMembershipRepo;
 @Service
 public class TeamMembershipService {
 	private TeamMembershipRepo teamMembershipRepo;
-	
-	public List<TeamMembership> getAllTeamMemberships(){
+
+	public List<TeamMembership> getAllTeamMemberships() {
 		return teamMembershipRepo.findAll();
 	}
-	
+
 	@Autowired
 	public void setTeamMembershipRepo(TeamMembershipRepo teamMembershipRepo) {
 		this.teamMembershipRepo = teamMembershipRepo;

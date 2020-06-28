@@ -3,6 +3,8 @@ package com.pmrendszer.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.pmrendszer.controller.api.error.EntityNotFoundException;
 import com.pmrendszer.domain.Customer;
 import com.pmrendszer.repository.CustomerRepo;
 
@@ -14,15 +16,21 @@ public class CustomerService {
 		return customerRepo.findAll();
 	}
 
-	public Customer getCustomerById(int id) {
-		return customerRepo.findById(id);
+	public Customer getCustomerById(int id) throws EntityNotFoundException {
+		Customer customer = customerRepo.findById(id);
+		CheckerClass.ifEmptyThrowException(customer);
+
+		return customer;
 	}
-	
+
 	public void addCustomer(Customer customer) {
 		customerRepo.save(customer);
 	}
 
-	public void updateCustomer(Customer customer, Customer customerDetails) {
+	public void updateCustomer(int id, Customer customerDetails) throws EntityNotFoundException {
+		Customer customer = customerRepo.findById(id);
+		CheckerClass.ifEmptyThrowException(customer);
+
 		customer.setName(customerDetails.getName());
 		customer.setPhone(customerDetails.getPhone());
 		customer.setEmail(customerDetails.getEmail());
@@ -33,7 +41,10 @@ public class CustomerService {
 		customerRepo.save(customer);
 	}
 
-	public void deleteCustomer(Customer customer) {
+	public void deleteCustomer(int id) throws EntityNotFoundException {
+		Customer customer = customerRepo.findById(id);
+		CheckerClass.ifEmptyThrowException(customer);
+
 		customerRepo.delete(customer);
 	}
 

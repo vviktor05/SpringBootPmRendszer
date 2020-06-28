@@ -15,7 +15,7 @@ http://localhost:8080/api/projects/name/{name}
 
 http://localhost:8080/api/projects/search?customerId=1&developmentAreaId=1&orderDateMin=1&orderDateMax=1&projectStatusId=1&priorityId=1&projectLeaderId=1&statusId=1
 
-0-tól az összes paraméter használatával is lehet szűrni, sorrend nem számít.
+0-tól az összes paraméter használatával lehet szűrni, sorrend nem számít.
 
 http://localhost:8080/api/teams
 
@@ -45,6 +45,8 @@ http://localhost:8080/api/reports/id/{id}
 
 http://localhost:8080/api/employees
 
+http://localhost:8080/api/employees/id/{id}
+
 http://localhost:8080/api/employees/in_team/team_id/{id}
 
 A megadott csapat id-vel rendelkező csapatban dolgozó fejlesztőket adja vissza.
@@ -56,14 +58,41 @@ http://localhost:8080/api/team_memberships
 - POST
 
 http://localhost:8080/api/projects
+
 http://localhost:8080/api/customers
+
+http://localhost:8080/api/tasks
+
+http://localhost:8080/api/reports
+
+http://localhost:8080/api/employees
+
+http://localhost:8080/api/teams
 
 - DELETE
 
 http://localhost:8080/api/projects/{id}
+
 http://localhost:8080/api/customers/{id}
+
+http://localhost:8080/api/tasks/{id}
+
+http://localhost:8080/api/reports/{id}
+
+http://localhost:8080/api/employees/{id}
+
+http://localhost:8080/api/teams/{id}
 
 - PUT
 
 http://localhost:8080/api/projects/{id}
+
 http://localhost:8080/api/customers/{id}
+
+http://localhost:8080/api/tasks/{id}
+
+http://localhost:8080/api/reports/{id}
+
+http://localhost:8080/api/employees/{id}
+
+http://localhost:8080/api/teams/{id}

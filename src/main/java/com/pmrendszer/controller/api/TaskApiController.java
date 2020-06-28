@@ -1,10 +1,17 @@
 package com.pmrendszer.controller.api;
 
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.pmrendszer.controller.api.error.EntityNotFoundException;
 import com.pmrendszer.domain.Task;
 import com.pmrendszer.service.TaskService;
 
@@ -13,26 +20,42 @@ import com.pmrendszer.service.TaskService;
 public class TaskApiController {
 	private TaskService taskService;
 
-	@RequestMapping("")
+	@GetMapping("")
 	public List<Task> getAllTasks() {
 		return taskService.getAllTasks();
 	}
-	
-	@RequestMapping("/active")
+
+	@GetMapping("/active")
 	public List<Task> getActiveTasks() {
 		return taskService.getActiveTasks();
 	}
 
-	@RequestMapping("/id/{id}")
-	public Task getTaskById(@PathVariable("id") int id) {
+	@GetMapping("/id/{id}")
+	public Task getTaskById(@PathVariable("id") int id) throws EntityNotFoundException {
 		return taskService.getTaskById(id);
 	}
-	
-	@RequestMapping("/name/{topic}")
-	public List<Task> getTasksByTopic(@PathVariable("topic") String topic) {
+
+	@GetMapping("/name/{topic}")
+	public List<Task> getTasksByTopic(@PathVariable("topic") String topic) throws EntityNotFoundException {
 		return taskService.getTasksByTopic(topic);
 	}
-	
+
+	@PostMapping("")
+	public void addTask(@Valid @RequestBody Task task) {
+		taskService.addTask(task);
+	}
+
+	@PutMapping("/{id}")
+	public void updateTask(@PathVariable(value = "id") int id, @Valid @RequestBody Task taskDetails)
+			throws EntityNotFoundException {
+		taskService.updateTask(id, taskDetails);
+	}
+
+	@DeleteMapping("/{id}")
+	public void deleteTask(@PathVariable(value = "id") int id) throws EntityNotFoundException {
+		taskService.deleteTask(id);
+	}
+
 	@Autowired
 	public void setTaskService(TaskService taskService) {
 		this.taskService = taskService;

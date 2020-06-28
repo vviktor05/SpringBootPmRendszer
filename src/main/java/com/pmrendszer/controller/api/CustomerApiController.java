@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.pmrendszer.controller.api.error.EntityNotFoundException;
 import com.pmrendszer.domain.Customer;
-import com.pmrendszer.service.CheckerClass;
 import com.pmrendszer.service.CustomerService;
 
 @RestController
@@ -27,11 +26,8 @@ public class CustomerApiController {
 	}
 
 	@GetMapping("/id/{id}")
-	public Customer getCustomerById(@PathVariable("id") int id) {
-		Customer customer = customerService.getCustomerById(id);
-		CheckerClass.notEmptyOrThrow(customer);
-		
-		return customer;
+	public Customer getCustomerById(@PathVariable("id") int id) throws EntityNotFoundException {
+		return customerService.getCustomerById(id);
 	}
 
 	@PostMapping("")
@@ -40,19 +36,14 @@ public class CustomerApiController {
 	}
 
 	@PutMapping("/{id}")
-	public void updateCustomer(@PathVariable(value = "id") int id, @Valid @RequestBody Customer customerDetails) {
-		Customer customer = customerService.getCustomerById(id);
-		CheckerClass.notEmptyOrThrow(customer);
-		
-		customerService.updateCustomer(customer, customerDetails);
+	public void updateCustomer(@PathVariable(value = "id") int id, @Valid @RequestBody Customer customerDetails)
+			throws EntityNotFoundException {
+		customerService.updateCustomer(id, customerDetails);
 	}
 
 	@DeleteMapping("/{id}")
-	public void deleteCustomer(@PathVariable(value = "id") int id) {
-		Customer customer = customerService.getCustomerById(id);
-		CheckerClass.notEmptyOrThrow(customer);
-		
-		customerService.deleteCustomer(customer);
+	public void deleteCustomer(@PathVariable(value = "id") int id) throws EntityNotFoundException {
+		customerService.deleteCustomer(id);
 	}
 
 	@Autowired

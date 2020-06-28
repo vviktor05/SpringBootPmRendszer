@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.pmrendszer.controller.api.error.EntityNotFoundException;
 import com.pmrendszer.domain.Project;
-import com.pmrendszer.service.CheckerClass;
 import com.pmrendszer.service.ProjectService;
 
 @RestController
@@ -35,19 +34,13 @@ public class ProjectApiController {
 	}
 
 	@GetMapping("/id/{id}")
-	public Project getProjectById(@PathVariable("id") int id) {
-		Project project = projectService.getProjectById(id);
-		CheckerClass.notEmptyOrThrow(project);
-
-		return project;
+	public Project getProjectById(@PathVariable("id") int id) throws EntityNotFoundException {
+		return projectService.getProjectById(id);
 	}
 
 	@GetMapping("/name/{name}")
-	public List<Project> getProjectsByName(@PathVariable("name") String name) {
-		List<Project> projects = projectService.getProjectsByName(name);
-		CheckerClass.notEmptyOrThrow(projects);
-		
-		return projects;
+	public List<Project> getProjectsByName(@PathVariable("name") String name) throws EntityNotFoundException {
+		return projectService.getProjectsByName(name);
 	}
 
 	@GetMapping("/search")
@@ -59,14 +52,10 @@ public class ProjectApiController {
 			@RequestParam(value = "projectStatusId", defaultValue = "-1") int projectStatusId,
 			@RequestParam(value = "priorityId", defaultValue = "-1") int priorityId,
 			@RequestParam(value = "projectLeaderId", defaultValue = "-1") int projectLeaderId,
-			@RequestParam(value = "statusId", defaultValue = "-1") int statusId) {
+			@RequestParam(value = "statusId", defaultValue = "-1") int statusId) throws EntityNotFoundException {
 
-		List<Project> projects = projectService.getProcjetsByDetailedSearch(customerId, developmentAreaId, orderDateMin,
-				orderDateMax, projectStatusId, priorityId, projectLeaderId, statusId);
-
-		CheckerClass.notEmptyOrThrow(projects);
-
-		return projects;
+		return projectService.getProcjetsByDetailedSearch(customerId, developmentAreaId, orderDateMin, orderDateMax,
+				projectStatusId, priorityId, projectLeaderId, statusId);
 	}
 
 	@PostMapping("")
@@ -75,19 +64,15 @@ public class ProjectApiController {
 	}
 
 	@PutMapping("/{id}")
-	public void updateProject(@PathVariable(value = "id") int id, @Valid @RequestBody Project projectDetails) {
-		Project project = projectService.getProjectById(id);
-		CheckerClass.notEmptyOrThrow(project);
-		
-		projectService.updateProject(project, projectDetails);
+	public void updateProject(@PathVariable(value = "id") int id, @Valid @RequestBody Project projectDetails)
+			throws EntityNotFoundException {
+
+		projectService.updateProject(id, projectDetails);
 	}
 
 	@DeleteMapping("/{id}")
-	public void deleteProject(@PathVariable(value = "id") int id) {
-		Project project = projectService.getProjectById(id);
-		CheckerClass.notEmptyOrThrow(project);
-		
-		projectService.deleteProject(project);
+	public void deleteProject(@PathVariable(value = "id") int id) throws EntityNotFoundException {
+		projectService.deleteProject(id);
 	}
 
 	@Autowired
