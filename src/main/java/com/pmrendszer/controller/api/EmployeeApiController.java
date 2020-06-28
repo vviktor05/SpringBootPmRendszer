@@ -25,6 +25,16 @@ public class EmployeeApiController {
 		return employeeService.getAllEmployees();
 	}
 
+	@GetMapping("/in_team/team_id/{id}")
+	public List<Employee> getTeamMembers(@PathVariable(value = "id") int id) throws EntityNotFoundException {
+		return employeeService.getTeamMembers(id);
+	}
+
+	@GetMapping("/not_in_team/team_id/{id}")
+	public List<Employee> getNotTeamMembers(@PathVariable(value = "id") int id) throws EntityNotFoundException {
+		return employeeService.getNotTeamMembers(id);
+	}
+
 	@PostMapping("")
 	public void addEmployee(@Valid @RequestBody Employee employee) {
 		employeeService.addEmployee(employee);
