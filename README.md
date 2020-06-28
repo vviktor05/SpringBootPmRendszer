@@ -21,12 +21,6 @@ http://localhost:8080/api/teams
 
 http://localhost:8080/api/teams/id/{id}
 
-http://localhost:8080/api/teams/working_on/project_id/{id}
-
-A megadott id-vel rendelkező projekten dolgozó csapatokat adja vissza.
-
-http://localhost:8080/api/teams/not_working_on/project_id/{id}
-
 http://localhost:8080/api/customers
 
 http://localhost:8080/api/customers/{id}
@@ -47,13 +41,21 @@ http://localhost:8080/api/employees
 
 http://localhost:8080/api/employees/id/{id}
 
-http://localhost:8080/api/employees/in_team/team_id/{id}
+http://localhost:8080/api/team_memberships
+
+http://localhost:8080/api/team_memberships/in_team/team_id/{id}
 
 A megadott csapat id-vel rendelkező csapatban dolgozó fejlesztőket adja vissza.
 
-http://localhost:8080/api/employees/not_in_team/team_id/{id}
+http://localhost:8080/api/team_memberships/not_in_team/team_id/{id}
 
-http://localhost:8080/api/team_memberships
+http://localhost:8080/api/projects_teams
+
+http://localhost:8080/api/projects_teams/working_on/project_id/{id}
+
+A megadott id-vel rendelkező projekten dolgozó csapatokat adja vissza.
+
+http://localhost:8080/api/projects_teams/not_working_on/project_id/{id}
 
 - POST
 
@@ -69,6 +71,10 @@ http://localhost:8080/api/employees
 
 http://localhost:8080/api/teams
 
+http://localhost:8080/api/team_memberships/team_id/{id}/employee_id/{id}
+
+http://localhost:8080/api/projects_teams/
+
 - DELETE
 
 http://localhost:8080/api/projects/{id}
@@ -83,6 +89,10 @@ http://localhost:8080/api/employees/{id}
 
 http://localhost:8080/api/teams/{id}
 
+http://localhost:8080/api/team_memberships/team_id/{id}/employee_id/{id}
+
+http://localhost:8080/api/projects_teams/
+
 - PUT
 
 http://localhost:8080/api/projects/{id}
@@ -96,3 +106,7 @@ http://localhost:8080/api/reports/{id}
 http://localhost:8080/api/employees/{id}
 
 http://localhost:8080/api/teams/{id}
+
+http://localhost:8080/api/team_memberships/team_id/{id}/employee_id/{id}
+
+http://localhost:8080/api/projects_teams/

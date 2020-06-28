@@ -30,16 +30,6 @@ public class TeamApiController {
 		return teamService.getTeamById(id);
 	}
 
-	@GetMapping("/working_on/project_id/{id}")
-	public List<Team> getTeamsWorkingOnProject(@PathVariable(value = "id") int id) throws EntityNotFoundException {
-		return teamService.getTeamsWorkingOnProject(id);
-	}
-
-	@GetMapping("/not_working_on/project_id/{id}")
-	public List<Team> getTeamsNotWorkingOnProject(@PathVariable(value = "id") int id) throws EntityNotFoundException {
-		return teamService.getTeamsNotWorkingOnProject(id);
-	}
-
 	@PostMapping("")
 	public void addTeam(@Valid @RequestBody Team team) {
 		teamService.addTeam(team);

@@ -22,20 +22,6 @@ public class TeamService {
 		return team;
 	}
 
-	public List<Team> getTeamsWorkingOnProject(int id) throws EntityNotFoundException {
-		List<Team> teams = teamRepo.findTeamsWorkingOnProject(id);
-		CheckerClass.ifEmptyThrowException(teams);
-
-		return teams;
-	}
-
-	public List<Team> getTeamsNotWorkingOnProject(int id) throws EntityNotFoundException {
-		List<Team> teams = teamRepo.findTeamsNotWorkingOnProject(id);
-		CheckerClass.ifEmptyThrowException(teams);
-
-		return teams;
-	}
-
 	public void addTeam(Team team) {
 		teamRepo.save(team);
 	}
