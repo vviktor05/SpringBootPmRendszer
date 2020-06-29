@@ -64,10 +64,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		for (javax.validation.ConstraintViolation error : ex.getConstraintViolations()) {
 			message.append(error.getMessage()).append(", ");
 		}
-		message.substring(0, message.length() - 3);
-		message.append(" ]");
+		String messageString = message.substring(0, message.length() - 2) + " ]";
 
-		return buildResponseEntity(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), message.toString(),
+		return buildResponseEntity(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), messageString,
 				getPath(request));
 	}
 
@@ -105,15 +104,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 
 		StringBuilder message = new StringBuilder();
-		message.append("Nem megfelelő adatok : [ ");
+		message.append("Nem megfelelő adatok: [ ");
 
 		for (ObjectError error : ex.getBindingResult().getAllErrors()) {
 			message.append(error.getDefaultMessage()).append(", ");
 		}
-		message.substring(0, message.length() - 3);
-		message.append(" ]");
+		String messageString = message.substring(0, message.length() - 2) + " ]";
 
-		return buildResponseEntity(status, ex.getLocalizedMessage(), message.toString(), getPath(request));
+		return buildResponseEntity(status, ex.getLocalizedMessage(), messageString, getPath(request));
 	}
 
 	@Override
@@ -156,8 +154,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<Object> handleAllException(Exception ex, HttpStatus status, WebRequest request) {
-		return buildResponseEntity(status, ex.getLocalizedMessage(), "Hiba történt", getPath(request));
+	public ResponseEntity<Object> handleAllException(Exception ex, WebRequest request) {
+		return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), "Hiba történt", getPath(request));
 	}
 
 	private ResponseEntity<Object> buildResponseEntity(HttpStatus status, String error, String message, String path) {

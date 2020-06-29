@@ -8,6 +8,6 @@ class PmRendszerApplicationTests {
 
 	@Test
 	void contextLoads() {
+		
 	}
-
 }

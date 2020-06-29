@@ -1,11 +1,22 @@
 package com.pmrendszer.domain;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.lang.Nullable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pmrendszer.service.CheckerClass;
 
 @Entity(name = "Tasks")
 public class Task {
@@ -13,15 +24,23 @@ public class Task {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition = "serial")
 	private int id;
+	@NotNull
+	@Size(max = 100, message = "{task.topic.max}")
 	private String topic;
+	@NotNull
 	@Column(columnDefinition = "timestamp")
-	private String deadline;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private Date deadline;
+	@NotNull
 	@ManyToOne
 	private Employee teamLeader;
+	@NotNull
 	@ManyToOne
 	private Project project;
+	@NotNull
 	@ManyToOne
 	private Status status;
+	@Nullable
 	@Column(columnDefinition = "text")
 	private String description;
 
@@ -29,7 +48,7 @@ public class Task {
 		;
 	}
 
-	public Task(int id, String topic, String deadline, Employee teamLeader, Project project, Status status,
+	public Task(int id, String topic, Date deadline, Employee teamLeader, Project project, Status status,
 			String description) {
 		this.id = id;
 		this.topic = topic;
@@ -39,7 +58,19 @@ public class Task {
 		this.status = status;
 		this.description = description;
 	}
+	
+	@JsonIgnore
+	@AssertTrue(message = "{task.id}")
+	public boolean isValidId() {
+		return id == 0;
+	}
 
+	@JsonIgnore
+	@AssertTrue(message = "{task.topic.min}")
+	public boolean isValidTopicMinLength() {
+		return CheckerClass.isValidMinLength(topic, 5);
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -56,11 +87,11 @@ public class Task {
 		this.topic = topic;
 	}
 
-	public String getDeadline() {
+	public Date getDeadline() {
 		return deadline;
 	}
 
-	public void setDeadline(String deadline) {
+	public void setDeadline(Date deadline) {
 		this.deadline = deadline;
 	}
 
