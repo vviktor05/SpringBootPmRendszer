@@ -1,4 +1,4 @@
-package com.pmrendszer.service;
+ package com.pmrendszer.service;
 
 import java.util.List;
 import com.pmrendszer.controller.api.error.EntityNotFoundException;

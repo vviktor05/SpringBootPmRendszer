@@ -2,7 +2,10 @@ package com.pmrendszer.controller.api;
 
 import java.util.List;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +19,7 @@ import com.pmrendszer.domain.Report;
 import com.pmrendszer.service.ReportService;
 
 @RestController
+@Validated
 @RequestMapping("/api/reports")
 public class ReportApiController {
 	private ReportService reportService;
@@ -26,7 +30,9 @@ public class ReportApiController {
 	}
 
 	@GetMapping("/id/{id}")
-	public Report getReportById(@PathVariable("id") int id) throws EntityNotFoundException {
+	public Report getReportById(@PathVariable("id") @Min(value = 1, message = "{id.path.valid}") int id)
+			throws EntityNotFoundException {
+
 		return reportService.getReportById(id);
 	}
 
@@ -36,13 +42,16 @@ public class ReportApiController {
 	}
 
 	@PutMapping("/{id}")
-	public void updateReport(@PathVariable(value = "id") int id, @Valid @RequestBody Report reportDetails)
-			throws EntityNotFoundException {
+	public void updateReport(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
+			@Valid @RequestBody Report reportDetails) throws EntityNotFoundException {
+
 		reportService.updateReport(id, reportDetails);
 	}
 
 	@DeleteMapping("/{id}")
-	public void deleteReport(@PathVariable(value = "id") int id) throws EntityNotFoundException {
+	public void deleteReport(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
+			throws EntityNotFoundException {
+		
 		reportService.deleteReport(id);
 	}
 

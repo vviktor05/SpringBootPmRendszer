@@ -1,7 +1,6 @@
 package com.pmrendszer.controller.api;
 
 import java.util.List;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.pmrendszer.controller.api.error.EntityNotFoundException;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import com.pmrendszer.domain.Project;
 import com.pmrendszer.service.ProjectService;
 
@@ -34,7 +35,8 @@ public class ProjectApiController {
 	}
 
 	@GetMapping("/id/{id}")
-	public Project getProjectById(@PathVariable("id") int id) throws EntityNotFoundException {
+	public Project getProjectById(@PathVariable("id") @Min(value = 1, message = "{id.path.valid}") int id)
+			throws EntityNotFoundException {
 		return projectService.getProjectById(id);
 	}
 
@@ -64,14 +66,15 @@ public class ProjectApiController {
 	}
 
 	@PutMapping("/{id}")
-	public void updateProject(@PathVariable(value = "id") int id, @Valid @RequestBody Project projectDetails)
-			throws EntityNotFoundException {
+	public void updateProject(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
+			@Valid @RequestBody Project projectDetails) throws EntityNotFoundException {
 
 		projectService.updateProject(id, projectDetails);
 	}
 
 	@DeleteMapping("/{id}")
-	public void deleteProject(@PathVariable(value = "id") int id) throws EntityNotFoundException {
+	public void deleteProject(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
+			throws EntityNotFoundException {
 		projectService.deleteProject(id);
 	}
 

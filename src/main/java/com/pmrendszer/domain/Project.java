@@ -77,7 +77,7 @@ public class Project {
 	}
 
 	@JsonIgnore
-	@AssertTrue(message = "{project.id}")
+	@AssertTrue(message = "{id.valid}")
 	public boolean isValidId() {
 		return id == 0;
 	}

@@ -2,7 +2,10 @@ package com.pmrendszer.controller.api;
 
 import java.util.List;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +19,7 @@ import com.pmrendszer.domain.Task;
 import com.pmrendszer.service.TaskService;
 
 @RestController
+@Validated
 @RequestMapping("/api/tasks")
 public class TaskApiController {
 	private TaskService taskService;
@@ -31,7 +35,9 @@ public class TaskApiController {
 	}
 
 	@GetMapping("/id/{id}")
-	public Task getTaskById(@PathVariable("id") int id) throws EntityNotFoundException {
+	public Task getTaskById(@PathVariable("id") @Min(value = 1, message = "{id.path.valid}") int id)
+			throws EntityNotFoundException {
+
 		return taskService.getTaskById(id);
 	}
 
@@ -46,13 +52,16 @@ public class TaskApiController {
 	}
 
 	@PutMapping("/{id}")
-	public void updateTask(@PathVariable(value = "id") int id, @Valid @RequestBody Task taskDetails)
-			throws EntityNotFoundException {
+	public void updateTask(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
+			@Valid @RequestBody Task taskDetails) throws EntityNotFoundException {
+
 		taskService.updateTask(id, taskDetails);
 	}
 
 	@DeleteMapping("/{id}")
-	public void deleteTask(@PathVariable(value = "id") int id) throws EntityNotFoundException {
+	public void deleteTask(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
+			throws EntityNotFoundException {
+		
 		taskService.deleteTask(id);
 	}
 

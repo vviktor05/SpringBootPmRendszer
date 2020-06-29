@@ -37,7 +37,7 @@ public class Team {
 	}
 
 	@JsonIgnore
-	@AssertTrue(message = "{team.id}")
+	@AssertTrue(message = "{id.valid}")
 	public boolean isValidId() {
 		return id == 0;
 	}

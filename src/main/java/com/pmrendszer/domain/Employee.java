@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.springframework.lang.Nullable;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -38,6 +39,7 @@ public class Employee {
 	@NotNull
 	@Column(columnDefinition = "date")
 	@JsonFormat(pattern = "yyyy-MM-dd")
+	@Pattern(regexp = CheckerClass.DATE_REGEX, message = "{employee.startDate.valid}")
 	private Date startDate;
 	@Size(max = 15, message = "{employee.phoneNumber.max}")
 	@NotNull
@@ -65,7 +67,7 @@ public class Employee {
 	}
 
 	@JsonIgnore
-	@AssertTrue(message = "{employee.id}")
+	@AssertTrue(message = "{id.valid}")
 	public boolean isValidId() {
 		return id == 0;
 	}

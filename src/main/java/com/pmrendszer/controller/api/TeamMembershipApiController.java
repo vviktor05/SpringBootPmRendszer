@@ -2,6 +2,8 @@ package com.pmrendszer.controller.api;
 
 import java.util.List;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +28,8 @@ public class TeamMembershipApiController {
 	}
 
 	@GetMapping("/team_id/{teamId}/employee_id/{employeeId}")
-	public TeamMembership getTeamMembershipById(@PathVariable("teamId") int teamId,
+	public TeamMembership getTeamMembershipById(
+			@PathVariable("teamId") @Min(value = 1, message = "{id.path.valid}") int teamId,
 			@PathVariable("employeeId") int employeeId) throws EntityNotFoundException {
 
 		return teamMembershipService.getTeamMembershipById(teamId, employeeId);
@@ -38,14 +41,17 @@ public class TeamMembershipApiController {
 	}
 
 	@PutMapping("/team_id/{teamId}/employee_id/{employeeId}")
-	public void updateTeamMembership(@PathVariable("teamId") int teamId, @PathVariable("employeeId") int employeeId,
+	public void updateTeamMembership(@PathVariable("teamId") @Min(value = 1, message = "{id.path.valid}") int teamId,
+			@PathVariable("employeeId") @Min(value = 1, message = "{id.path.valid}") int employeeId,
 			@Valid @RequestBody TeamMembership teamMembership) throws EntityNotFoundException {
 
 		teamMembershipService.updateTeamMembership(teamId, employeeId, teamMembership);
 	}
 
 	@DeleteMapping("/team_id/{teamId}/employee_id/{employeeId}")
-	public void deleteCustomer(@PathVariable("teamId") int teamId, @PathVariable("employeeId") int employeeId)
+	public void deleteCustomer(
+			@PathVariable("teamId") @Min(value = 1, message = "{id.path.valid}") int teamId,
+			@PathVariable("employeeId") @Min(value = 1, message = "{id.path.valid}") int employeeId)
 			throws EntityNotFoundException {
 
 		teamMembershipService.deleteTeamMembership(teamId, employeeId);

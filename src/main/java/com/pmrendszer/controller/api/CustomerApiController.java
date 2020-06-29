@@ -2,7 +2,10 @@ package com.pmrendszer.controller.api;
 
 import java.util.List;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +19,7 @@ import com.pmrendszer.domain.Customer;
 import com.pmrendszer.service.CustomerService;
 
 @RestController
+@Validated
 @RequestMapping("/api/customers")
 public class CustomerApiController {
 	private CustomerService customerService;
@@ -26,7 +30,9 @@ public class CustomerApiController {
 	}
 
 	@GetMapping("/id/{id}")
-	public Customer getCustomerById(@PathVariable("id") int id) throws EntityNotFoundException {
+	public Customer getCustomerById(@PathVariable("id") @Min(value = 1, message = "{id.path.valid}") int id)
+			throws EntityNotFoundException {
+
 		return customerService.getCustomerById(id);
 	}
 
@@ -36,13 +42,16 @@ public class CustomerApiController {
 	}
 
 	@PutMapping("/{id}")
-	public void updateCustomer(@PathVariable(value = "id") int id, @Valid @RequestBody Customer customerDetails)
-			throws EntityNotFoundException {
+	public void updateCustomer(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
+			@Valid @RequestBody Customer customerDetails) throws EntityNotFoundException {
+
 		customerService.updateCustomer(id, customerDetails);
 	}
 
 	@DeleteMapping("/{id}")
-	public void deleteCustomer(@PathVariable(value = "id") int id) throws EntityNotFoundException {
+	public void deleteCustomer(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
+			throws EntityNotFoundException {
+		
 		customerService.deleteCustomer(id);
 	}
 

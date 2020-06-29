@@ -60,7 +60,7 @@ public class Customer {
 	}
 
 	@JsonIgnore
-	@AssertTrue(message = "{customer.id}")
+	@AssertTrue(message = "{id.valid}")
 	public boolean isValidId() {
 		return id == 0;
 	}
