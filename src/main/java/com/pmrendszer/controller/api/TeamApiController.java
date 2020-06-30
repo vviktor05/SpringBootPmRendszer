@@ -20,28 +20,23 @@ import com.pmrendszer.service.TeamService;
 
 @RestController
 @Validated
-@RequestMapping("/api/teams")
+@RequestMapping("/api")
 public class TeamApiController {
 	private TeamService teamService;
 
-	@GetMapping("")
+	@GetMapping("/project_manager/teams")
 	public List<Team> getAllTeams(HttpServletRequest request) {
-		if (request.isUserInRole("ROLE_ADMIN")) {
-			return teamService.getAllTeams();
-		}else {
-			
-		}
-		return null;
+		return teamService.getAllTeams();
 	}
 
-	@GetMapping("/id/{id}")
+	@GetMapping("/project_manager/teams/id/{id}")
 	public Team getTeamById(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
 
 		return teamService.getTeamById(id);
 	}
 
-	@GetMapping("/working_on/project_id/{id}")
+	@GetMapping("/project_manager/teams/working_on/project_id/{id}")
 	public List<Team> getTeamsWorkingOnProject(
 			@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
@@ -49,7 +44,7 @@ public class TeamApiController {
 		return teamService.getTeamsWorkingOnProject(id);
 	}
 
-	@GetMapping("/not_working_on/project_id/{id}")
+	@GetMapping("/project_manager/teams/not_working_on/project_id/{id}")
 	public List<Team> getTeamsNotWorkingOnProject(
 			@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
@@ -57,19 +52,19 @@ public class TeamApiController {
 		return teamService.getTeamsNotWorkingOnProject(id);
 	}
 
-	@PostMapping("")
+	@PostMapping("/project_manager/teams")
 	public void addTeam(@Valid @RequestBody Team team) {
 		teamService.addTeam(team);
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping("/project_manager/teams/{id}")
 	public void updateTeam(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
 			@Valid @RequestBody Team teamDetails) throws EntityNotFoundException {
 
 		teamService.updateTeam(id, teamDetails);
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/project_manager/teams/{id}")
 	public void deleteEmployee(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
 

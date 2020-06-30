@@ -20,35 +20,35 @@ import com.pmrendszer.service.ReportService;
 
 @RestController
 @Validated
-@RequestMapping("/api/reports")
+@RequestMapping("/api")
 public class ReportApiController {
 	private ReportService reportService;
 
-	@GetMapping("")
+	@GetMapping("/project_manager/reports")
 	public List<Report> getAllReports() {
 		return reportService.getAllReports();
 	}
 
-	@GetMapping("/id/{id}")
+	@GetMapping("/project_manager/reports/id/{id}")
 	public Report getReportById(@PathVariable("id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
 
 		return reportService.getReportById(id);
 	}
 
-	@PostMapping("")
+	@PostMapping("/project_manager/reports")
 	public void addReport(@Valid @RequestBody Report report) {
 		reportService.addReport(report);
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping("/project_manager/reports/{id}")
 	public void updateReport(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
 			@Valid @RequestBody Report reportDetails) throws EntityNotFoundException {
 
 		reportService.updateReport(id, reportDetails);
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/project_manager/reports/{id}")
 	public void deleteReport(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
 		

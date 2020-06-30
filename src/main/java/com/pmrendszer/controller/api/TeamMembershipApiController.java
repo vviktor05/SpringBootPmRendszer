@@ -18,16 +18,16 @@ import com.pmrendszer.domain.TeamMembership;
 import com.pmrendszer.service.TeamMembershipService;
 
 @RestController
-@RequestMapping("api/team_memberships")
+@RequestMapping("/api")
 public class TeamMembershipApiController {
 	private TeamMembershipService teamMembershipService;
 
-	@GetMapping("")
+	@GetMapping("/project_manager/team_memberships")
 	public List<TeamMembership> getAllTeamMemberships() {
 		return teamMembershipService.getAllTeamMemberships();
 	}
 
-	@GetMapping("/team_id/{teamId}/employee_id/{employeeId}")
+	@GetMapping("/project_manager/team_memberships/team_id/{teamId}/employee_id/{employeeId}")
 	public TeamMembership getTeamMembershipById(
 			@PathVariable("teamId") @Min(value = 1, message = "{id.path.valid}") int teamId,
 			@PathVariable("employeeId") int employeeId) throws EntityNotFoundException {
@@ -35,12 +35,12 @@ public class TeamMembershipApiController {
 		return teamMembershipService.getTeamMembershipById(teamId, employeeId);
 	}
 
-	@PostMapping("")
+	@PostMapping("/project_manager/team_memberships")
 	public void addTeamMembership(@Valid @RequestBody TeamMembership teamMembership) {
 		teamMembershipService.addTeamMembership(teamMembership);
 	}
 
-	@PutMapping("/team_id/{teamId}/employee_id/{employeeId}")
+	@PutMapping("/project_manager/team_memberships/team_id/{teamId}/employee_id/{employeeId}")
 	public void updateTeamMembership(@PathVariable("teamId") @Min(value = 1, message = "{id.path.valid}") int teamId,
 			@PathVariable("employeeId") @Min(value = 1, message = "{id.path.valid}") int employeeId,
 			@Valid @RequestBody TeamMembership teamMembership) throws EntityNotFoundException {
@@ -48,7 +48,7 @@ public class TeamMembershipApiController {
 		teamMembershipService.updateTeamMembership(teamId, employeeId, teamMembership);
 	}
 
-	@DeleteMapping("/team_id/{teamId}/employee_id/{employeeId}")
+	@DeleteMapping("/project_manager/team_memberships/team_id/{teamId}/employee_id/{employeeId}")
 	public void deleteCustomer(
 			@PathVariable("teamId") @Min(value = 1, message = "{id.path.valid}") int teamId,
 			@PathVariable("employeeId") @Min(value = 1, message = "{id.path.valid}") int employeeId)

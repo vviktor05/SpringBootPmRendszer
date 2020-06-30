@@ -20,23 +20,23 @@ import com.pmrendszer.service.EmployeeService;
 
 @RestController
 @Validated
-@RequestMapping("api/employees")
+@RequestMapping("/api")
 public class EmployeeApiController {
 	private EmployeeService employeeService;
 
-	@GetMapping("")
+	@GetMapping("/project_manager/employees")
 	public List<Employee> getAllEmployees() {
 		return employeeService.getAllEmployees();
 	}
-
-	@GetMapping("id/{id}")
+	
+	@GetMapping("/project_manager/employees/id/{id}")
 	public Employee getEmployeeById(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
 
 		return employeeService.getEmployeeById(id);
 	}
 
-	@GetMapping("/in_team/team_id/{id}")
+	@GetMapping("/project_manager/employees/in_team/team_id/{id}")
 	public List<Employee> getTeamMembers(
 			@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
@@ -44,7 +44,7 @@ public class EmployeeApiController {
 		return employeeService.getTeamMembers(id);
 	}
 
-	@GetMapping("/not_in_team/team_id/{id}")
+	@GetMapping("/project_manager/employees/not_in_team/team_id/{id}")
 	public List<Employee> getNotTeamMembers(
 			@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
@@ -52,19 +52,19 @@ public class EmployeeApiController {
 		return employeeService.getNotTeamMembers(id);
 	}
 
-	@PostMapping("")
+	@PostMapping("/project_manager/employees")
 	public void addEmployee(@Valid @RequestBody Employee employee) {
 		employeeService.addEmployee(employee);
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping("/project_manager/employees/{id}")
 	public void updateEmployee(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
 			@Valid @RequestBody Employee employeeDetails) throws EntityNotFoundException {
 
 		employeeService.updateEmployee(id, employeeDetails);
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/project_manager/employees/{id}")
 	public void deleteEmployee(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
 		

@@ -20,45 +20,45 @@ import com.pmrendszer.service.TaskService;
 
 @RestController
 @Validated
-@RequestMapping("/api/tasks")
+@RequestMapping("/api")
 public class TaskApiController {
 	private TaskService taskService;
 
-	@GetMapping("")
+	@GetMapping("/project_manager/tasks")
 	public List<Task> getAllTasks() {
 		return taskService.getAllTasks();
 	}
 
-	@GetMapping("/active")
+	@GetMapping("/project_manager/tasks/active")
 	public List<Task> getActiveTasks() {
 		return taskService.getActiveTasks();
 	}
 
-	@GetMapping("/id/{id}")
+	@GetMapping("/project_manager/tasks/id/{id}")
 	public Task getTaskById(@PathVariable("id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
 
 		return taskService.getTaskById(id);
 	}
 
-	@GetMapping("/name/{topic}")
+	@GetMapping("/project_manager/tasks/name/{topic}")
 	public List<Task> getTasksByTopic(@PathVariable("topic") String topic) throws EntityNotFoundException {
 		return taskService.getTasksByTopic(topic);
 	}
 
-	@PostMapping("")
+	@PostMapping("/project_manager/tasks")
 	public void addTask(@Valid @RequestBody Task task) {
 		taskService.addTask(task);
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping("/project_manager/tasks/{id}")
 	public void updateTask(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
 			@Valid @RequestBody Task taskDetails) throws EntityNotFoundException {
 
 		taskService.updateTask(id, taskDetails);
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/project_manager/tasks/{id}")
 	public void deleteTask(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
 		

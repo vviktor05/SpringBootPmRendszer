@@ -19,33 +19,38 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 	private UserDetailsServiceImpl userDetailsServiceImpl;
 
 	@Autowired
-	public void configureAuth(AuthenticationManagerBuilder  auth) throws Exception{
+	public void configureAuth(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authProvider());
 	}
 
 	@Override
 	protected void configure(HttpSecurity httpSec) throws Exception {
-		httpSec
-			.authorizeRequests()
-				.antMatchers("/index").permitAll()
+		httpSec.authorizeRequests()
 				.antMatchers("/api/**").authenticated()
 				.antMatchers("/api/developer/**").hasAnyRole("Fejlesztő", "Csapatvezető", "Projektvezető")
 				.antMatchers("/api/team_leader/**").hasAnyRole("Csapatvezető", "Projektvezető")
 				.antMatchers("/api/project_manager/**").hasRole("Projektvezető")
 			.and()
-				.httpBasic();
+				.httpBasic()
+			.and()
+				.logout()
+				.logoutUrl("/login")
+				.invalidateHttpSession(true)
+				.deleteCookies("JSESSIONID")
+			.and()
+				.csrf().disable();
 	}
-	
+
 	@Bean
 	public DaoAuthenticationProvider authProvider() {
-	    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-	    authProvider.setUserDetailsService(userDetailsServiceImpl);
-	    authProvider.setPasswordEncoder(passwordEncoder());
-	    return authProvider;
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(userDetailsServiceImpl);
+		authProvider.setPasswordEncoder(passwordEncoder());
+		return authProvider;
 	}
-	
+
 	@Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
-    }
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder(10);
+	}
 }

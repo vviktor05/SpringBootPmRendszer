@@ -20,32 +20,32 @@ import com.pmrendszer.service.ProjectService;
 
 @RestController
 @Validated
-@RequestMapping("/api/projects")
+@RequestMapping("/api")
 public class ProjectApiController {
 	private ProjectService projectService;
 
-	@GetMapping("")
+	@GetMapping("/project_manager/projects")
 	public List<Project> getAllProjects() {
 		return projectService.getAllProjects();
 	}
 
-	@GetMapping("/active")
+	@GetMapping("/project_manager/projects/active")
 	public List<Project> getActiveProjects() {
 		return projectService.getActiveProjects();
 	}
 
-	@GetMapping("/id/{id}")
+	@GetMapping("/project_manager/projects/id/{id}")
 	public Project getProjectById(@PathVariable("id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
 		return projectService.getProjectById(id);
 	}
 
-	@GetMapping("/name/{name}")
+	@GetMapping("/project_manager/projects/name/{name}")
 	public List<Project> getProjectsByName(@PathVariable("name") String name) throws EntityNotFoundException {
 		return projectService.getProjectsByName(name);
 	}
 
-	@GetMapping("/search")
+	@GetMapping("/project_manager/projects/search")
 	public List<Project> getProjectsByDetailedSearch(
 			@RequestParam(value = "customerId", defaultValue = "-1") int customerId,
 			@RequestParam(value = "developmentAreaId", defaultValue = "-1") int developmentAreaId,
@@ -60,19 +60,19 @@ public class ProjectApiController {
 				projectStatusId, priorityId, projectLeaderId, statusId);
 	}
 
-	@PostMapping("")
+	@PostMapping("/project_manager/projects")
 	public void addProject(@Valid @RequestBody Project project) {
 		projectService.addProject(project);
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping("/project_manager/projects/{id}")
 	public void updateProject(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
 			@Valid @RequestBody Project projectDetails) throws EntityNotFoundException {
 
 		projectService.updateProject(id, projectDetails);
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/project_manager/projects/{id}")
 	public void deleteProject(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
 		projectService.deleteProject(id);

@@ -20,35 +20,35 @@ import com.pmrendszer.service.CustomerService;
 
 @RestController
 @Validated
-@RequestMapping("/api/customers")
+@RequestMapping("/api")
 public class CustomerApiController {
 	private CustomerService customerService;
 
-	@GetMapping("")
+	@GetMapping("/project_manager/customers")
 	public List<Customer> getAllCustomers() {
 		return customerService.getAllCustomers();
 	}
 
-	@GetMapping("/id/{id}")
+	@GetMapping("/project_manager/customers/id/{id}")
 	public Customer getCustomerById(@PathVariable("id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
 
 		return customerService.getCustomerById(id);
 	}
 
-	@PostMapping("")
+	@PostMapping("/project_manager/customers")
 	public void addCustomer(@Valid @RequestBody Customer customer) {
 		customerService.addCustomer(customer);
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping("/project_manager/customers/{id}")
 	public void updateCustomer(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
 			@Valid @RequestBody Customer customerDetails) throws EntityNotFoundException {
 
 		customerService.updateCustomer(id, customerDetails);
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/project_manager/customers/{id}")
 	public void deleteCustomer(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
 		

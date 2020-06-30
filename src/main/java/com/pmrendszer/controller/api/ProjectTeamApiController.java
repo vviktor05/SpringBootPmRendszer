@@ -20,16 +20,16 @@ import com.pmrendszer.service.ProjectTeamService;
 
 @RestController
 @Validated
-@RequestMapping("api/projects_teams")
+@RequestMapping("/api")
 public class ProjectTeamApiController {
 	private ProjectTeamService projectTeamService;
 
-	@GetMapping("")
+	@GetMapping("/project_manager/projects_teams")
 	public List<ProjectTeam> getAllProjectsTeams() {
 		return projectTeamService.getAllprojectsTeams();
 	}
 
-	@GetMapping("/project_id/{projectId}/team_id/{teamId}")
+	@GetMapping("/project_manager/projects_teams/project_id/{projectId}/team_id/{teamId}")
 	public ProjectTeam getProjectTeamById(
 			@PathVariable("projectId") @Min(value = 1, message = "{id.path.valid}") int projectId,
 			@PathVariable("teamId") @Min(value = 1, message = "{id.path.valid}") int teamId)
@@ -38,12 +38,12 @@ public class ProjectTeamApiController {
 		return projectTeamService.getProjectTeamById(projectId, teamId);
 	}
 
-	@PostMapping("")
+	@PostMapping("/project_manager/projects_teams")
 	public void addProjectTeam(@Valid @RequestBody ProjectTeam projectTeam) {
 		projectTeamService.addProjectTeam(projectTeam);
 	}
 
-	@PutMapping("/project_id/{projectId}/team_id/{teamId}")
+	@PutMapping("/project_manager/projects_teams/project_id/{projectId}/team_id/{teamId}")
 	public void updateProjectTeam(
 			@PathVariable("projectId") @Min(value = 1, message = "{id.path.valid}") int projectId,
 			@PathVariable("teamId") @Min(value = 1, message = "{id.path.valid}") int teamId,
@@ -52,7 +52,7 @@ public class ProjectTeamApiController {
 		projectTeamService.updateProjectTeam(projectId, teamId, projectTeam);
 	}
 
-	@DeleteMapping("/project_id/{projectId}/team_id/{teamId}")
+	@DeleteMapping("/project_manager/projects_teams/project_id/{projectId}/team_id/{teamId}")
 	public void deleteProjectTeam(
 			@PathVariable("project_id") @Min(value = 1, message = "{id.path.valid}") int projectId,
 			@PathVariable("teamId") @Min(value = 1, message = "{id.path.valid}") int teamId)

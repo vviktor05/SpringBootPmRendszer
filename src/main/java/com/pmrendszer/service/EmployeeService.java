@@ -2,9 +2,6 @@ package com.pmrendszer.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.pmrendszer.controller.api.error.EntityNotFoundException;
@@ -14,7 +11,7 @@ import com.pmrendszer.repository.EmployeeRepo;
 @Service
 public class EmployeeService {
 	private EmployeeRepo employeeRepo;
-	
+
 	public List<Employee> getAllEmployees() {
 		return employeeRepo.findAll();
 	}
@@ -25,7 +22,7 @@ public class EmployeeService {
 
 		return employee;
 	}
-	
+
 	public Employee getEmployeeByEmail(String email) throws EntityNotFoundException {
 		Employee employee = employeeRepo.findByEmail(email);
 		CheckerClass.ifEmptyThrowException(employee);
