@@ -50,23 +50,23 @@ INSERT INTO customers (name, phone, email, website, zip_code, locality, street_a
 ('Data Hungária Kft.', '06205478941', 'datainfo@hungaria.hu', 'www.datahun.hu', '5000', 'Szolnok', 'Dózsa György út 67.'),
 ('IRP International Kft.', '06303264589', 'info@irp.com', 'www.irp.com', '1027', 'Budapest II. kerület', 'Bem József utca 12.');
 
-INSERT INTO employees (name, password, job_id, development_area_id, skill_id, start_date, phone_number, last_login_date) VALUES
-('Horváth Krisztina', 'ed20a3f3b8b4c67c848b6f53d9da31270cf3a20998944b2b7e0278dccbb9c18f', 1, 1, 4, '2020-02-01', '06701122345', '2020-03-07 19:28:22'),
-('Faragó András', '598dbeb7ca96ccc4523ea8c997fc9cbd6be29baf571495ded2788fa71e8455e0', 2, 1, 3, '2020-02-01', '06701122345', '2020-03-05 00:32:46'),
-('Lukáts Zoltán', '19f18324dfa42ec28807f6c031c9cb24c3883959e13deaa973b1fac04bc2cafb', 3, 1, 2, '2020-02-02', '06701122345', '2020-03-04 19:50:05'),
-('Lakatos Géza', '598dbeb7ca96ccc4523ea8c997fc9cbd6be29baf571495ded2788fa71e8455e0', 2, 4, 4, '2020-02-01', '06302425505', '2020-02-28 23:23:39'),
-('Csikós Csaba', '2c7a4c5f98d05a38a2baf9383930a19afe1d1f3ebd85bce370b15b45e5a37f57', 1, 1, 5, '2018-05-07', '06203254679', NULL),
-('Kovács Annamária', '3247df76b73273030876b0a8533182731c5003502b99dd7efad3e93cbc900c83', 1, 4, 4, '2018-11-14', '06306237942', NULL),
-('Bana Ferenc', '5cd6937c10c8be0c9274372fa9d5d70c429d78ad7e3c5ae6b6e788c64d333cfe', 2, 3, 3, '2018-03-23', '06207942653', NULL),
-('Gál Endre', '72b6331a2b3fea9c0c5faa54b2254911cd1fc27170ac900f452e5e72d8176131', 3, 4, 2, '2019-02-18', '06207237689', NULL),
-('Tóth Ádám', '852db2468a4b76030bef3ba429bf73e134b7112c5622fc3ee8fa6e0bcd15ed39', 3, 1, 1, '2019-11-29', '06706271345', NULL),
-('Kerekes Eszter', '39c648259495b8e83c2856da31bc86153012b6e118944c78c2150167e8385666', 1, 2, 5, '2019-01-17', '06308942571', NULL),
-('Kiss Elemér', '12feab7f6b26dba78fe2e6319aa5e6083455ea201d8070613929aa4490696af5', 3, 4, 3, '2019-05-23', '06705941739', NULL),
-('Kováts Károly', '42baab9bd8afe059e4e5e9a2c9ba3ecaa9372ab3b20b5475e6ea3c76980662d4', 2, 2, 5, '2018-03-05', '06302465987', NULL),
-('Szilágyi Péter', '8957c0e6cec0698f80692c2779bc57ac39916e9bbc310799d247b0e81f832c98', 3, 1, 2, '2019-09-20', '06304569841', NULL),
-('Balogh Sándor', 'd704eb2b7affdbb9682fd34c6e3dbebb262e5ad0762dfe476d192b2d071b2461', 3, 4, 3, '2018-12-12', '06707893521', NULL),
-('Vincze László', '33d5f92211e451e6e5cd66170a6baa1bc644d595604cea65e5b55daaca6c3f7e', 3, 1, 3, '2019-01-24', '06308945689', NULL),
-('Balla Mihály', '982520eb0a3909b12aa8b1ccf1a8335d8772dfdcfa2482b4823ca30907a09c7c', 3, 2, 4, '2020-01-03', '06707768964', NULL);
+INSERT INTO employees (name, email, password, job_id, development_area_id, skill_id, start_date, phone_number, last_login_date) VALUES
+('Horváth Krisztina', 'horvath@gmail.com', 'ed20a3f3b8b4c67c848b6f53d9da31270cf3a20998944b2b7e0278dccbb9c18f', 1, 1, 4, '2020-02-01', '06701122345', '2020-03-07 19:28:22'),
+('Faragó András', 'farago@gmail.com', '598dbeb7ca96ccc4523ea8c997fc9cbd6be29baf571495ded2788fa71e8455e0', 2, 1, 3, '2020-02-01', '06701122345', '2020-03-05 00:32:46'),
+('Lukáts Zoltán', 'lukats@gmail.com', '19f18324dfa42ec28807f6c031c9cb24c3883959e13deaa973b1fac04bc2cafb', 3, 1, 2, '2020-02-02', '06701122345', '2020-03-04 19:50:05'),
+('Lakatos Géza', 'lakatos@gmail.com', '598dbeb7ca96ccc4523ea8c997fc9cbd6be29baf571495ded2788fa71e8455e0', 2, 4, 4, '2020-02-01', '06302425505', '2020-02-28 23:23:39'),
+('Csikós Csaba', 'csikos@gmail.com', '2c7a4c5f98d05a38a2baf9383930a19afe1d1f3ebd85bce370b15b45e5a37f57', 1, 1, 5, '2018-05-07', '06203254679', NULL),
+('Kovács Annamária', 'kovacs@gmail.com', '3247df76b73273030876b0a8533182731c5003502b99dd7efad3e93cbc900c83', 1, 4, 4, '2018-11-14', '06306237942', NULL),
+('Bana Ferenc', 'bana@gmail.com', '5cd6937c10c8be0c9274372fa9d5d70c429d78ad7e3c5ae6b6e788c64d333cfe', 2, 3, 3, '2018-03-23', '06207942653', NULL),
+('Gál Endre', 'gal@gmail.com', '72b6331a2b3fea9c0c5faa54b2254911cd1fc27170ac900f452e5e72d8176131', 3, 4, 2, '2019-02-18', '06207237689', NULL),
+('Tóth Ádám', 'toth@gmail.com', '852db2468a4b76030bef3ba429bf73e134b7112c5622fc3ee8fa6e0bcd15ed39', 3, 1, 1, '2019-11-29', '06706271345', NULL),
+('Kerekes Eszter', 'kerekes@gmail.com', '39c648259495b8e83c2856da31bc86153012b6e118944c78c2150167e8385666', 1, 2, 5, '2019-01-17', '06308942571', NULL),
+('Kiss Elemér', 'kiss@gmail.com', '12feab7f6b26dba78fe2e6319aa5e6083455ea201d8070613929aa4490696af5', 3, 4, 3, '2019-05-23', '06705941739', NULL),
+('Kováts Károly', 'kovats@gmail.com', '42baab9bd8afe059e4e5e9a2c9ba3ecaa9372ab3b20b5475e6ea3c76980662d4', 2, 2, 5, '2018-03-05', '06302465987', NULL),
+('Szilágyi Péter', 'szilagyi@gmail.com', '8957c0e6cec0698f80692c2779bc57ac39916e9bbc310799d247b0e81f832c98', 3, 1, 2, '2019-09-20', '06304569841', NULL),
+('Balogh Sándor', 'balogh@gmail.com', 'd704eb2b7affdbb9682fd34c6e3dbebb262e5ad0762dfe476d192b2d071b2461', 3, 4, 3, '2018-12-12', '06707893521', NULL),
+('Vincze László', 'vincze@gmail.com', '33d5f92211e451e6e5cd66170a6baa1bc644d595604cea65e5b55daaca6c3f7e', 3, 1, 3, '2019-01-24', '06308945689', NULL),
+('Balla Mihály', 'balla@gmail.com', '982520eb0a3909b12aa8b1ccf1a8335d8772dfdcfa2482b4823ca30907a09c7c', 3, 2, 4, '2020-01-03', '06707768964', NULL);
 
 INSERT INTO teams (name, team_leader_id) VALUES
 ('A team', 2),

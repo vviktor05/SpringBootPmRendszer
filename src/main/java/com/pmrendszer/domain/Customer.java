@@ -27,8 +27,8 @@ public class Customer {
 	@Size(max = 20, message = "{customer.phone.max}")
 	private String phone;
 	@NotNull
-	@Email(message = "{customer.email.contains}")
-	@Size(max = 100, message = "{customer.email.max}")
+	@Email(message = "{email.valid}")
+	@Size(max = 100, message = "{email.max}")
 	private String email;
 	@Nullable
 	@Size(max = 100, message = "{customer.website.max}")
@@ -75,12 +75,6 @@ public class Customer {
 	@AssertTrue(message = "{customer.phone.min}")
 	public boolean isValidPhoneMinLength() {
 		return CheckerClass.isValidMinLength(phone, 5);
-	}
-
-	@JsonIgnore
-	@AssertTrue(message = "{customer.email.min}")
-	public boolean isValidEmailMinLength() {
-		return CheckerClass.isValidMinLength(email, 5);
 	}
 
 	@JsonIgnore

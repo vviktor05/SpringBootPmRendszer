@@ -9,5 +9,4 @@ public class PmRendszerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PmRendszerApplication.class, args);
 	}
-
 }

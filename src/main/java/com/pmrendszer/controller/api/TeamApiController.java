@@ -1,9 +1,9 @@
 package com.pmrendszer.controller.api;
 
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,8 +25,13 @@ public class TeamApiController {
 	private TeamService teamService;
 
 	@GetMapping("")
-	public List<Team> getAllTeams() {
-		return teamService.getAllTeams();
+	public List<Team> getAllTeams(HttpServletRequest request) {
+		if (request.isUserInRole("ROLE_ADMIN")) {
+			return teamService.getAllTeams();
+		}else {
+			
+		}
+		return null;
 	}
 
 	@GetMapping("/id/{id}")
@@ -67,7 +72,7 @@ public class TeamApiController {
 	@DeleteMapping("/{id}")
 	public void deleteEmployee(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
-		
+
 		teamService.deleteTeam(id);
 	}
 

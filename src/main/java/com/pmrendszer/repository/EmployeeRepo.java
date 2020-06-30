@@ -20,4 +20,5 @@ public interface EmployeeRepo extends CrudRepository<Employee, Integer> {
 	@Query(value = "SELECT * FROM employees WHERE job_id=" + JOB_DEVELOPER_ID + " AND id NOT IN "
 			+ "(SELECT employee_id FROM team_memberships " + "WHERE team_id = ?1)", nativeQuery = true)
 	List<Employee> findNotTeamMembers(int id);
+	Employee findByEmail(String email);
 }

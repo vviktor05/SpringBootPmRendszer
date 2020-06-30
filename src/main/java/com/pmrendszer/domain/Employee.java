@@ -8,8 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.springframework.lang.Nullable;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -26,6 +26,11 @@ public class Employee {
 	@Size(max = 50, message = "{employee.name.max}")
 	private String name;
 	@NotNull
+	@Email(message = "{email.valid}")
+	@Size(max = 100, message = "{email.max}")
+	@Column(unique=true)
+	private String email;
+	@NotNull
 	private String password;
 	@NotNull
 	@ManyToOne
@@ -39,7 +44,6 @@ public class Employee {
 	@NotNull
 	@Column(columnDefinition = "date")
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	@Pattern(regexp = CheckerClass.DATE_REGEX, message = "{employee.startDate.valid}")
 	private Date startDate;
 	@Size(max = 15, message = "{employee.phoneNumber.max}")
 	@NotNull
@@ -110,6 +114,14 @@ public class Employee {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
