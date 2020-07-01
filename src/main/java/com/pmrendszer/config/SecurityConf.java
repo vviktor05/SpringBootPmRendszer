@@ -20,6 +20,8 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureAuth(AuthenticationManagerBuilder auth) throws Exception {
+//		auth.inMemoryAuthentication().withUser("d").password(passwordEncoder().encode("d")).roles("DEVELOPER");
+//		auth.inMemoryAuthentication().withUser("tm").password(passwordEncoder().encode("tm")).roles("PROJECT_MANAGER");
 		auth.authenticationProvider(authProvider());
 	}
 
@@ -27,14 +29,15 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSec) throws Exception {
 		httpSec.authorizeRequests()
 				.antMatchers("/api/**").authenticated()
-				.antMatchers("/api/developer/**").hasAnyRole("Fejlesztő", "Csapatvezető", "Projektvezető")
-				.antMatchers("/api/team_leader/**").hasAnyRole("Csapatvezető", "Projektvezető")
-				.antMatchers("/api/project_manager/**").hasRole("Projektvezető")
+//				.antMatchers("/api/developer/**").hasRole("DEVELOPER")
+//				.antMatchers("/api/team_leader/**").hasRole("TEAM_LEADER")
+//				.antMatchers("/api/project_manager/**").hasRole("PROJECT_MANAGER") / access("hasRole('ROLE_PROJECT_MANAGER')"), 
+//																						hasAnyAuthority("ROLE_PROJECT_MANAGER") / Doesn't work
 			.and()
 				.httpBasic()
 			.and()
-				.logout()
-				.logoutUrl("/login")
+				.logout().permitAll()
+				.logoutUrl("/logout")
 				.invalidateHttpSession(true)
 				.deleteCookies("JSESSIONID")
 			.and()

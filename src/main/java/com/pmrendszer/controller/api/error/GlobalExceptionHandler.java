@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -33,6 +33,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(EntityNotFoundException.class)
 	protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex, WebRequest request) {
 		return buildResponseEntity(HttpStatus.NOT_FOUND, "Entity not found", "Nincs találat", getPath(request));
+	}
+
+	@ExceptionHandler({ AccessDeniedException.class })
+	public ResponseEntity<Object> handleAccessDeniedException(Exception ex, WebRequest request) {
+		return buildResponseEntity(HttpStatus.FORBIDDEN, ex.getLocalizedMessage(), "Hozzáférés megtagadva!", getPath(request));
 	}
 
 	@ExceptionHandler(DataIntegrityViolationException.class)
@@ -56,7 +61,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return buildResponseEntity(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), message, getPath(request));
 	}
-	
+
 	@ExceptionHandler(ConstraintViolationException.class)
 	protected ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex, WebRequest request) {
 
@@ -67,8 +72,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		}
 		String messageString = message.substring(0, message.length() - 2) + " ]";
 
-		return buildResponseEntity(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), messageString,
-				getPath(request));
+		return buildResponseEntity(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), messageString, getPath(request));
 	}
 
 	@ExceptionHandler(javax.persistence.EntityNotFoundException.class)
@@ -156,7 +160,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleAllException(Exception ex, WebRequest request) {
-		return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), "Hiba történt", getPath(request));
+		return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), "Hiba történt",
+				getPath(request));
 	}
 
 	private ResponseEntity<Object> buildResponseEntity(HttpStatus status, String error, String message, String path) {

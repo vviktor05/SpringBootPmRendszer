@@ -5,8 +5,6 @@ import java.util.HashSet;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import com.pmrendszer.domain.Employee;
 
 public class UserDetailsImpl implements UserDetails {
@@ -19,7 +17,17 @@ public class UserDetailsImpl implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority(employee.getJob().getName()));
+		String jobName = employee.getJob().getName();
+		String role;
+		
+		if (jobName.equals("Projektvezető")) {
+			role = "PROJECT_MANAGER";
+		} else if (jobName.equals("Csapatvezető")) {
+			role = "TEAM_LEADER";
+		} else {
+			role = "DEVELOPER";
+		}
+		authorities.add(new SimpleGrantedAuthority(role));
 
 		return authorities;
 	}
