@@ -3,7 +3,6 @@ package com.pmrendszer.controller.api;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,7 +20,7 @@ import com.pmrendszer.service.ProjectTeamService;
 @RestController
 @Validated
 @RequestMapping("/api")
-public class ProjectTeamApiController {
+public class ProjectTeamApiController implements Roles{
 	private ProjectTeamService projectTeamService;
 
 	@GetMapping("/project_manager/projects_teams")
@@ -39,17 +38,17 @@ public class ProjectTeamApiController {
 	}
 
 	@PostMapping("/project_manager/projects_teams")
-	public void addProjectTeam(@Valid @RequestBody ProjectTeam projectTeam) {
-		projectTeamService.addProjectTeam(projectTeam);
+	public ProjectTeam addProjectTeam(@Valid @RequestBody ProjectTeam projectTeam) {
+		return projectTeamService.addProjectTeam(projectTeam);
 	}
 
 	@PutMapping("/project_manager/projects_teams/project_id/{projectId}/team_id/{teamId}")
-	public void updateProjectTeam(
+	public ProjectTeam updateProjectTeam(
 			@PathVariable("projectId") @Min(value = 1, message = "{id.path.valid}") int projectId,
 			@PathVariable("teamId") @Min(value = 1, message = "{id.path.valid}") int teamId,
 			@Valid @RequestBody ProjectTeam projectTeam) throws EntityNotFoundException {
 
-		projectTeamService.updateProjectTeam(projectId, teamId, projectTeam);
+		return projectTeamService.updateProjectTeam(projectId, teamId, projectTeam);
 	}
 
 	@DeleteMapping("/project_manager/projects_teams/project_id/{projectId}/team_id/{teamId}")

@@ -3,7 +3,6 @@ package com.pmrendszer.controller.api;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,7 +20,7 @@ import com.pmrendszer.service.ReportService;
 @RestController
 @Validated
 @RequestMapping("/api")
-public class ReportApiController {
+public class ReportApiController implements Roles {
 	private ReportService reportService;
 
 	@GetMapping("/project_manager/reports")
@@ -37,22 +36,53 @@ public class ReportApiController {
 	}
 
 	@PostMapping("/project_manager/reports")
-	public void addReport(@Valid @RequestBody Report report) {
-		reportService.addReport(report);
+	public Report addReport(@Valid @RequestBody Report report)  {
+		return reportService.addReport(report);
 	}
 
 	@PutMapping("/project_manager/reports/{id}")
-	public void updateReport(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
+	public Report updateReport(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
 			@Valid @RequestBody Report reportDetails) throws EntityNotFoundException {
 
-		reportService.updateReport(id, reportDetails);
+		return reportService.updateReport(id, reportDetails);
 	}
 
 	@DeleteMapping("/project_manager/reports/{id}")
 	public void deleteReport(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
-		
+
 		reportService.deleteReport(id);
+	}
+
+	@GetMapping("/team_leader/reports")
+	public List<Report> getMyReports() {
+		return reportService.getMyReports();
+	}
+
+	@GetMapping("/team_leader/reports/id/{id}")
+	public Report getMyReportById(@PathVariable("id") @Min(value = 1, message = "{id.path.valid}") int id)
+			throws EntityNotFoundException {
+
+		return reportService.getMyReportById(id);
+	}
+
+	@PostMapping("/team_leader/reports")
+	public Report addMyReport(@Valid @RequestBody Report report) throws Exception {
+		return reportService.addMyReport(report);
+	}
+
+	@PutMapping("/team_leader/reports/{id}")
+	public Report updateMyReport(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
+			@Valid @RequestBody Report reportDetails) throws EntityNotFoundException, Exception {
+
+		return reportService.updateMyReport(id, reportDetails);
+	}
+
+	@DeleteMapping("/team_leader/reports/{id}")
+	public void deleteMyReport(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
+			throws EntityNotFoundException, Exception {
+
+		reportService.deleteMyReport(id);
 	}
 
 	@Autowired

@@ -3,7 +3,6 @@ package com.pmrendszer.controller.api;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,7 +20,7 @@ import com.pmrendszer.service.CustomerService;
 @RestController
 @Validated
 @RequestMapping("/api")
-public class CustomerApiController {
+public class CustomerApiController implements Roles{
 	private CustomerService customerService;
 
 	@GetMapping("/project_manager/customers")
@@ -37,15 +36,15 @@ public class CustomerApiController {
 	}
 
 	@PostMapping("/project_manager/customers")
-	public void addCustomer(@Valid @RequestBody Customer customer) {
-		customerService.addCustomer(customer);
+	public Customer addCustomer(@Valid @RequestBody Customer customer) {
+		return customerService.addCustomer(customer);
 	}
 
 	@PutMapping("/project_manager/customers/{id}")
-	public void updateCustomer(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
+	public Customer updateCustomer(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
 			@Valid @RequestBody Customer customerDetails) throws EntityNotFoundException {
 
-		customerService.updateCustomer(id, customerDetails);
+		return customerService.updateCustomer(id, customerDetails);
 	}
 
 	@DeleteMapping("/project_manager/customers/{id}")

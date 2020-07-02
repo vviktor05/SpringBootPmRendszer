@@ -23,11 +23,11 @@ public class CustomerService {
 		return customer;
 	}
 
-	public void addCustomer(Customer customer) {
-		customerRepo.save(customer);
+	public Customer addCustomer(Customer customer) {
+		return customerRepo.save(customer);
 	}
 
-	public void updateCustomer(int id, Customer customerDetails) throws EntityNotFoundException {
+	public Customer updateCustomer(int id, Customer customerDetails) throws EntityNotFoundException {
 		Customer customer = customerRepo.findById(id);
 		CheckerClass.ifEmptyThrowException(customer);
 
@@ -38,7 +38,7 @@ public class CustomerService {
 		customer.setZipCode(customerDetails.getZipCode());
 		customer.setLocality(customerDetails.getLocality());
 		customer.setStreetAddress(customerDetails.getStreetAddress());
-		customerRepo.save(customer);
+		return customerRepo.save(customer);
 	}
 
 	public void deleteCustomer(int id) throws EntityNotFoundException {

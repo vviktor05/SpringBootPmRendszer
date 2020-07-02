@@ -22,18 +22,18 @@ public class TeamMembershipService {
 		return teamMemberShip;
 	}
 
-	public void addTeamMembership(TeamMembership teamMembership) {
-		teamMembershipRepo.save(teamMembership);
+	public TeamMembership addTeamMembership(TeamMembership teamMembership) {
+		return teamMembershipRepo.save(teamMembership);
 	}
 
-	public void updateTeamMembership(int teamId, int employeeId, TeamMembership teamMembershipDetails)
+	public TeamMembership updateTeamMembership(int teamId, int employeeId, TeamMembership teamMembershipDetails)
 			throws EntityNotFoundException {
 		TeamMembership teamMemberShip = teamMembershipRepo.findByTeamIdAndEmployeeId(teamId, employeeId);
 		CheckerClass.ifEmptyThrowException(teamMemberShip);
 
 		teamMemberShip.setTeam(teamMembershipDetails.getTeam());
 		teamMemberShip.setEmployee(teamMembershipDetails.getEmployee());
-		teamMembershipRepo.save(teamMemberShip);
+		return teamMembershipRepo.save(teamMemberShip);
 	}
 
 	public void deleteTeamMembership(int teamId, int employeeId) throws EntityNotFoundException {

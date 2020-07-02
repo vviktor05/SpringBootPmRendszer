@@ -5,19 +5,31 @@ Az első Spring Boot projektem.
 
 - GET
 
-http://localhost:8080/api/projects
+http://localhost:8080/api/project_manager/projects
 
-http://localhost:8080/api/projects/active
+http://localhost:8080/api/project_manager/projects/active
 
-http://localhost:8080/api/projects/id/{id}
+http://localhost:8080/api/project_manager/projects/id/{id}
 
-http://localhost:8080/api/projects/name/{name}
+http://localhost:8080/api/project_manager/projects/name/{name}
 
-http://localhost:8080/api/projects/search?customerId=1&developmentAreaId=1&orderDateMin=1&orderDateMax=1&projectStatusId=1&priorityId=1&projectLeaderId=1&statusId=1
+http://localhost:8080/api/project_manager/projects/search?customerId=1&developmentAreaId=1&orderDateMin=1&orderDateMax=1&projectStatusId=1&priorityId=1&projectLeaderId=1&statusId=1
 
 0-tól az összes paraméter használatával lehet szűrni, sorrend nem számít.
 
+http://localhost:8080/api/team_leader/projects
+
+http://localhost:8080/api/team_leader/projects/active
+
+http://localhost:8080/api/team_leader/projects/id/{id}
+
+http://localhost:8080/api/team_leader/projects/name/{name}
+
+http://localhost:8080/api/team_leader/projects/search?customerId=1&developmentAreaId=1&orderDateMin=1&orderDateMax=1&projectStatusId=1&priorityId=1&projectLeaderId=1&statusId=1
+
 http://localhost:8080/api/developer/projects
+
+Azokat a projekteket adja vissza amelyeken a bejelentkezett fejlesztő dolgozik.
 
 http://localhost:8080/api/developer/projects/active
 
@@ -27,108 +39,164 @@ http://localhost:8080/api/developer/projects/name/{name}
 
 http://localhost:8080/api/developer/projects/search?customerId=1&developmentAreaId=1&orderDateMin=1&orderDateMax=1&projectStatusId=1&priorityId=1&projectLeaderId=1&statusId=1
 
-http://localhost:8080/api/teams
+http://localhost:8080/api/project_manager/teams
 
-http://localhost:8080/api/teams/id/{id}
+http://localhost:8080/api/project_manager/teams/id/{id}
 
-http://localhost:8080/api/teams/working_on/project_id/{id}
+http://localhost:8080/api/project_manager/teams/working_on/project_id/{id}
 
 A megadott id-vel rendelkező projekten dolgozó csapatokat adja vissza.
 
-http://localhost:8080/api/customers
+http://localhost:8080/api/project_manager/teams/not_working_on/project_id/{id}
 
-http://localhost:8080/api/customers/{id}
+http://localhost:8080/api/team_leader/teams
 
-http://localhost:8080/api/tasks
+http://localhost:8080/api/team_leader/teams/id/{id}
 
-http://localhost:8080/api/tasks/active
+http://localhost:8080/api/team_leader/teams/working_on/project_id/{id}
 
-http://localhost:8080/api/tasks/id/{id}
+http://localhost:8080/api/team_leader/teams/not_working_on/project_id/{id}
 
-http://localhost:8080/api/tasks/name/{topic}
--------------------------------------------------
+http://localhost:8080/api/project_manager/customers/customers
+
+http://localhost:8080/api/project_manager/customers/customers/{id}
+
+http://localhost:8080/api/project_manager/tasks
+
+http://localhost:8080/api/project_manager/tasks/active
+
+http://localhost:8080/api/project_manager/tasks/id/{id}
+
+http://localhost:8080/api/project_manager/tasks/topic/{topic}
+
+http://localhost:8080/api/team_leader/tasks
+
+A csapatvezető csak azokat a feladatokat látja, amelyik olyan projekthez kapcsolódik, amin dolgozik.
+
+http://localhost:8080/api/team_leader/tasks/active
+
+http://localhost:8080/api/team_leader/tasks/id/{id}
+
+http://localhost:8080/api/team_leader/tasks/topic/{topic}
+
 http://localhost:8080/api/developer/tasks
+
+A fejlesztő csak azokat a feladatokat látja, amelyik olyan projekthez kapcsolódik, amin dolgozik.
 
 http://localhost:8080/api/developer/tasks/active
 
 http://localhost:8080/api/developer/tasks/id/{id}
 
-http://localhost:8080/api/developer/tasks/name/{topic}
+http://localhost:8080/api/developer/tasks/topic/{topic}
 
-http://localhost:8080/api/reports
+http://localhost:8080/api/project_manager/reports
 
-A csapatvezető, csak azokat a reportokat látja, amelyek kapcsolódnak valamelyik projekthez amin dolgozik.
+http://localhost:8080/api/project_manager/reports/id/{id}
 
-http://localhost:8080/api/reports/id/{id}
+http://localhost:8080/api/team_leader/reports
 
-http://localhost:8080/api/employees
+A csapatvezető csak azokat a jelentéseket látja, amelyik olyan projekthez kapcsolódik, amin dolgozik.
 
-http://localhost:8080/api/employees/id/{id}
+http://localhost:8080/api/team_leader/reports/id/{id}
 
-http://localhost:8080/api/employees/in_team/team_id/{id}
+http://localhost:8080/api/project_manager/employees
+
+http://localhost:8080/api/project_manager/employees/id/{id}
+
+http://localhost:8080/api/project_manager/employees/in_team/team_id/{id}
 
 A megadott csapat id-vel rendelkező csapatban dolgozó fejlesztőket adja vissza.
 
-http://localhost:8080/api/employees/not_in_team/team_id/{id}
+http://localhost:8080/api/project_manager/employees/not_in_team/team_id/{id}
 
-http://localhost:8080/api/team_memberships
+http://localhost:8080/api/team_leader/employees
 
-http://localhost:8080/api/team_memberships/team_id/{teamId}/employee_id/{employeeId}
+A csapatvezető csak azokat a fejlesztőket látja akik a csapatában vannak.
 
-http://localhost:8080/api/projects_teams
+http://localhost:8080/api/team_leader/employees/id/{id}
 
-http://localhost:8080/api/projects_teams/project_id/{projectId}/team_id/{teamId}
+http://localhost:8080/api/project_manager/team_memberships
+
+http://localhost:8080/api/project_manager/team_memberships/team_id/{teamId}/employee_id/{employeeId}
+
+http://localhost:8080/api/project_manager/projects_teams
+
+http://localhost:8080/api/project_manager/projects_teams/project_id/{projectId}/team_id/{teamId}
 
 - POST
 
-http://localhost:8080/api/projects
+http://localhost:8080/api/project_manager/projects
 
-http://localhost:8080/api/customers
+http://localhost:8080/api/project_manager/customers
 
-http://localhost:8080/api/tasks
+http://localhost:8080/api/project_manager/tasks
 
-http://localhost:8080/api/reports
+http://localhost:8080/api/team_leader/tasks
 
-http://localhost:8080/api/employees
+A csapatvezető csak a saját projektjéhez tud hozzá adni feladatot.
 
-http://localhost:8080/api/teams
+http://localhost:8080/api/project_manager/reports
 
-http://localhost:8080/api/team_memberships
+http://localhost:8080/api/team_leader/reports
 
-http://localhost:8080/api/projects_teams
+A csapatvezető csak a saját projektjéhez tud hozzá adni jelentést.
 
-- DELETE
+http://localhost:8080/api/project_manager/employees
 
-http://localhost:8080/api/projects/{id}
+http://localhost:8080/api/project_manager/teams
 
-http://localhost:8080/api/customers/{id}
+http://localhost:8080/api/project_manager/team_memberships
 
-http://localhost:8080/api/tasks/{id}
-
-http://localhost:8080/api/reports/{id}
-
-http://localhost:8080/api/employees/{id}
-
-http://localhost:8080/api/teams/{id}
-
-http://localhost:8080/api/team_memberships/team_id/{teamId}/employee_id/{employeeId}
-
-http://localhost:8080/api/projects_teams/project_id/{projectId}/team_id/{teamId}
+http://localhost:8080/api/project_manager/projects_teams
 
 - PUT
 
-http://localhost:8080/api/projects/{id}
+http://localhost:8080/api/project_manager/projects/{id}
 
-http://localhost:8080/api/customers/{id}
+http://localhost:8080/api/project_manager/customers/{id}
 
-http://localhost:8080/api/tasks/{id}
+http://localhost:8080/api/project_manager/tasks/{id}
 
-http://localhost:8080/api/reports/{id}
+http://localhost:8080/api/team_leader/tasks/{id}
 
-http://localhost:8080/api/employees/{id}
+A csapatvezető csak a saját maga által felvitt feladatot tudja módosítani.
 
-http://localhost:8080/api/teams/{id}
+http://localhost:8080/api/project_manager/reports/{id}
 
-http://localhost:8080/api/team_memberships/team_id/{teamId}/employee_id/{employeeId}
+http://localhost:8080/api/team_leader/reports/{id}
 
-http://localhost:8080/api/projects_teams/project_id/{projectId}/team_id/{teamId}
+A csapatvezető csak a saját maga által felvitt jelentést tudja módosítani.
+
+http://localhost:8080/api/project_manager/employees/{id}
+
+http://localhost:8080/api/project_manager/teams/{id}
+
+http://localhost:8080/api/project_manager/team_memberships/team_id/{teamId}/employee_id/{employeeId}
+
+http://localhost:8080/api/project_manager/projects_teams/project_id/{projectId}/team_id/{teamId}
+
+- DELETE
+
+http://localhost:8080/api/project_manager/projects/{id}
+
+http://localhost:8080/api/project_manager/customers/{id}
+
+http://localhost:8080/api/project_manager/tasks/{id}
+
+http://localhost:8080/api/team_leader/tasks/{id}
+
+A csapatvezető csak a saját maga által felvitt feladatot   tudja módosítani.
+
+http://localhost:8080/api/project_manager/reports/{id}
+
+http://localhost:8080/api/team_leader/reports/{id}
+
+A csapatvezető csak a saját maga által felvitt jelentést tudja módosítani.
+
+http://localhost:8080/api/project_manager/employees/{id}
+
+http://localhost:8080/api/project_manager/teams/{id}
+
+http://localhost:8080/api/project_manager/team_memberships/team_id/{teamId}/employee_id/{employeeId}
+
+http://localhost:8080/api/project_manager/projects_teams/project_id/{projectId}/team_id/{teamId}

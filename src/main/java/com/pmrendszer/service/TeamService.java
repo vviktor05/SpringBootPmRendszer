@@ -36,17 +36,17 @@ public class TeamService {
 		return teams;
 	}
 
-	public void addTeam(Team team) {
-		teamRepo.save(team);
+	public Team addTeam(Team team) {
+		return teamRepo.save(team);
 	}
 
-	public void updateTeam(int id, Team teamDetails) throws EntityNotFoundException {
+	public Team updateTeam(int id, Team teamDetails) throws EntityNotFoundException {
 		Team team = teamRepo.findById(id);
 		CheckerClass.ifEmptyThrowException(team);
 
 		team.setName(teamDetails.getName());
 		team.setTeamLeader(teamDetails.getTeamLeader());
-		teamRepo.save(team);
+		return teamRepo.save(team);
 	}
 
 	public void deleteTeam(int id) throws EntityNotFoundException {

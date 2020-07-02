@@ -31,6 +31,7 @@ public class Employee {
 	@Column(unique=true)
 	private String email;
 	@NotNull
+	@JsonIgnore
 	private String password;
 	@NotNull
 	@ManyToOne

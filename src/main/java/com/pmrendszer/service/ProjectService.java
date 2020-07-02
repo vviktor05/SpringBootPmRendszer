@@ -5,12 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pmrendszer.controller.api.error.EntityNotFoundException;
+import com.pmrendszer.domain.Employee;
 import com.pmrendszer.domain.Project;
 import com.pmrendszer.repository.ProjectRepo;
 
 @Service
 public class ProjectService {
 	private ProjectRepo projectRepo;
+	private EmployeeService employeeService;
 	private final int ACTIVE_STATUS_ID = 3;
 
 	public List<Project> getAllProjects() {
@@ -84,39 +86,54 @@ public class ProjectService {
 	}
 
 	public List<Project> getMyProjects() {
-		return null;
+		return projectRepo.findMyProjects(getAuthenticatedEmployee().getId());
 	}
 
 	public List<Project> getMyActiveProjects() {
-		return null;
+		return projectRepo.findMyActiveProjects(getAuthenticatedEmployee().getId());
 	}
 
 	public Project getMyProjectById(int id) {
-		return null;
+		Project project = projectRepo.findMyProjectById(id, getAuthenticatedEmployee().getId());
+		CheckerClass.ifEmptyThrowException(project);
+
+		return project;
 	}
 
 	public List<Project> getMyProjectsByName(String name) {
-		return null;
+		List<Project> projects = projectRepo.findMyProjectsByName(name, getAuthenticatedEmployee().getId());
+		CheckerClass.ifEmptyThrowException(projects);
+		
+		return projects;
 	}
 
 	public List<Project> getMyProcjetsByDetailedSearch(int customerId, int developmentAreaId, String orderDateMin,
 			String orderDateMax, int projectStatusId, int priorityId, int projectLeaderId, int statusId)
 			throws Exception {
 
-//		Date oDateMin = CheckerClass.parseDate(orderDateMin, CheckerClass.DATE_FORMAT);
-//		Date oDateMax = CheckerClass.parseDate(orderDateMax, CheckerClass.DATE_FORMAT);
-//
-//		List<Project> projects;
-//		if (oDateMin != null && oDateMax != null) {
-//			projects = projectRepo.detailedSearchInMy(customerId, developmentAreaId, oDateMin, oDateMax,
-//					projectStatusId, priorityId, projectLeaderId, statusId);
-//
-//			CheckerClass.ifEmptyThrowException(projects);
-//		} else {
-//			throw new Exception("Hiba a rendelési dátum átalakításánál!");
-//		}
+		Date oDateMin = CheckerClass.parseDate(orderDateMin, CheckerClass.DATE_FORMAT);
+		Date oDateMax = CheckerClass.parseDate(orderDateMax, CheckerClass.DATE_FORMAT);
 
-		return null;
+		List<Project> projects;
+		if (oDateMin != null && oDateMax != null) {
+			projects = projectRepo.findMyProjectsBydetailedSearch(customerId, developmentAreaId, oDateMin, oDateMax,
+					projectStatusId, priorityId, projectLeaderId, statusId, getAuthenticatedEmployee().getId());
+
+			CheckerClass.ifEmptyThrowException(projects);
+		} else {
+			throw new Exception("Hiba a rendelési dátum átalakításánál!");
+		}
+
+		return projects;
+	}
+	
+	public Employee getAuthenticatedEmployee() {
+		return employeeService.getAuthenticatedEmployee();
+	}
+
+	@Autowired
+	public void setEmployeeService(EmployeeService employeeService) {
+		this.employeeService = employeeService;
 	}
 
 	@Autowired

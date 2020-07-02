@@ -2,7 +2,6 @@ package com.pmrendszer.controller.api;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,38 +23,31 @@ import com.pmrendszer.service.ProjectService;
 @RestController
 @Validated
 @RequestMapping("/api")
-public class ProjectApiController {
+public class ProjectApiController implements Roles{
 	private ProjectService projectService;
-	private final String PROJECT_MANAGER = "ROLE_PROJECT_MANAGER";
-	private final String TEAM_LEADER = "ROLE_TEAM_LEADER";
-
-	@Secured({ PROJECT_MANAGER, TEAM_LEADER })
-	@GetMapping("/projects")
+	
+	@GetMapping({"/project_manager/projects", "/team_leader/projects"})
 	public List<Project> getAllProjects() {
 		return projectService.getAllProjects();
 	}
 
-	@Secured({ PROJECT_MANAGER, TEAM_LEADER })
-	@GetMapping("/projects/active")
+	@GetMapping({"/project_manager/projects/active", "/team_leader/projects/active"})
 	public List<Project> getActiveProjects() {
 		return projectService.getActiveProjects();
 	}
 
-	@Secured({ PROJECT_MANAGER, TEAM_LEADER })
-	@GetMapping("/projects/id/{id}")
+	@GetMapping({"/project_manager/projects/id/{id}", "/team_leader/projects/id/{id}"})
 	public Project getProjectById(@PathVariable("id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
 		return projectService.getProjectById(id);
 	}
 
-	@Secured({ PROJECT_MANAGER, TEAM_LEADER })
-	@GetMapping("/projects/name/{name}")
+	@GetMapping({"/project_manager/projects/name/{name}", "/team_leader/projects/name/{name}"})
 	public List<Project> getProjectsByName(@PathVariable("name") String name) throws EntityNotFoundException {
 		return projectService.getProjectsByName(name);
 	}
 
-	@Secured({ PROJECT_MANAGER, TEAM_LEADER })
-	@GetMapping("/projects/search")
+	@GetMapping({"/project_manager/projects/search", "/team_leader/projects/search"})
 	public List<Project> getProjectsByDetailedSearch(
 			@RequestParam(value = "customerId", defaultValue = "-1") int customerId,
 			@RequestParam(value = "developmentAreaId", defaultValue = "-1") int developmentAreaId,
@@ -71,21 +63,18 @@ public class ProjectApiController {
 				projectStatusId, priorityId, projectLeaderId, statusId);
 	}
 
-	@Secured(PROJECT_MANAGER)
-	@PostMapping("/projects")
+	@PostMapping("/project_manager/projects")
 	public Project addProject(@Valid @RequestBody Project project) {
 		return projectService.addProject(project);
 	}
 
-	@Secured(PROJECT_MANAGER)
-	@PutMapping("/projects/{id}")
+	@PutMapping("/project_manager/projects/{id}")
 	public Project updateProject(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
 			@Valid @RequestBody Project projectDetails) throws EntityNotFoundException {
 		return projectService.updateProject(id, projectDetails);
 	}
 
-	@Secured(PROJECT_MANAGER)
-	@DeleteMapping("/projects/{id}")
+	@DeleteMapping("/project_manager/projects/{id}")
 	public void deleteProject(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
 		projectService.deleteProject(id);

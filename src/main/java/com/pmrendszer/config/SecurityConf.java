@@ -20,24 +20,22 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureAuth(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.inMemoryAuthentication().withUser("d").password(passwordEncoder().encode("d")).roles("DEVELOPER");
-//		auth.inMemoryAuthentication().withUser("tm").password(passwordEncoder().encode("tm")).roles("PROJECT_MANAGER");
 		auth.authenticationProvider(authProvider());
 	}
 
 	@Override
 	protected void configure(HttpSecurity httpSec) throws Exception {
 		httpSec.authorizeRequests()
-				.antMatchers("/api/**").authenticated()
-//				.antMatchers("/api/developer/**").hasRole("DEVELOPER")
-//				.antMatchers("/api/team_leader/**").hasRole("TEAM_LEADER")
-//				.antMatchers("/api/project_manager/**").hasRole("PROJECT_MANAGER") / access("hasRole('ROLE_PROJECT_MANAGER')"), 
-//																						hasAnyAuthority("ROLE_PROJECT_MANAGER") / Doesn't work
+				.antMatchers("/api/project_manager/**").hasRole("PROJECT_MANAGER")
+				.antMatchers("/api/team_leader/**").hasRole("TEAM_LEADER")
+				.antMatchers("/api/developer/**").hasRole("DEVELOPER")
+				.anyRequest().authenticated()
 			.and()
 				.httpBasic()
 			.and()
 				.logout().permitAll()
 				.logoutUrl("/logout")
+				.logoutSuccessUrl("/login")
 				.invalidateHttpSession(true)
 				.deleteCookies("JSESSIONID")
 			.and()

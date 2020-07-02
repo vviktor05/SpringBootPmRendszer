@@ -24,13 +24,11 @@ import com.pmrendszer.service.EmployeeService;
 public class EmployeeApiController {
 	private EmployeeService employeeService;
 
-	@Secured({"PROJECT_MANAGER", "TEAM_LEADER"})
 	@GetMapping("/project_manager/employees")
 	public List<Employee> getAllEmployees() {
 		return employeeService.getAllEmployees();
 	}
 	
-	@Secured({"PROJECT_MANAGER", "TEAM_LEADER"})
 	@GetMapping("/project_manager/employees/id/{id}")
 	public Employee getEmployeeById(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
@@ -38,7 +36,6 @@ public class EmployeeApiController {
 		return employeeService.getEmployeeById(id);
 	}
 
-	@Secured({"PROJECT_MANAGER", "TEAM_LEADER"})
 	@GetMapping("/project_manager/employees/in_team/team_id/{id}")
 	public List<Employee> getTeamMembers(
 			@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
@@ -47,7 +44,6 @@ public class EmployeeApiController {
 		return employeeService.getTeamMembers(id);
 	}
 
-	@Secured({"PROJECT_MANAGER", "TEAM_LEADER"})
 	@GetMapping("/project_manager/employees/not_in_team/team_id/{id}")
 	public List<Employee> getNotTeamMembers(
 			@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
@@ -56,28 +52,30 @@ public class EmployeeApiController {
 		return employeeService.getNotTeamMembers(id);
 	}
 
-	@Secured("PROJECT_MANAGER")
-	@PostMapping("/project_manager/employees")
-	public void addEmployee(@Valid @RequestBody Employee employee) {
-		employeeService.addEmployee(employee);
+	@PostMapping("/project_manager/employees/employees")
+	public Employee addEmployee(@Valid @RequestBody Employee employee) {
+		return employeeService.addEmployee(employee);
 	}
 
-	@Secured("PROJECT_MANAGER")
-	@PutMapping("/project_manager/employees/{id}")
-	public void updateEmployee(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
+	@PutMapping("/project_manager/employees/employees/{id}")
+	public Employee updateEmployee(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
 			@Valid @RequestBody Employee employeeDetails) throws EntityNotFoundException {
 
-		employeeService.updateEmployee(id, employeeDetails);
+		return employeeService.updateEmployee(id, employeeDetails);
 	}
 
-	@Secured("PROJECT_MANAGER")
-	@DeleteMapping("/project_manager/employees/{id}")
+	@DeleteMapping("/project_manager/employees/employees/{id}")
 	public void deleteEmployee(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
 		
 		employeeService.deleteEmployee(id);
 	}
 
+	@GetMapping("/team_leader/employees")
+	public List<Employee> getMyEmployees() {
+		return employeeService.getMyEmployees();
+	}
+	
 	@Autowired
 	public void setEmployeeService(EmployeeService employeeService) {
 		this.employeeService = employeeService;

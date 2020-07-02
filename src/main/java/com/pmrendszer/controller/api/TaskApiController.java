@@ -41,21 +41,21 @@ public class TaskApiController {
 		return taskService.getTaskById(id);
 	}
 
-	@GetMapping("/project_manager/tasks/name/{topic}")
+	@GetMapping("/project_manager/tasks/topic/{topic}")
 	public List<Task> getTasksByTopic(@PathVariable("topic") String topic) throws EntityNotFoundException {
 		return taskService.getTasksByTopic(topic);
 	}
 
 	@PostMapping("/project_manager/tasks")
-	public void addTask(@Valid @RequestBody Task task) {
-		taskService.addTask(task);
+	public Task addTask(@Valid @RequestBody Task task) {
+		return taskService.addTask(task);
 	}
 
 	@PutMapping("/project_manager/tasks/{id}")
-	public void updateTask(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
+	public Task updateTask(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
 			@Valid @RequestBody Task taskDetails) throws EntityNotFoundException {
 
-		taskService.updateTask(id, taskDetails);
+		return taskService.updateTask(id, taskDetails);
 	}
 
 	@DeleteMapping("/project_manager/tasks/{id}")
@@ -65,6 +65,69 @@ public class TaskApiController {
 		taskService.deleteTask(id);
 	}
 
+	@GetMapping("/team_leader/tasks")
+	public List<Task> getMyTeamLeaderTasks() {
+		return taskService.getMyTeamLeaderTasks();
+	}
+
+	@GetMapping("/team_leader/tasks/active")
+	public List<Task> getMyTeamLeaderActiveTasks() {
+		return taskService.getMyTeamLeaderActiveTasks();
+	}
+
+	@GetMapping("/team_leader/tasks/id/{id}")
+	public Task getMyTeamLeaderTaskById(@PathVariable("id") @Min(value = 1, message = "{id.path.valid}") int id)
+			throws EntityNotFoundException {
+
+		return taskService.getMyTeamLeaderTaskById(id);
+	}
+
+	@GetMapping("/team_leader/tasks/topic/{topic}")
+	public List<Task> getMyTeamLeaderTasksByTopic(@PathVariable("topic") String topic) throws EntityNotFoundException {
+		return taskService.getMyTeamLeaderTasksByTopic(topic);
+	}
+
+	@GetMapping("/developer/tasks")
+	public List<Task> getMyTasks() {
+		return taskService.getMyDeveloperTasks();
+	}
+
+	@GetMapping("/developer/tasks/active")
+	public List<Task> getMyActiveTasks() {
+		return taskService.getMyDeveloperActiveTasks();
+	}
+
+	@GetMapping("/developer/tasks/id/{id}")
+	public Task getMyTaskById(@PathVariable("id") @Min(value = 1, message = "{id.path.valid}") int id)
+			throws EntityNotFoundException {
+
+		return taskService.getMyDeveloperTaskById(id);
+	}
+
+	@GetMapping("/developer/tasks/topic/{topic}")
+	public List<Task> getMyTasksByTopic(@PathVariable("topic") String topic) throws EntityNotFoundException {
+		return taskService.getMyDeveloperTasksByTopic(topic);
+	}
+	
+	@PostMapping("/team_leader/tasks")
+	public Task addMyTeamLeaderTask(@Valid @RequestBody Task task) throws Exception {
+		return taskService.addMyTeamLeaderTask(task);
+	}
+
+	@PutMapping("/team_leader/tasks/{id}")
+	public Task updateMyTeamLeaderTask(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
+			@Valid @RequestBody Task taskDetails) throws Exception {
+
+		return taskService.updateMyTeamLeaderTask(id, taskDetails);
+	}
+
+	@DeleteMapping("/team_leader/tasks/{id}")
+	public void deleteMyTeamLeaderTask(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
+			throws Exception {
+		
+		taskService.deleteMyTeamLeaderTask(id);
+	}
+	
 	@Autowired
 	public void setTaskService(TaskService taskService) {
 		this.taskService = taskService;

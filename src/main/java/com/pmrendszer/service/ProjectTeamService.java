@@ -22,11 +22,11 @@ public class ProjectTeamService {
 		return projectTeam;
 	}
 
-	public void addProjectTeam(ProjectTeam projectTeam) {
-		projectTeamRepo.save(projectTeam);
+	public ProjectTeam addProjectTeam(ProjectTeam projectTeam) {
+		return projectTeamRepo.save(projectTeam);
 	}
 
-	public void updateProjectTeam(int projectId, int teamId, ProjectTeam projectTeamDetails)
+	public ProjectTeam updateProjectTeam(int projectId, int teamId, ProjectTeam projectTeamDetails)
 			throws EntityNotFoundException {
 
 		ProjectTeam projectTeam = projectTeamRepo.findByProjectIdAndTeamId(projectId, teamId);
@@ -34,7 +34,7 @@ public class ProjectTeamService {
 
 		projectTeam.setProject(projectTeamDetails.getProject());
 		projectTeam.setTeam(projectTeamDetails.getTeam());
-		projectTeamRepo.save(projectTeam);
+		return projectTeamRepo.save(projectTeam);
 	}
 
 	public void deleteProjectTeam(int projectId, int teamId) throws EntityNotFoundException {
