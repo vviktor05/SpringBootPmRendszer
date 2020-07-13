@@ -1,6 +1,9 @@
 # Spring Boot Projektmenedzsment rendszer
 Az első Spring Boot projektem.
 
+A működéshez az üres adatbázisnak léteznie kell pmrendszer néven.
+
+Teszt adatok (Project manager):
 felhasználónév: admin@gmail.com
 jelszó: admin
 
