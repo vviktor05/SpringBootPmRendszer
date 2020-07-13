@@ -31,14 +31,7 @@ public class CustomerService {
 		Customer customer = customerRepo.findById(id);
 		CheckerClass.ifEmptyThrowException(customer);
 
-		customer.setName(customerDetails.getName());
-		customer.setPhone(customerDetails.getPhone());
-		customer.setEmail(customerDetails.getEmail());
-		customer.setWebsite(customerDetails.getWebsite());
-		customer.setZipCode(customerDetails.getZipCode());
-		customer.setLocality(customerDetails.getLocality());
-		customer.setStreetAddress(customerDetails.getStreetAddress());
-		return customerRepo.save(customer);
+		return customerRepo.save(updateCustomerDetails(customer, customerDetails));
 	}
 
 	public void deleteCustomer(int id) throws EntityNotFoundException {
@@ -46,6 +39,18 @@ public class CustomerService {
 		CheckerClass.ifEmptyThrowException(customer);
 
 		customerRepo.delete(customer);
+	}
+
+	private Customer updateCustomerDetails(Customer customer, Customer customerDetails) {
+		customer.setName(customerDetails.getName());
+		customer.setPhone(customerDetails.getPhone());
+		customer.setEmail(customerDetails.getEmail());
+		customer.setWebsite(customerDetails.getWebsite());
+		customer.setZipCode(customerDetails.getZipCode());
+		customer.setLocality(customerDetails.getLocality());
+		customer.setStreetAddress(customerDetails.getStreetAddress());
+		customer.setUpdateMode(true);
+		return customer;
 	}
 
 	@Autowired

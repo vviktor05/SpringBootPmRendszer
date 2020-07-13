@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.pmrendszer.controller.api.error.EntityNotFoundException;
 import com.pmrendszer.domain.Employee;
 import com.pmrendszer.domain.Project;
-import com.pmrendszer.domain.Report;
 import com.pmrendszer.domain.Task;
 import com.pmrendszer.repository.TaskRepo;
 
@@ -47,13 +46,7 @@ public class TaskService {
 		Task task = taskRepo.findById(id);
 		CheckerClass.ifEmptyThrowException(task);
 
-		task.setTopic(taskDetails.getTopic());
-		task.setDeadline(taskDetails.getDeadline());
-		task.setTeamLeader(taskDetails.getTeamLeader());
-		task.setProject(taskDetails.getProject());
-		task.setStatus(taskDetails.getStatus());
-		task.setDescription(taskDetails.getDescription());
-		return taskRepo.save(task);
+		return taskRepo.save(updateTaskDetails(task, taskDetails));
 	}
 
 	public void deleteTask(int id) throws EntityNotFoundException {
@@ -62,7 +55,7 @@ public class TaskService {
 
 		taskRepo.delete(task);
 	}
-	
+
 	public List<Task> getMyTeamLeaderTasks() {
 		return taskRepo.findMyTeamLeaderTasks(getAuthenticatedEmployee().getId());
 	}
@@ -84,7 +77,7 @@ public class TaskService {
 
 		return tasks;
 	}
-	
+
 	public List<Task> getMyDeveloperTasks() {
 		return taskRepo.findMyDeveloperTasks(getAuthenticatedEmployee().getId());
 	}
@@ -106,7 +99,7 @@ public class TaskService {
 
 		return tasks;
 	}
-	 
+
 	public Task addMyTeamLeaderTask(Task task) throws Exception {
 		List<Project> myProjects = projectService.getMyProjects();
 
@@ -126,13 +119,7 @@ public class TaskService {
 		List<Task> myTasks = getMyTeamLeaderTasks();
 
 		if (myTasks.contains(task)) {
-			task.setTopic(taskDetails.getTopic());
-			task.setDeadline(taskDetails.getDeadline());
-			task.setTeamLeader(taskDetails.getTeamLeader());
-			task.setProject(taskDetails.getProject());
-			task.setStatus(taskDetails.getStatus());
-			task.setDescription(taskDetails.getDescription());
-			task = taskRepo.save(task);
+			task = taskRepo.save(updateTaskDetails(task, taskDetails));
 		} else {
 			throw new Exception("Csak a saját feladatokat lehet szerkeszteni!");
 		}
@@ -154,9 +141,20 @@ public class TaskService {
 
 		taskRepo.delete(task);
 	}
-	
-	public Employee getAuthenticatedEmployee() {
+
+	private Employee getAuthenticatedEmployee() {
 		return employeeService.getAuthenticatedEmployee();
+	}
+
+	private Task updateTaskDetails(Task task, Task taskDetails) {
+		task.setTopic(taskDetails.getTopic());
+		task.setDeadline(taskDetails.getDeadline());
+		task.setTeamLeader(taskDetails.getTeamLeader());
+		task.setProject(taskDetails.getProject());
+		task.setStatus(taskDetails.getStatus());
+		task.setDescription(taskDetails.getDescription());
+		task.setUpdateMode(true);
+		return task;
 	}
 
 	@Autowired

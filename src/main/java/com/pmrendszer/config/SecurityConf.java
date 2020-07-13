@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.session.SessionManagementFilter;
+
 import com.pmrendszer.service.UserDetailsServiceImpl;
 
 @EnableGlobalMethodSecurity(securedEnabled = true)
@@ -25,21 +27,29 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSec) throws Exception {
-		httpSec.authorizeRequests()
-				.antMatchers("/api/project_manager/**").hasRole("PROJECT_MANAGER")
-				.antMatchers("/api/team_leader/**").hasRole("TEAM_LEADER")
-				.antMatchers("/api/developer/**").hasRole("DEVELOPER")
-				.anyRequest().authenticated()
-			.and()
-				.httpBasic()
-			.and()
-				.logout().permitAll()
-				.logoutUrl("/logout")
-				.logoutSuccessUrl("/login")
-				.invalidateHttpSession(true)
-				.deleteCookies("JSESSIONID")
-			.and()
-				.csrf().disable();
+		httpSec.addFilterBefore(corsFilter(), SessionManagementFilter.class)
+					.authorizeRequests()
+					.antMatchers("/api/project_manager/**").hasRole("PROJECT_MANAGER")
+					.antMatchers("/api/team_leader/**").hasRole("TEAM_LEADER")
+					.antMatchers("/api/developer/**").hasRole("DEVELOPER")
+					.anyRequest().authenticated()
+				.and()
+//					.httpBasic()
+					.formLogin().permitAll()
+				.and()
+					.logout().permitAll()
+					.logoutUrl("/logout")
+					.logoutSuccessUrl("/login")
+					.invalidateHttpSession(true)
+					.deleteCookies("JSESSIONID")
+				.and()
+					.csrf().disable();
+	}
+
+	@Bean
+	CorsFilter corsFilter() {
+		CorsFilter filter = new CorsFilter();
+		return filter;
 	}
 
 	@Bean

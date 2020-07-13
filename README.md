@@ -1,6 +1,9 @@
 # Spring Boot Projektmenedzsment rendszer
 Az első Spring Boot projektem.
 
+felhasználónév: admin@gmail.com
+jelszó: admin
+
 # CRUD REST-API útvonalak:
 
 - GET
@@ -122,6 +125,16 @@ http://localhost:8080/api/project_manager/team_memberships/team_id/{teamId}/empl
 http://localhost:8080/api/project_manager/projects_teams
 
 http://localhost:8080/api/project_manager/projects_teams/project_id/{projectId}/team_id/{teamId}
+
+http://localhost:8080/api/api/project_manager/development_areas
+
+http://localhost:8080/api/api/project_manager/development_areas
+
+http://localhost:8080/api/api/project_manager/project_statuses
+
+http://localhost:8080/api/api/project_manager/priorities
+
+http://localhost:8080/api/api/project_manager/statuses
 
 - POST
 

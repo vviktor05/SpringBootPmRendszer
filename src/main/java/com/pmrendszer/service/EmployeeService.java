@@ -53,16 +53,7 @@ public class EmployeeService {
 		Employee employee = employeeRepo.findById(id);
 		CheckerClass.ifEmptyThrowException(employee);
 
-		employee.setName(employeeDetails.getName());
-		employee.setPassword(employeeDetails.getPassword());
-		employee.setJob(employeeDetails.getJob());
-		employee.setDevelopmentArea(employeeDetails.getDevelopmentArea());
-		employee.setSkill(employeeDetails.getSkill());
-		employee.setStartDate(employeeDetails.getStartDate());
-		employee.setPhoneNumber(employeeDetails.getPhoneNumber());
-		employee.setStartDate(employeeDetails.getLastLoginDate());
-
-		return employeeRepo.save(employee);
+		return employeeRepo.save(updateEmployeeDetails(employee, employeeDetails));
 	}
 
 	public void deleteEmployee(int id) throws EntityNotFoundException {
@@ -71,20 +62,33 @@ public class EmployeeService {
 
 		employeeRepo.delete(employee);
 	}
-	
+
 	public List<Employee> getMyEmployees() {
 		return employeeRepo.findMyEmployees(getAuthenticatedEmployee().getId());
 	}
-	
+
 	public Employee getMyEmployeeById(int id) throws EntityNotFoundException {
 		Employee employee = employeeRepo.findMyEmployeeById(id, getAuthenticatedEmployee().getId());
 		CheckerClass.ifEmptyThrowException(employee);
 
 		return employee;
 	}
-	
+
 	public Employee getAuthenticatedEmployee() {
 		return getEmployeeByEmail(AuthenticatedUser.getEmail());
+	}
+
+	private Employee updateEmployeeDetails(Employee employee, Employee employeeDetails) {
+		employee.setName(employeeDetails.getName());
+		employee.setPassword(employeeDetails.getPassword());
+		employee.setJob(employeeDetails.getJob());
+		employee.setDevelopmentArea(employeeDetails.getDevelopmentArea());
+		employee.setSkill(employeeDetails.getSkill());
+		employee.setStartDate(employeeDetails.getStartDate());
+		employee.setPhoneNumber(employeeDetails.getPhoneNumber());
+		employee.setStartDate(employeeDetails.getLastLoginDate());
+		employee.setUpdateMode(true);
+		return employee;
 	}
 
 	@Autowired

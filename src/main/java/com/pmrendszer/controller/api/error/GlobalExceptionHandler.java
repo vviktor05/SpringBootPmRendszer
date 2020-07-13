@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -36,7 +35,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return buildResponseEntity(HttpStatus.NOT_FOUND, "Entity not found", "Nincs találat", getPath(request));
 	}
 
-	@ExceptionHandler({ AccessDeniedException.class })
+	@ExceptionHandler(AccessDeniedException.class)
 	public ResponseEntity<Object> handleAccessDeniedException(Exception ex, WebRequest request) {
 		return buildResponseEntity(HttpStatus.FORBIDDEN, ex.getLocalizedMessage(), "Hozzáférés megtagadva!", getPath(request));
 	}
@@ -50,6 +49,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 					getPath(request));
 		}
 		return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), "Adatbázis hiba",
+				getPath(request));
+	}
+	
+	@ExceptionHandler(IllegalArgumentException.class)
+	protected ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+		return buildResponseEntity(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), "Nem megfelelő paraméter!",
 				getPath(request));
 	}
 

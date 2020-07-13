@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -42,6 +43,9 @@ public class Customer {
 	@NotNull
 	@Size(max = 100, message = "{customer.streetAddress.max}")
 	private String streetAddress;
+	@Transient
+	@JsonIgnore
+	private boolean updateMode;
 
 	public Customer() {
 		;
@@ -58,10 +62,13 @@ public class Customer {
 		this.locality = locality;
 		this.streetAddress = streetAddress;
 	}
-
+	
 	@JsonIgnore
 	@AssertTrue(message = "{id.valid}")
 	public boolean isValidId() {
+		if (updateMode) {
+			return true;
+		}
 		return id == 0;
 	}
 
@@ -93,12 +100,6 @@ public class Customer {
 	@AssertTrue(message = "{customer.streetAddress.min}")
 	public boolean isValidStreetAddress() {
 		return CheckerClass.isValidMinLength(streetAddress, 5);
-	}
-
-	@JsonIgnore
-	@AssertTrue(message = "{customer.name.contains}")
-	public boolean isValidName() {
-		return CheckerClass.isValidName(name);
 	}
 
 	public int getId() {
@@ -163,5 +164,13 @@ public class Customer {
 
 	public void setStreetAddress(String streetAddress) {
 		this.streetAddress = streetAddress;
+	}
+
+	public boolean isUpdateMode() {
+		return updateMode;
+	}
+
+	public void setUpdateMode(boolean updateMode) {
+		this.updateMode = updateMode;
 	}
 }

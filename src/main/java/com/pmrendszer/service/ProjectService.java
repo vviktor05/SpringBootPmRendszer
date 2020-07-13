@@ -65,17 +65,7 @@ public class ProjectService {
 		Project project = projectRepo.findById(id);
 		CheckerClass.ifEmptyThrowException(project);
 
-		project.setName(projectDetails.getName());
-		project.setCustomer(projectDetails.getCustomer());
-		project.setDevelopmentArea(projectDetails.getDevelopmentArea());
-		project.setOrderDate(projectDetails.getOrderDate());
-		project.setDeadline(projectDetails.getDeadline());
-		project.setProjectStatus(projectDetails.getProjectStatus());
-		project.setPriority(projectDetails.getPriority());
-		project.setProjectLeader(projectDetails.getProjectLeader());
-		project.setStatus(projectDetails.getStatus());
-		project.setDescription(projectDetails.getDescription());
-		return projectRepo.save(project);
+		return projectRepo.save(updateProjectDetails(project, projectDetails));
 	}
 
 	public void deleteProject(int id) throws EntityNotFoundException {
@@ -103,7 +93,7 @@ public class ProjectService {
 	public List<Project> getMyProjectsByName(String name) {
 		List<Project> projects = projectRepo.findMyProjectsByName(name, getAuthenticatedEmployee().getId());
 		CheckerClass.ifEmptyThrowException(projects);
-		
+
 		return projects;
 	}
 
@@ -126,9 +116,24 @@ public class ProjectService {
 
 		return projects;
 	}
-	
-	public Employee getAuthenticatedEmployee() {
+
+	private Employee getAuthenticatedEmployee() {
 		return employeeService.getAuthenticatedEmployee();
+	}
+
+	private Project updateProjectDetails(Project project, Project projectDetails) {
+		project.setName(projectDetails.getName());
+		project.setCustomer(projectDetails.getCustomer());
+		project.setDevelopmentArea(projectDetails.getDevelopmentArea());
+		project.setOrderDate(projectDetails.getOrderDate());
+		project.setDeadline(projectDetails.getDeadline());
+		project.setProjectStatus(projectDetails.getProjectStatus());
+		project.setPriority(projectDetails.getPriority());
+		project.setProjectLeader(projectDetails.getProjectLeader());
+		project.setStatus(projectDetails.getStatus());
+		project.setDescription(projectDetails.getDescription());
+		project.setUpdateMode(true);
+		return project;
 	}
 
 	@Autowired

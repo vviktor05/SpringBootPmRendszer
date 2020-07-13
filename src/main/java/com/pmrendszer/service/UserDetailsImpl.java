@@ -5,9 +5,10 @@ import java.util.HashSet;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import com.pmrendszer.controller.api.Roles;
 import com.pmrendszer.domain.Employee;
 
-public class UserDetailsImpl implements UserDetails {
+public class UserDetailsImpl implements UserDetails, Roles {
 	private Employee employee;
 
 	public UserDetailsImpl(Employee employee) {
@@ -21,11 +22,11 @@ public class UserDetailsImpl implements UserDetails {
 		String role;
 		
 		if (jobName.equals("Projektvezető")) {
-			role = "PROJECT_MANAGER";
+			role = PROJECT_MANAGER;
 		} else if (jobName.equals("Csapatvezető")) {
-			role = "TEAM_LEADER";
+			role = TEAM_LEADER;
 		} else {
-			role = "DEVELOPER";
+			role = DEVELOPER;
 		}
 		authorities.add(new SimpleGrantedAuthority(role));
 

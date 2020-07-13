@@ -44,9 +44,7 @@ public class TeamService {
 		Team team = teamRepo.findById(id);
 		CheckerClass.ifEmptyThrowException(team);
 
-		team.setName(teamDetails.getName());
-		team.setTeamLeader(teamDetails.getTeamLeader());
-		return teamRepo.save(team);
+		return teamRepo.save(updateTeamDetails(team, teamDetails));
 	}
 
 	public void deleteTeam(int id) throws EntityNotFoundException {
@@ -56,6 +54,13 @@ public class TeamService {
 		teamRepo.delete(team);
 	}
 
+	private Team updateTeamDetails(Team team, Team teamDetails) {
+		team.setName(teamDetails.getName());
+		team.setTeamLeader(teamDetails.getTeamLeader());
+		team.setUpdateMode(true);
+		return team;
+	}
+	
 	@Autowired
 	public void setTeamRepo(TeamRepo teamRepo) {
 		this.teamRepo = teamRepo;

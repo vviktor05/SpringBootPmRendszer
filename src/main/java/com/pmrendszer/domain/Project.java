@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -52,6 +53,9 @@ public class Project {
 	@Nullable
 	@Column(columnDefinition = "text")
 	private String description;
+	@Transient
+	@JsonIgnore
+	private boolean updateMode;
 
 	public Project() {
 		;
@@ -76,6 +80,9 @@ public class Project {
 	@JsonIgnore
 	@AssertTrue(message = "{id.valid}")
 	public boolean isValidId() {
+		if (updateMode) {
+			return true;
+		}
 		return id == 0;
 	}
 
@@ -177,5 +184,13 @@ public class Project {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public boolean isUpdateMode() {
+		return updateMode;
+	}
+
+	public void setUpdateMode(boolean updateMode) {
+		this.updateMode = updateMode;
 	}
 }

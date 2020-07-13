@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -31,6 +32,9 @@ public class Report {
 	@NotNull
 	@Column(columnDefinition = "text")
 	private String text;
+	@Transient
+	@JsonIgnore
+	private boolean updateMode;
 
 	public Report() {
 		;
@@ -47,6 +51,9 @@ public class Report {
 	@JsonIgnore
 	@AssertTrue(message = "{id.valid}")
 	public boolean isValidId() {
+		if (updateMode) {
+			return true;
+		}
 		return id == 0;
 	}
 
@@ -88,5 +95,13 @@ public class Report {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public boolean isUpdateMode() {
+		return updateMode;
+	}
+
+	public void setUpdateMode(boolean updateMode) {
+		this.updateMode = updateMode;
 	}
 }

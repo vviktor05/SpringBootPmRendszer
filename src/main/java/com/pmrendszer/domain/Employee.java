@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -53,6 +54,9 @@ public class Employee {
 	@Column(columnDefinition = "timestamp")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date lastLoginDate;
+	@Transient
+	@JsonIgnore
+	private boolean updateMode;
 
 	public Employee() {
 		;
@@ -74,6 +78,9 @@ public class Employee {
 	@JsonIgnore
 	@AssertTrue(message = "{id.valid}")
 	public boolean isValidId() {
+		if (updateMode) {
+			return true;
+		}
 		return id == 0;
 	}
 
@@ -179,5 +186,13 @@ public class Employee {
 
 	public void setLastLoginDate(Date lastLoginDate) {
 		this.lastLoginDate = lastLoginDate;
+	}
+
+	public boolean isUpdateMode() {
+		return updateMode;
+	}
+
+	public void setUpdateMode(boolean updateMode) {
+		this.updateMode = updateMode;
 	}
 }
