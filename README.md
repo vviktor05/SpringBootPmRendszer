@@ -1,10 +1,19 @@
 # Spring Boot Projektmenedzsment rendszer
 Az első Spring Boot projektem.
 
-A működéshez az üres adatbázisnak léteznie kell pmrendszer néven.
+A működéshez az üres adatbázisnak léteznie kell "pmrendszer" néven. 
 
-Teszt adatok (Project manager):
-felhasználónév: admin@gmail.com
+Második indítás elött az application-dev.properties fájlban át kell állítani jpa.hibernate.ddl-auto=update és datasource.initialization-mode=never állapotba.
+
+Teszt adatok:
+
+felhasználónév: manager@gmail.com
+jelszó: admin
+
+felhasználónév: leader@gmail.com
+jelszó: admin
+
+felhasználónév: developer@gmail.com
 jelszó: admin
 
 # CRUD REST-API útvonalak:

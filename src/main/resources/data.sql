@@ -51,9 +51,9 @@ INSERT INTO customers (name, phone, email, website, zip_code, locality, street_a
 ('IRP International Kft.', '06303264589', 'info@irp.com', 'www.irp.com', '1027', 'Budapest II. kerület', 'Bem József utca 12.');
 
 INSERT INTO employees (name, email, password, job_id, development_area_id, skill_id, start_date, phone_number, last_login_date) VALUES
-('Horváth Krisztina', 'admin@gmail.com', '$2a$10$PMZZVq5qVaC7BrvUKx889O/OpSR15ojylURVvSx.b61t/tZRtQ7jC', 1, 1, 4, '2020-02-01', '06701122345', '2020-03-07 19:28:22'),
-('Faragó András', 'farago@gmail.com', '598dbeb7ca96ccc4523ea8c997fc9cbd6be29baf571495ded2788fa71e8455e0', 2, 1, 3, '2020-02-01', '06701122345', '2020-03-05 00:32:46'),
-('Lukáts Zoltán', 'lukats@gmail.com', '19f18324dfa42ec28807f6c031c9cb24c3883959e13deaa973b1fac04bc2cafb', 3, 1, 2, '2020-02-02', '06701122345', '2020-03-04 19:50:05'),
+('Horváth Krisztina', 'manager@gmail.com', '$2a$10$PMZZVq5qVaC7BrvUKx889O/OpSR15ojylURVvSx.b61t/tZRtQ7jC', 1, 1, 4, '2020-02-01', '06701122345', '2020-03-07 19:28:22'),
+('Faragó András', 'leader@gmail.com', '$2a$10$PMZZVq5qVaC7BrvUKx889O/OpSR15ojylURVvSx.b61t/tZRtQ7jC', 2, 1, 3, '2020-02-01', '06701122345', '2020-03-05 00:32:46'),
+('Lukáts Zoltán', 'developer@gmail.com', '$2a$10$PMZZVq5qVaC7BrvUKx889O/OpSR15ojylURVvSx.b61t/tZRtQ7jC', 3, 1, 2, '2020-02-02', '06701122345', '2020-03-04 19:50:05'),
 ('Lakatos Géza', 'lakatos@gmail.com', '598dbeb7ca96ccc4523ea8c997fc9cbd6be29baf571495ded2788fa71e8455e0', 2, 4, 4, '2020-02-01', '06302425505', '2020-02-28 23:23:39'),
 ('Csikós Csaba', 'csikos@gmail.com', '2c7a4c5f98d05a38a2baf9383930a19afe1d1f3ebd85bce370b15b45e5a37f57', 1, 1, 5, '2018-05-07', '06203254679', NULL),
 ('Kovács Annamária', 'kovacs@gmail.com', '3247df76b73273030876b0a8533182731c5003502b99dd7efad3e93cbc900c83', 1, 4, 4, '2018-11-14', '06306237942', NULL),

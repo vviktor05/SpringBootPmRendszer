@@ -59,14 +59,20 @@ export default class Customer extends Component {
             locality: this.state.locality,
             streetAddress: this.state.streetAddress,
         }
-
-        axios.post("/api/project_manager/customers", customer)
-            .then(response => {
-                if (response.status === 200) {
-                    this.setState(this.initialState);
-                    alert("A megrendelő elmentve!");
-                }
-            });
+        var r;
+        try {
+            axios.post("/api/project_manager/customers", customer)
+                .then(response => {
+                    r = response;
+                    if (response.status === 200) {
+                        this.setState(this.initialState);
+                        alert("A megrendelő elmentve!");
+                    }
+                });
+        } catch (error) {
+            console.log(r.data);
+            alert(error.data + JSON.stringify(r.data));
+        }
     }
 
     updateCustomer = (event) => {

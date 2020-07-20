@@ -3,7 +3,6 @@ package com.pmrendszer;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -33,13 +32,19 @@ public class ProjectApiTests {
 	@Test
 	@WithMockUser(roles = "PROJECT_MANAGER")
 	public void projectManagerGetAllProjects_shouldReturnOk() throws Exception {
-		mockMvc.perform(get("/api/projects")).andExpect(status().isOk());
+		mockMvc.perform(get("/api/project_manager/projects")).andExpect(status().isOk());
 	}
 
 	@Test
 	public void developerGetAllProjects_ShouldReturnForbidden() throws Exception {
-		mockMvc.perform(get("/api/projects").with(httpBasic("admin@gmail.com", "admin")))
+		mockMvc.perform(get("/api/project_manager/projects").with(httpBasic("developer@gmail.com", "admin")))
 				.andExpect(status().isForbidden());
+	}
+	
+	@Test
+	public void developerGetMyProjects_ShouldReturnOk() throws Exception {
+		mockMvc.perform(get("/api/developer/projects").with(httpBasic("developer@gmail.com", "admin")))
+				.andExpect(status().isOk());
 	}
 
 	RestTemplate restTemplate = new RestTemplate();
@@ -50,24 +55,16 @@ public class ProjectApiTests {
 		Project project = projectService.getProjectById(1);
 		project.setId(0);
 
-		mockMvc.perform(post("/api/projects")
+		mockMvc.perform(post("/api/project_manager/projects")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(toJson(project)))
-				.andExpect(status().isForbidden())
-				.andExpect(content().contentType("application/json"));
-	}
-
-
-	@Test
-	public void developerFromDBGetAllMyProjects_ShouldReturnOk() throws Exception {
-		mockMvc.perform(get("/api/developer/projects").with(httpBasic("admin@gmail.com", "admin")))
-				.andExpect(status().isOk());
+				.andExpect(status().isForbidden());
 	}
 
 	@Test
 	@WithMockUser(roles = "PROJECT_MANAGER")
 	public void projectManagerGetProjectsByDetailedSearch_ShouldReturnOk() throws Exception {
-		mockMvc.perform(get("/api/projects/search?developmentAreaId=1")).andExpect(status().isOk());
+		mockMvc.perform(get("/api/project_manager/projects/search?developmentAreaId=1")).andExpect(status().isOk());
 	}
 	
 	public static String toJson(final Object obj) {
