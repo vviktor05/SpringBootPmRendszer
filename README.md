@@ -1,11 +1,13 @@
 # Spring Boot Projektmenedzsment rendszer
 Az első Spring Boot projektem.
 
-A működéshez az üres adatbázisnak léteznie kell "pmrendszer" néven. 
+- Helyi indítás:
+
+A működéshez az üres adatbázisnak léteznie kell lokálisan PostgreSQL szerveren "pmrendszer" néven. 
 
 Második indítás elött az application-dev.properties fájlban át kell állítani jpa.hibernate.ddl-auto=update és datasource.initialization-mode=never állapotba.
 
-Teszt adatok:
+- Teszt adatok:
 
 felhasználónév: manager@gmail.com
 jelszó: admin
@@ -15,6 +17,8 @@ jelszó: admin
 
 felhasználónév: developer@gmail.com
 jelszó: admin
+
+- Live szerver url: https://pmrendszer.herokuapp.com/api/project_manager/projects
 
 # CRUD REST-API útvonalak:
 
