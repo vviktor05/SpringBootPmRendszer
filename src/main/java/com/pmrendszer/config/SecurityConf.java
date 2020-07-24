@@ -29,11 +29,11 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSec) throws Exception {
 		httpSec.addFilterBefore(corsFilter(), SessionManagementFilter.class)
 					.authorizeRequests()
-					.antMatchers("/").permitAll()
+					.antMatchers("/**").permitAll()
 //					.antMatchers("/api/project_manager/**").hasRole("PROJECT_MANAGER")
 //					.antMatchers("/api/team_leader/**").hasRole("TEAM_LEADER")
 //					.antMatchers("/api/developer/**").hasRole("DEVELOPER")
-					.anyRequest().authenticated()
+//					.anyRequest().authenticated()
 				.and()
 					.httpBasic()
 				.and()
