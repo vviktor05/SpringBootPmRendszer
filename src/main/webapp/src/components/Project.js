@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Form, Button, Col } from 'react-bootstrap';
 import axios from 'axios';
+import { url } from '../util/BackendURL';
 
 export default class Project extends Component {
 
@@ -32,29 +33,29 @@ export default class Project extends Component {
     }
 
     findAllLists = () => {
-        axios.get("http://localhost:8080/api/project_manager/customers")
+        axios.get(url("api/project_manager/customers"))
             .then(response => response.data)
             .then((data) => this.lists.customerList = data);
 
-        axios.get("http://localhost:8080/api/project_manager/development_areas")
+        axios.get(url("api/project_manager/development_areas"))
             .then(response => response.data)
             .then((data) => this.lists.developmentAreaList = data);
 
-        axios.get("http://localhost:8080/api/project_manager/project_statuses")
+        axios.get(url("api/project_manager/project_statuses"))
             .then(response => response.data)
             .then((data) => this.lists.projectStatusList = data);
 
-        axios.get("http://localhost:8080/api/project_manager/priorities")
+        axios.get(url("api/project_manager/priorities"))
             .then(response => response.data)
             .then((data) => this.lists.priorityList = data);
 
-        axios.get("http://localhost:8080/api/project_manager/statuses")
+        axios.get(url("api/project_manager/statuses"))
             .then(response => response.data)
             .then((data) => this.lists.statusList = data);
     }
 
     findProjectById = (projectId) => {
-        axios.get("http://localhost:8080/api/project_manager/projects/id/" + projectId)
+        axios.get(url("api/project_manager/projects/id/" + projectId))
             .then(response => {
                 if (response.status === 200) {
                     this.setState({
@@ -94,7 +95,7 @@ export default class Project extends Component {
             description: this.state.description
         }
 
-        axios.post("http://localhost:8080/api/project_manager/projects", project)
+        axios.post(url("api/project_manager/projects", project))
             .then(response => {
                 if (response.status === 200) {
                     this.setState(this.initialState);
@@ -118,7 +119,7 @@ export default class Project extends Component {
             description: this.state.description
         }
 
-        axios.put("http://localhost:8080/api/project_manager/projects/" + this.state.id, project)
+        axios.put(url("api/project_manager/projects/" + this.state.id, project))
             .then(response => {
                 if (response.status === 200) {
                     this.setState(this.initialState);

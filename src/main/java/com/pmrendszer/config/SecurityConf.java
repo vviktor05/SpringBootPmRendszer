@@ -27,7 +27,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSec) throws Exception {
-		httpSec.addFilterBefore(corsFilter(), SessionManagementFilter.class)
+		httpSec.addFilterBefore(crossFilter(), SessionManagementFilter.class)
 					.authorizeRequests()
 					.antMatchers("/").permitAll()
 					.antMatchers("/api/project_manager/**").hasRole("PROJECT_MANAGER")
@@ -47,7 +47,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	CorsFilter corsFilter() {
+	public CorsFilter crossFilter() {
 		CorsFilter filter = new CorsFilter();
 		return filter;
 	}

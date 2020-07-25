@@ -18,7 +18,7 @@ class NavigationBar extends React.Component {
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text>
-                        Belépve: <a href="/"> Viktor</a>
+                        Belépve: Viktor | <a href="/">kijelentkezés</a>
                     </Navbar.Text>
                 </Navbar.Collapse>
             </Navbar>

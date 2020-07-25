@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Form, Button, Col } from 'react-bootstrap';
 import axios from 'axios';
+import { url } from '../util/BackendURL';
 
 export default class Customer extends Component {
 
@@ -24,7 +25,7 @@ export default class Customer extends Component {
     }
 
     findProjectById = (customerId) => {
-        axios.get("/api/project_manager/customers/id/" + customerId)
+        axios.get(url("api/project_manager/customers/id/" + customerId))
             .then(response => {
                 if (response.data != null) {
                     this.setState({
@@ -61,7 +62,7 @@ export default class Customer extends Component {
         }
         var r;
         try {
-            axios.post("/api/project_manager/customers", customer)
+            axios.post(url("api/project_manager/customers", customer))
                 .then(response => {
                     r = response;
                     if (response.status === 200) {
@@ -88,7 +89,7 @@ export default class Customer extends Component {
             streetAddress: this.state.streetAddress,
         }
 
-        axios.put("/api/project_manager/customers/" + this.state.id, customer)
+        axios.put(url("api/project_manager/customers/" + this.state.id, customer))
             .then(response => {
                 if (response.status === 200) {
                     this.setState(this.initialState);

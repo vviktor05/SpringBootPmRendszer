@@ -1,13 +1,13 @@
 # Spring Boot Projektmenedzsment rendszer
 Az első Spring Boot projektem.
 
-- Helyi indítás:
+## Helyi indítás:
 
 A működéshez az üres adatbázisnak léteznie kell lokálisan PostgreSQL szerveren "pmrendszer" néven. 
 
 Második indítás elött az application-dev.properties fájlban át kell állítani jpa.hibernate.ddl-auto=update és datasource.initialization-mode=never állapotba.
 
-- Teszt adatok:
+## Teszt adatok:
 
 felhasználónév: manager@gmail.com
 jelszó: admin
@@ -18,13 +18,13 @@ jelszó: admin
 felhasználónév: developer@gmail.com
 jelszó: admin
 
-- Live szerver url: https://pmrendszer.herokuapp.com/api/project_manager/projects
+## Live szerver url: https://pmrendszer.herokuapp.com/api/project_manager/projects
 
-- A front end részét a projektnek React-ban fejlesztem az src/main/webapp mappán belül, de még kezdetleges ezért nem aktív.
+## A front end részét a projektnek React-ban fejlesztem az src/main/webapp mappán belül, de még kezdetleges ezért nem aktív.
 
 # CRUD REST-API útvonalak:
 
-- GET
+## GET
 
 http://localhost:8080/api/project_manager/projects
 
@@ -154,7 +154,7 @@ http://localhost:8080/api/api/project_manager/priorities
 
 http://localhost:8080/api/api/project_manager/statuses
 
-- POST
+## POST
 
 http://localhost:8080/api/project_manager/projects
 
@@ -180,7 +180,7 @@ http://localhost:8080/api/project_manager/team_memberships
 
 http://localhost:8080/api/project_manager/projects_teams
 
-- PUT
+## PUT
 
 http://localhost:8080/api/project_manager/projects/{id}
 
@@ -206,7 +206,7 @@ http://localhost:8080/api/project_manager/team_memberships/team_id/{teamId}/empl
 
 http://localhost:8080/api/project_manager/projects_teams/project_id/{projectId}/team_id/{teamId}
 
-- DELETE
+## DELETE
 
 http://localhost:8080/api/project_manager/projects/{id}
 

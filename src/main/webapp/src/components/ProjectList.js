@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, Table, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { url } from '../util/BackendURL';
 
 export default class ProjectLista extends Component {
 
@@ -13,13 +14,13 @@ export default class ProjectLista extends Component {
     }
 
     componentDidMount() {
-        axios.get("/api/project_manager/projects")
+        axios.get(url("api/project_manager/projects"))
             .then(response => response.data)
             .then((data) => this.setState({ projects: data }));
     }
 
     deleteProject = (projectId) => {
-        axios.delete("/api/project_manager/projects/" + projectId)
+        axios.delete(url("api/project_manager/projects/" + projectId))
             .then(response => {
                 if (response.data != null) {
                     alert("A projekt törölve!");
