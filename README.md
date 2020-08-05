@@ -166,13 +166,13 @@ http://localhost:8080/api/project_manager/tasks
 
 http://localhost:8080/api/team_leader/tasks
 
-A csapatvezető csak a saját projektjéhez tud hozzá adni feladatot.
+A csapatvezető csak a saját projektjéhez tud hozzáadni feladatot.
 
 http://localhost:8080/api/project_manager/reports
 
 http://localhost:8080/api/team_leader/reports
 
-A csapatvezető csak a saját projektjéhez tud hozzá adni jelentést.
+A csapatvezető csak a saját projektjéhez tud hozzáadni jelentést.
 
 http://localhost:8080/api/project_manager/employees
 
@@ -218,13 +218,13 @@ http://localhost:8080/api/project_manager/tasks/{id}
 
 http://localhost:8080/api/team_leader/tasks/{id}
 
-A csapatvezető csak a saját maga által felvitt feladatot   tudja módosítani.
+A csapatvezető csak a saját maga által felvitt feladatot tudja törölni.
 
 http://localhost:8080/api/project_manager/reports/{id}
 
 http://localhost:8080/api/team_leader/reports/{id}
 
-A csapatvezető csak a saját maga által felvitt jelentést tudja módosítani.
+A csapatvezető csak a saját maga által felvitt jelentést tudja törölni.
 
 http://localhost:8080/api/project_manager/employees/{id}
 
