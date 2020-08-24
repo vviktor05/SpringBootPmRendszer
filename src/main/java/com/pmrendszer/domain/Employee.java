@@ -31,7 +31,7 @@ public class Employee {
 	@Size(max = 100, message = "{email.max}")
 	@Column(unique=true)
 	private String email;
-	@NotNull
+	@Column(nullable = false)
 	@JsonIgnore
 	private String password;
 	@NotNull

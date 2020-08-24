@@ -176,6 +176,8 @@ A csapatvezető csak a saját projektjéhez tud hozzáadni jelentést.
 
 http://localhost:8080/api/project_manager/employees
 
+A jelszót nem kell megadni, alapértelmezetten a kezdés dátuma lesz.
+
 http://localhost:8080/api/project_manager/teams
 
 http://localhost:8080/api/project_manager/team_memberships

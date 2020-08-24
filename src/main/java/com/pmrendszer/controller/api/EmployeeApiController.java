@@ -52,19 +52,19 @@ public class EmployeeApiController {
 		return employeeService.getNotTeamMembers(id);
 	}
 
-	@PostMapping("/project_manager/employees/employees")
+	@PostMapping("/project_manager/employees")
 	public Employee addEmployee(@Valid @RequestBody Employee employee) {
 		return employeeService.addEmployee(employee);
 	}
 
-	@PutMapping("/project_manager/employees/employees/{id}")
+	@PutMapping("/project_manager/employees/{id}")
 	public Employee updateEmployee(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id,
 			@Valid @RequestBody Employee employeeDetails) throws EntityNotFoundException {
 
 		return employeeService.updateEmployee(id, employeeDetails);
 	}
 
-	@DeleteMapping("/project_manager/employees/employees/{id}")
+	@DeleteMapping("/project_manager/employees/{id}")
 	public void deleteEmployee(@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
 		

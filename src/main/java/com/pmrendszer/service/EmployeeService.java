@@ -45,6 +45,7 @@ public class EmployeeService {
 	}
 
 	public Employee addEmployee(Employee employee) {
+		employee.setPassword(CheckerClass.DATE_FORMAT.format(employee.getStartDate()));
 		employee.setPassword(new BCryptPasswordEncoder(10).encode(employee.getPassword()));
 		return employeeRepo.save(employee);
 	}
