@@ -22,7 +22,7 @@ export default class CustomerList extends Component {
     deleteCustomer = (customerId) => {
         axios.delete(url("api/project_manager/customers/" + customerId))
             .then(response => {
-                if (response.data != null) {
+                if (response.status === 200) {
                     alert("A megrendelő törölve!");
                     this.setState({
                         customers: this.state.customers.filter(customer => customer.id !== customerId)
@@ -36,7 +36,7 @@ export default class CustomerList extends Component {
             <Card className="border border-dark bg-dark text-white">
                 <Card.Header>Megrendelők</Card.Header>
                 <Card.Body>
-                    <Link to={"/customers/add"}><Button variant="success" disabled>Megrendelő hozzáadása</Button></Link>
+                    <Link to={"/customers/add"}><Button variant="success">Megrendelő hozzáadása</Button></Link>
                     <Table bordered hover striped variant="dark" style={{ marginTop: "20px" }}>
                         <thead>
                             <tr>
@@ -47,7 +47,7 @@ export default class CustomerList extends Component {
                                 <th>Irányítószám</th>
                                 <th>Helység</th>
                                 <th>Utca, házszám</th>
-                                <th>Gombok</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,7 +56,7 @@ export default class CustomerList extends Component {
                                     <tr align="center">
                                         <td colSpan="10">Nincs elérhető megrendelő.</td>
                                     </tr> :
-                                    this.state.customers.map((customer) => (
+                                    this.state.customers.sort((a, b) => a.id - b.id).map((customer) => (
                                         <tr key={customer.id}>
                                             <td>{customer.name}</td>
                                             <td>{customer.phone}</td>
@@ -66,7 +66,7 @@ export default class CustomerList extends Component {
                                             <td>{customer.locality}</td>
                                             <td>{customer.streetAddress}</td>
                                             <td>
-                                                <Link to={"customers/edit/" + customer.id} className="mr-2 btn btn-sm btn-primary disabled">Módosít</Link>
+                                                <Link to={"customers/edit/" + customer.id} className="mr-2 btn btn-sm btn-primary">Módosít</Link>
                                                 <Button variant="danger" onClick={this.deleteCustomer.bind(this, customer.id)} size="sm">Töröl</Button>
                                             </td>
                                         </tr>

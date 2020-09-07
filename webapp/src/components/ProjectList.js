@@ -20,23 +20,25 @@ export default class ProjectLista extends Component {
     }
 
     deleteProject = (projectId) => {
-        axios.delete(url("api/project_manager/projects/" + projectId))
-            .then(response => {
-                if (response.data != null) {
-                    alert("A projekt törölve!");
-                    this.setState({
-                        projects: this.state.projects.filter(project => project.id !== projectId)
-                    });
-                }
-            });
+        if (window.confirm('Biztosan törli a kiválasztott projektet?')) {
+            axios.delete(url("api/project_manager/projects/" + projectId))
+                .then(response => {
+                    if (response.status === 200) {
+                        this.setState({
+                            projects: this.state.projects.filter(project => project.id !== projectId)
+                        });
+                        alert("A projekt törölve!");
+                    }
+                });
+        }
     }
 
-    render() {
+    render() { 
         return (
             <Card className="border border-dark bg-dark text-white">
                 <Card.Header>Projektek</Card.Header>
                 <Card.Body>
-                    <Link to={"/projects/add"}><Button variant="success" disabled>Projekt hozzáadása</Button></Link>
+                    <Link to={"/projects/add"}><Button variant="success">Projekt hozzáadása</Button></Link>
                     <Table bordered hover striped variant="dark" style={{ marginTop: "20px" }}>
                         <thead>
                             <tr>
@@ -49,7 +51,7 @@ export default class ProjectLista extends Component {
                                 <th>Prioritás</th>
                                 <th>Projektvezető</th>
                                 <th>Státusz</th>
-                                <th>Gombok</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,20 +59,22 @@ export default class ProjectLista extends Component {
                                 this.state.projects.length === 0 ?
                                     <tr align="center">
                                         <td colSpan="10">Nincs elérhető projekt.</td>
-                                    </tr> :
-                                    this.state.projects.map((project) => (
+                                    </tr>
+                                    :
+                                    this.state.projects.sort((a, b) => a.id - b.id).map((project) => (
                                         <tr key={project.id}>
                                             <td>{project.name}</td>
                                             <td>{project.customer.name}</td>
-                                            <td>{project.developmentArea.name}</td>
                                             <td>{project.orderDate}</td>
                                             <td>{project.deadline}</td>
+                                            <td>{project.developmentArea.name}</td>
                                             <td>{project.projectStatus.name}</td>
                                             <td>{project.priority.name}</td>
                                             <td>{project.projectLeader.name}</td>
                                             <td>{project.status.name}</td>
                                             <td>
-                                                <Link to={"projects/edit/" + project.id} className="mr-2 btn btn-sm btn-primary disabled">Módosít</Link>
+                                                {/* <Link to={"projects/details/" + project.id} className="mr-2 btn btn-sm btn-primary">Információ</Link> */}
+                                                <Link to={"projects/edit/" + project.id} className="mr-2 btn btn-sm btn-primary">Módosít</Link>
                                                 <Button variant="danger" onClick={this.deleteProject.bind(this, project.id)} size="sm">Töröl</Button>
                                             </td>
                                         </tr>

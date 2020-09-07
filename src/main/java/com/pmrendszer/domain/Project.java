@@ -91,11 +91,11 @@ public class Project {
 	public boolean isValidNameMinLength() {
 		return CheckerClass.isValidMinLength(name, 5);
 	}
-
+	
 	@JsonIgnore
-	@AssertTrue(message = "{project.name.valid}")
-	public boolean isValidName() {
-		return CheckerClass.isValidName(name);
+	@AssertTrue(message = "{project.dates.valid}")
+	public boolean isValidDates() {
+		return CheckerClass.isValidDates(orderDate, deadline);
 	}
 
 	public int getId() {

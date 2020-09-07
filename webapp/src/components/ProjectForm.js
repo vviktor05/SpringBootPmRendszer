@@ -5,69 +5,79 @@ import axios from 'axios';
 import { url } from '../util/BackendURL';
 
 export default class Project extends Component {
-
     constructor(props) {
         super(props);
-        this.state = this.initialState;
-        this.lists = {
+        this.state = {
+            id: '',
+            name: '',
+            customerId: 1,
+            orderDate: '',
+            deadline: '',
+            developmentAreaId: 1,
+            projectStatusId: 1,
+            priorityId: 1,
+            statusId: 1,
+            description: '',
             customerList: [],
             developmentAreaList: [],
             projectStatusList: [],
             priorityList: [],
             statusList: []
         };
-        this.findAllLists();
+
         this.projectChange = this.projectChange.bind(this);
-        this.submitProject = this.submitProject.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     initialState = {
-        id: '', name: '', customer: {}, orderDate: '', deadline: '', developmentArea: {}, projectStatus: {}, priority: {}, status: {}, description: ''
+        id: '', name: '', customerId: 1, orderDate: '', deadline: '', developmentAreaId: 1, projectStatusId: 1, priorityId: 1, statusId: 1, description: ''
     }
 
     componentDidMount() {
+        this.findAllLists();
+
         const projectId = +this.props.match.params.id;
         if (projectId) {
             this.findProjectById(projectId);
         }
     }
 
-    findAllLists = () => {
+    findAllLists() {
         axios.get(url("api/project_manager/customers"))
             .then(response => response.data)
-            .then((data) => this.lists.customerList = data);
+            .then((data) => this.setState({ customerList: data }));
 
         axios.get(url("api/project_manager/development_areas"))
             .then(response => response.data)
-            .then((data) => this.lists.developmentAreaList = data);
+            .then((data) => this.setState({ developmentAreaList: data }));
 
         axios.get(url("api/project_manager/project_statuses"))
             .then(response => response.data)
-            .then((data) => this.lists.projectStatusList = data);
+            .then((data) => this.setState({ projectStatusList: data }));
 
         axios.get(url("api/project_manager/priorities"))
             .then(response => response.data)
-            .then((data) => this.lists.priorityList = data);
+            .then((data) => this.setState({ priorityList: data }));
 
         axios.get(url("api/project_manager/statuses"))
             .then(response => response.data)
-            .then((data) => this.lists.statusList = data);
+            .then((data) => this.setState({ statusList: data }));
     }
 
-    findProjectById = (projectId) => {
+    findProjectById(projectId) {
         axios.get(url("api/project_manager/projects/id/" + projectId))
             .then(response => {
                 if (response.status === 200) {
                     this.setState({
                         id: response.data.id,
                         name: response.data.name,
-                        customer: response.data.customer,
+                        customerId: this.findProjectIndexInArray(this.state.customerList, response.data.customer.id),
                         orderDate: response.data.orderDate,
                         deadline: response.data.deadline,
-                        developmentArea: response.data.developmentArea,
-                        projectStatus: response.data.projectStatus,
-                        priority: response.data.priority,
-                        status: response.data.status,
+                        developmentAreaId: this.findProjectIndexInArray(this.state.developmentAreaList, response.data.developmentArea.id),
+                        projectStatusId: this.findProjectIndexInArray(this.state.projectStatusList, response.data.projectStatus.id),
+                        priorityId: this.findProjectIndexInArray(this.state.priorityList, response.data.priority.id),
+                        statusId: this.findProjectIndexInArray(this.state.statusList, response.data.status.id),
                         description: response.data.description
                     });
                 }
@@ -76,109 +86,125 @@ export default class Project extends Component {
             });
     }
 
-    resetProject = () => {
-        this.setState(() => this.initialState);
-    }
-
-    submitProject = (event) => {
-        event.preventDefault();
-
-        const project = {
-            name: this.state.name,
-            customer: this.state.customer,
-            orderDate: this.state.orderDate,
-            deadline: this.state.deadline,
-            developmentArea: this.state.developmentArea,
-            projectStatus: this.state.projectStatus,
-            priority: this.state.priority,
-            status: this.state.status,
-            description: this.state.description
+    findProjectIndexInArray(array, id) {
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].id === id) {
+                return i + 1;
+            }
         }
 
-        axios.post(url("api/project_manager/projects", project))
-            .then(response => {
-                if (response.status === 200) {
-                    this.setState(this.initialState);
-                    alert("A project elmentve!");
-                }
-            });
+        return 0;
     }
 
-    updateProject = (event) => {
+    onSubmit(event) {
         event.preventDefault();
 
-        const project = {
-            name: this.state.name,
-            customer: this.state.customer,
-            orderDate: this.state.orderDate,
-            deadline: this.state.deadline,
-            developmentArea: this.state.developmentArea,
-            projectStatus: this.state.projectStatus,
-            priority: this.state.priority,
-            status: this.state.status,
-            description: this.state.description
-        }
+        const testProjectLeader = {
+            id: 1,
+            name: "Horváth Krisztina",
+            email: "manager@gmail.com",
+            job: {
+                id: 1,
+                name: "Projektvezető"
+            },
+            developmentArea: {
+                id: 1,
+                name: "Asztali alkalmazás"
+            },
+            skill: {
+                id: 4,
+                name: "Senior"
+            },
+            startDate: "2020-01-31",
+            phoneNumber: "06701122345",
+            lastLoginDate: "2020-03-07 18:28:22"
+        };
 
-        axios.put(url("api/project_manager/projects/" + this.state.id, project))
+        if (this.checkDetails()) {
+            const project = {
+                name: this.state.name,
+                customer: this.state.customerList[this.state.customerId - 1],
+                orderDate: this.state.orderDate,
+                deadline: this.state.deadline,
+                developmentArea: this.state.developmentAreaList[this.state.developmentAreaId - 1],
+                projectStatus: this.state.projectStatusList[this.state.projectStatusId - 1],
+                priority: this.state.priorityList[this.state.priorityId - 1],
+                projectLeader: testProjectLeader,
+                status: this.state.statusList[this.state.statusId - 1],
+                description: this.state.description
+            }
+
+            if (this.state.id) {
+                this.editProject(project);
+            } else {
+                this.addProject(project);
+            }
+        }
+    }
+
+    addProject(project) {
+        axios.post(url("api/project_manager/projects"), project)
             .then(response => {
                 if (response.status === 200) {
-                    this.setState(this.initialState);
+                    this.resetProject();
                     alert("A project elmentve!");
                     this.projectList();
                 }
             });
     }
 
+    editProject(project) {
+        axios.put(url("api/project_manager/projects/" + this.state.id), project)
+            .then(response => {
+                if (response.status === 200) {
+                    this.resetProject();
+                    alert("A project elmentve!");
+                    this.projectList();
+                }
+            });
+    }
+
+    checkDetails() {
+        if (this.state.name.length >= 5) {
+            if (new Date(this.state.orderDate) < new Date(this.state.deadline)) {
+                return true;
+            } else {
+                alert("A határidőnek késöbbi időpontnak kell lennie, mint a megrendelés dátumának!");
+            }
+        } else {
+            alert("A projekt neve nem lehet rövidebb 5 karakternél!");
+        }
+        return false;
+    }
+
     projectChange = (event) => {
         this.setState({
-            name: event.target.value,
-            customer: this.getObject(this.lists.customerList, event.target.value),
-            orderDate: event.target.value,
-            deadline: event.target.value,
-            developmentArea: this.getObject(this.lists.developmentAreaList, event.target.value),
-            projectStatus: this.getObject(this.lists.projectStatusList, event.target.value),
-            priority: this.getObject(this.lists.priorityList, event.target.value),
-            status: this.getObject(this.lists.statusList, event.target.value),
-            description: event.target.value
+            [event.target.name]: event.target.value
         });
-        console.log(this.state);
     }
 
     projectList = () => {
         return this.props.history.push("/projects");
     }
 
-    getObject = (list, id) => {
-        for (let index = 0; index < list.length; index++) {
-            if (list[index].id === id) {
-                return list[index];
-            }
-        }
-        return null;
-    }
-
-    getIndex = (list, object) => {
-        for (let index = 0; index < list.length; index++) {
-            if (list[index].id === object.id) {
-                return index + 1;
-            }
-        }
-        return 0;
+    resetProject = () => {
+        this.setState(() => this.initialState);
     }
 
     render() {
-        const { name, orderDate, deadline, description } = this.state;
+        const { name, customerId, orderDate, deadline, developmentAreaId, projectStatusId, priorityId, statusId, description } = this.state;
 
         return (
             <Card style={{ width: "75%", margin: "0px auto" }} className="border border-dark bg-dark text-white">
                 <Card.Header> {this.state.id ? "Projekt módosítása" : "Projekt hozzáadása"} </Card.Header>
-                <Form onReset={this.resetProject} onSubmit={this.state.id ? this.updateProject : this.submitProject} id="projektForm">
+                <Form onReset={this.resetProject} onSubmit={this.onSubmit} id="projektForm">
                     <Card.Body>
                         <Form.Row>
                             <Form.Group as={Col} controlId="formName">
                                 <Form.Label>Projekt neve</Form.Label>
                                 <Form.Control required
-                                    type="text" name="name" value={name}
+                                    type="text" name="name"
+                                    value={name}
                                     autoComplete="off"
                                     onChange={this.projectChange}
                                     className={"bg-dark text-white"}
@@ -187,13 +213,16 @@ export default class Project extends Component {
                             <Form.Group as={Col} controlId="formCustomer">
                                 <Form.Label>Megrendelő</Form.Label>
                                 <Form.Control className={"bg-dark text-white"}
-                                    as="select" name="customer" value={this.getIndex(this.lists.customerList, this.state.customer)}
+                                    as="select" name="customerId"
+                                    value={customerId}
                                     onChange={this.projectChange}>
-                                    {this.lists.customerList.map((customer) => (
-                                        <option key={customer.id} value={customer.id}>
-                                            {customer.name}
-                                        </option>
-                                    ))}
+                                    {
+                                        this.state.customerList.map((customer) => (
+                                            <option key={customer.id} value={customer.id}>
+                                                {customer.name}
+                                            </option>
+                                        ))
+                                    }
                                 </Form.Control>
                             </Form.Group>
                         </Form.Row>
@@ -222,9 +251,10 @@ export default class Project extends Component {
                         <Form.Row>
                             <Form.Group as={Col} controlId="formDevelopmentArea">
                                 <Form.Label>Fejlesztési terület</Form.Label>
-                                <Form.Control className={"bg-dark text-white"} as="select" name="developmentArea" value={this.getIndex(this.lists.developmentAreaList, this.state.developmentArea)}
+                                <Form.Control className={"bg-dark text-white"} as="select" name="developmentAreaId"
+                                    value={developmentAreaId}
                                     onChange={this.projectChange}>
-                                    {this.lists.developmentAreaList.map((developmentArea) => (
+                                    {this.state.developmentAreaList.map((developmentArea) => (
                                         <option key={developmentArea.id} value={developmentArea.id}>
                                             {developmentArea.name}
                                         </option>
@@ -233,9 +263,10 @@ export default class Project extends Component {
                             </Form.Group>
                             <Form.Group as={Col} controlId="formProjectStatus">
                                 <Form.Label>Projekt állapot</Form.Label>
-                                <Form.Control className={"bg-dark text-white"} as="select" name="projectStatus" value={this.getIndex(this.lists.projectStatusList, this.state.projectStatus)}
+                                <Form.Control className={"bg-dark text-white"} as="select" name="projectStatusId"
+                                    value={projectStatusId}
                                     onChange={this.projectChange}>
-                                    {this.lists.projectStatusList.map((projectStatus) => (
+                                    {this.state.projectStatusList.map((projectStatus) => (
                                         <option key={projectStatus.id} value={projectStatus.id}>
                                             {projectStatus.name}
                                         </option>
@@ -246,9 +277,11 @@ export default class Project extends Component {
                         <Form.Row>
                             <Form.Group as={Col} controlId="formPriority">
                                 <Form.Label>Prioritás</Form.Label>
-                                <Form.Control className={"bg-dark text-white"} as="select" name="priority" value={this.getIndex(this.lists.priorityList, this.state.priority)}
-                                    onChange={this.projectChange}>
-                                    {this.lists.priorityList.map((priority) => (
+                                <Form.Control className={"bg-dark text-white"} as="select" name="priorityId"
+                                    value={priorityId}
+                                    onChange={this.projectChange}
+                                >
+                                    {this.state.priorityList.map((priority) => (
                                         <option key={priority.id} value={priority.id}>
                                             {priority.name}
                                         </option>
@@ -257,9 +290,11 @@ export default class Project extends Component {
                             </Form.Group>
                             <Form.Group as={Col} controlId="formStatus">
                                 <Form.Label>Státusz</Form.Label>
-                                <Form.Control className={"bg-dark text-white"} as="select" name="status" value={this.getIndex(this.lists.statusList, this.state.status)}
-                                    onChange={this.projectChange}>
-                                    {this.lists.statusList.map((status) => (
+                                <Form.Control className={"bg-dark text-white"} as="select" name="statusId"
+                                    value={statusId}
+                                    onChange={this.projectChange}
+                                >
+                                    {this.state.statusList.map((status) => (
                                         <option key={status.id} value={status.id}>
                                             {status.name}
                                         </option>
@@ -283,7 +318,7 @@ export default class Project extends Component {
                         <Link to={"/projects"}><Button variant="primary">Vissza</Button></Link>
                         <div style={{ "display": "inline", "float": "right" }}>
                             <Button size="bg" variant="success" type="submit">Mentés</Button>
-                            <Button style={{ marginLeft: "10px" }} size="bg" variant="info" type="reset">Alaphelyzet</Button>
+                            {this.state.id ? null : <Button style={{ marginLeft: "10px" }} size="bg" variant="info" type="reset">Alaphelyzet</Button>}
                         </div>
                     </Card.Footer>
                 </Form>

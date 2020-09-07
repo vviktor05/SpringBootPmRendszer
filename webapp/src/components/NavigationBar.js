@@ -18,7 +18,7 @@ class NavigationBar extends React.Component {
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text>
-                        Belépve: Viktor | <a href="/">kijelentkezés</a>
+                        {localStorage.getItem('user') ? <span>Belépve : {localStorage.getItem('user')} | <Link to="/login">Kijelentkezés</Link> </span> : <Link to="/login">Bejelentkezés</Link>}
                     </Navbar.Text>
                 </Navbar.Collapse>
             </Navbar>

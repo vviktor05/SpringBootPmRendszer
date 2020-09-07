@@ -4,13 +4,23 @@ import { Card, Form, Button, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { url } from '../util/BackendURL';
 
-export default class Customer extends Component {
+export default class CustomerForm extends Component {
 
     constructor(props) {
         super(props);
-        this.state = this.initialState;
+        this.state = {
+            id: '',
+            name: '',
+            phone: '',
+            email: '',
+            website: '',
+            zipCode: '',
+            locality: '',
+            streetAddress: ''
+        };
+
         this.customerChange = this.customerChange.bind(this);
-        this.submitCustomer = this.submitCustomer.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     initialState = {
@@ -20,14 +30,14 @@ export default class Customer extends Component {
     componentDidMount() {
         const customerId = +this.props.match.params.id;
         if (customerId) {
-            this.findProjectById(customerId);
+            this.findCustomerById(customerId);
         }
     }
 
-    findProjectById = (customerId) => {
+    findCustomerById(customerId) {
         axios.get(url("api/project_manager/customers/id/" + customerId))
             .then(response => {
-                if (response.data != null) {
+                if (response.status === 200) {
                     this.setState({
                         id: response.data.id,
                         name: response.data.name,
@@ -44,65 +54,91 @@ export default class Customer extends Component {
             });
     }
 
-    resetCustomer = () => {
-        this.setState(() => this.initialState);
-    }
-
-    submitCustomer = (event) => {
+    onSubmit(event) {
         event.preventDefault();
 
-        const customer = {
-            name: this.state.name,
-            phone: this.state.phone,
-            email: this.state.email,
-            website: this.state.website,
-            zipCode: this.state.zipCode,
-            locality: this.state.locality,
-            streetAddress: this.state.streetAddress,
-        }
-        var r;
-        try {
-            axios.post(url("api/project_manager/customers", customer))
-                .then(response => {
-                    r = response;
-                    if (response.status === 200) {
-                        this.setState(this.initialState);
-                        alert("A megrendelő elmentve!");
-                    }
-                });
-        } catch (error) {
-            console.log(r.data);
-            alert(error.data + JSON.stringify(r.data));
+        if (this.checkDetails()) {
+            const customer = {
+                name: this.state.name,
+                phone: this.state.phone,
+                email: this.state.email,
+                website: this.state.website,
+                zipCode: this.state.zipCode,
+                locality: this.state.locality,
+                streetAddress: this.state.streetAddress,
+            }
+
+            if (this.state.id) {
+                this.editCustomer(customer);
+            } else {
+                this.addCustomer(customer);
+            }
         }
     }
 
-    updateCustomer = (event) => {
-        event.preventDefault();
-
-        const customer = {
-            name: this.state.name,
-            phone: this.state.phone,
-            email: this.state.email,
-            website: this.state.website,
-            zipCode: this.state.zipCode,
-            locality: this.state.locality,
-            streetAddress: this.state.streetAddress,
-        }
-
-        axios.put(url("api/project_manager/customers/" + this.state.id, customer))
+    addCustomer(customer) {
+        axios.post(url("api/project_manager/customers"), customer)
             .then(response => {
                 if (response.status === 200) {
-                    this.setState(this.initialState);
+                    this.resetCustomer();
                     alert("A megrendelő elmentve!");
                     this.customerList();
                 }
             });
     }
 
-    customerChange = (event) => {
+    editCustomer(customer) {
+        axios.put(url("api/project_manager/customers/" + this.state.id), customer)
+            .then(response => {
+                if (response.status === 200) {
+                    this.resetCustomer();
+                    alert("A megrendelő elmentve!");
+                    this.customerList();
+                }
+            });
+    }
+
+    checkDetails() {
+        if (this.state.name.length >= 5) {
+            if (this.state.phone.length >= 5) {
+                if (this.state.email.length >= 5) {
+                    if (this.state.website.length >= 5) {
+                        if (this.state.zipCode.length >= 3) {
+                            if (this.state.locality.length >= 3) {
+                                if (this.state.streetAddress.length >= 5) {
+                                    return true;
+                                } else {
+                                    alert("Az utca, házszám nem lehet rövidebb 5 karakternél!");
+                                }
+                            } else {
+                                alert("A helység neve nem lehet rövidebb 3 karakternél!");
+                            }
+                        } else {
+                            alert("Az irányítószám nem lehet rövidebb 3 karakternél!");
+                        }
+                    } else {
+                        alert("A weboldal nem lehet rövidebb 5 karakternél!");
+                    }
+                } else {
+                    alert("Az email nem lehet rövidebb 5 karakternél!");
+                }
+            } else {
+                alert("A telefonszám nem lehet rövidebb 5 karakternél!");
+            }
+        } else {
+            alert("A név nem lehet rövidebb 5 karakternél!");
+        }
+        return false;
+    }
+
+    customerChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         });
+    }
+
+    resetCustomer = () => {
+        this.setState(() => this.initialState);
     }
 
     customerList = () => {
@@ -115,7 +151,7 @@ export default class Customer extends Component {
         return (
             <Card style={{ width: "75%", margin: "0px auto" }} className="border border-dark bg-dark text-white">
                 <Card.Header>{this.state.id ? "Megrendelő módosítása" : "Megrendelő hozzáadása"}</Card.Header>
-                <Form onReset={this.resetCustomer} onSubmit={this.state.id ? this.updateCustomer : this.submitCustomer} id="customerForm">
+                <Form onReset={this.resetCustomer} onSubmit={this.onSubmit} id="customerForm">
                     <Card.Body>
                         <Form.Row>
                             <Form.Group as={Col} controlId="formName">
@@ -193,7 +229,7 @@ export default class Customer extends Component {
                         <Link to={"/customers"}><Button variant="primary">Vissza</Button></Link>
                         <div style={{ "display": "inline", "float": "right" }}>
                             <Button size="bg" variant="success" type="submit">Mentés</Button>
-                            <Button style={{ marginLeft: "10px" }} size="bg" variant="info" type="reset">Alaphelyzet</Button>
+                            {this.state.id ? null : <Button style={{ marginLeft: "10px" }} size="bg" variant="info" type="reset">Alaphelyzet</Button>}
                         </div>
                     </Card.Footer>
                 </Form>

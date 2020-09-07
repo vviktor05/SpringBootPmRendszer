@@ -33,6 +33,10 @@ public abstract class CheckerClass {
 	public static boolean isValidName(String name) {
 		return name.matches(NAME_REGEX);
 	}
+	
+	public static boolean isValidDates(Date date1, Date date2) {
+		return date1.before(date2);
+	}
 
 	public static boolean isValidDate(String date) {
 		return date.matches(DATE_REGEX);

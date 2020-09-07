@@ -11,12 +11,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.session.SessionManagementFilter;
-
 import com.pmrendszer.service.UserDetailsServiceImpl;
 
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @Configuration
 public class SecurityConf extends WebSecurityConfigurerAdapter {
+	
 	@Autowired
 	private UserDetailsServiceImpl userDetailsServiceImpl;
 
@@ -27,23 +27,23 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSec) throws Exception {
-		httpSec.addFilterBefore(crossFilter(), SessionManagementFilter.class)
-					.authorizeRequests()
+		httpSec
+			.addFilterBefore(crossFilter(), SessionManagementFilter.class)
+			.authorizeRequests()
 					.antMatchers("/").permitAll()
-					.antMatchers("/api/project_manager/**").hasRole("PROJECT_MANAGER")
-					.antMatchers("/api/team_leader/**").hasRole("TEAM_LEADER")
-					.antMatchers("/api/developer/**").hasRole("DEVELOPER")
-					.anyRequest().authenticated()
-				.and()
-					.httpBasic()
-				.and()
-					.logout().permitAll()
-					.logoutUrl("/logout")
-					.logoutSuccessUrl("/login")
-					.invalidateHttpSession(true)
-					.deleteCookies("JSESSIONID")
-				.and()
-					.csrf().disable();
+//					.antMatchers("/api/project_manager/**").hasRole("PROJECT_MANAGER")
+//					.antMatchers("/api/team_leader/**").hasRole("TEAM_LEADER")
+//					.antMatchers("/api/developer/**").hasRole("DEVELOPER")
+//					.anyRequest().authenticated()
+			.and()
+				.httpBasic()
+			.and()
+				.logout().permitAll()
+				.logoutUrl("/logout")
+				.invalidateHttpSession(true)
+				.deleteCookies("JSESSIONID")
+			.and()
+				.csrf().disable();
 	}
 
 	@Bean
