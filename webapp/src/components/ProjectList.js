@@ -39,7 +39,7 @@ export default class ProjectLista extends Component {
                 <Card.Header>Projektek</Card.Header>
                 <Card.Body>
                     <Link to={"/projects/add"}><Button variant="success">Projekt hozzáadása</Button></Link>
-                    <Table bordered hover striped variant="dark" style={{ marginTop: "20px" }}>
+                    <Table className="marginTop" bordered hover striped variant="dark">
                         <thead>
                             <tr>
                                 <th>Név</th>
@@ -73,7 +73,7 @@ export default class ProjectLista extends Component {
                                             <td>{project.projectLeader.name}</td>
                                             <td>{project.status.name}</td>
                                             <td>
-                                                {/* <Link to={"projects/details/" + project.id} className="mr-2 btn btn-sm btn-primary">Információ</Link> */}
+                                                <Link to={"projects/details/" + project.id} className="mr-2 btn btn-sm btn-primary disabled">Információ</Link>
                                                 <Link to={"projects/edit/" + project.id} className="mr-2 btn btn-sm btn-primary">Módosít</Link>
                                                 <Button variant="danger" onClick={this.deleteProject.bind(this, project.id)} size="sm">Töröl</Button>
                                             </td>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './CustomerForm.css';
 import { Link } from 'react-router-dom';
 import { Card, Form, Button, Col } from 'react-bootstrap';
 import axios from 'axios';
@@ -149,7 +150,7 @@ export default class CustomerForm extends Component {
         const { name, phone, email, website, zipCode, locality, streetAddress } = this.state;
 
         return (
-            <Card style={{ width: "75%", margin: "0px auto" }} className="border border-dark bg-dark text-white">
+            <Card id="customerFormContainer" className="border border-dark bg-dark text-white">
                 <Card.Header>{this.state.id ? "Megrendelő módosítása" : "Megrendelő hozzáadása"}</Card.Header>
                 <Form onReset={this.resetCustomer} onSubmit={this.onSubmit} id="customerForm">
                     <Card.Body>
@@ -227,9 +228,9 @@ export default class CustomerForm extends Component {
                     </Card.Body>
                     <Card.Footer>
                         <Link to={"/customers"}><Button variant="primary">Vissza</Button></Link>
-                        <div style={{ "display": "inline", "float": "right" }}>
+                        <div className="formButtonsRight">
                             <Button size="bg" variant="success" type="submit">Mentés</Button>
-                            {this.state.id ? null : <Button style={{ marginLeft: "10px" }} size="bg" variant="info" type="reset">Alaphelyzet</Button>}
+                            {this.state.id ? null : <Button className="defaultButtonMarginLeft" size="bg" variant="info" type="reset">Alaphelyzet</Button>}
                         </div>
                     </Card.Footer>
                 </Form>

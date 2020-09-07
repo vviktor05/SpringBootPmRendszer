@@ -24,6 +24,10 @@ jelszó: admin
 
 https://pmrendszer.herokuapp.com
 
+###### Swagger UI:
+
+https://pmrendszer.herokuapp.com/swagger-ui.html
+
 A frontend része a projektnek React-ban készűl és a webapp mappában található. Ez még kezdetleges, fejlesztés alatt áll. Indításkor a Maven automatikusan legenerálja belőle a buildet és átmásolja a megfelelő helyre.
 
 # CRUD REST-API útvonalak:

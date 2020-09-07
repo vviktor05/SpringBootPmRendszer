@@ -15,7 +15,7 @@ import com.pmrendszer.service.UserDetailsServiceImpl;
 
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @Configuration
-public class SecurityConf extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private UserDetailsServiceImpl userDetailsServiceImpl;

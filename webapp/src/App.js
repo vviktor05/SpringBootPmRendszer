@@ -16,9 +16,9 @@ function App() {
   return (
     <Router>
       <NavigationBar />
-      <Container fluid={true}>
+      <Container className="marginTop" fluid={true}>
         <Row>
-          <Col lg={12} style={{ marginTop: "20px" }}>
+          <Col lg={12}>
             <Switch>
               <Route path="/login" exact component={LoginForm} />
               <PrivateRoute path={["/", "/projects"]} exact component={ProjectList} />

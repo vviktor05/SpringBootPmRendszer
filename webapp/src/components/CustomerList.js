@@ -37,7 +37,7 @@ export default class CustomerList extends Component {
                 <Card.Header>Megrendelők</Card.Header>
                 <Card.Body>
                     <Link to={"/customers/add"}><Button variant="success">Megrendelő hozzáadása</Button></Link>
-                    <Table bordered hover striped variant="dark" style={{ marginTop: "20px" }}>
+                    <Table className="marginTop" bordered hover striped variant="dark">
                         <thead>
                             <tr>
                                 <th>Név</th>

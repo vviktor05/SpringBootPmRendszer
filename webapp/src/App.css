@@ -1,4 +1,12 @@
-.App {
-  /* text-align: center; */
+.marginTop{
+  margin-top: 20px;
 }
 
+.formButtonsRight{
+  display: inline;
+  float: right;
+}
+
+.defaultButtonMarginLeft{
+  margin-left: 10px;
+}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './ProjectForm.css';
 import { Link } from 'react-router-dom';
 import { Card, Form, Button, Col } from 'react-bootstrap';
 import axios from 'axios';
@@ -195,7 +196,7 @@ export default class Project extends Component {
         const { name, customerId, orderDate, deadline, developmentAreaId, projectStatusId, priorityId, statusId, description } = this.state;
 
         return (
-            <Card style={{ width: "75%", margin: "0px auto" }} className="border border-dark bg-dark text-white">
+            <Card id="projectFormContainer" className="border border-dark bg-dark text-white">
                 <Card.Header> {this.state.id ? "Projekt módosítása" : "Projekt hozzáadása"} </Card.Header>
                 <Form onReset={this.resetProject} onSubmit={this.onSubmit} id="projektForm">
                     <Card.Body>
@@ -316,9 +317,9 @@ export default class Project extends Component {
                     </Card.Body>
                     <Card.Footer>
                         <Link to={"/projects"}><Button variant="primary">Vissza</Button></Link>
-                        <div style={{ "display": "inline", "float": "right" }}>
+                        <div className="formButtonsRight">
                             <Button size="bg" variant="success" type="submit">Mentés</Button>
-                            {this.state.id ? null : <Button style={{ marginLeft: "10px" }} size="bg" variant="info" type="reset">Alaphelyzet</Button>}
+                            {this.state.id ? null : <Button className="defaultButtonMarginLeft" size="bg" variant="info" type="reset">Alaphelyzet</Button>}
                         </div>
                     </Card.Footer>
                 </Form>

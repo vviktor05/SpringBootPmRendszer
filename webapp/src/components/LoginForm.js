@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './LoginForm.css';
 // import { Link } from 'react-router-dom';
 import { Card, Form, Button, Col } from 'react-bootstrap';
 // import axios from 'axios';
@@ -60,7 +61,7 @@ export default class Project extends Component {
         const { email, password } = this.state;
 
         return (
-            <Card style={{ width: "25%", margin: "0px auto" }} className="border border-dark bg-dark text-white">
+            <Card id="loginFormContainer" className="border border-dark bg-dark text-white">
                 <Card.Header> Bejelentkezés </Card.Header>
                 <Form onSubmit={this.onSubmit} id="projektForm">
                     <Card.Body>
