@@ -1,1 +1,0 @@
-{"version":3,"sources":["NotFound.css"],"names":[],"mappings":"AAAA,UACI,SAAU,CACV,iBAAkB,CAClB,UACJ","file":"main.65ba8d4f.chunk.css","sourcesContent":["#notFound{\r\n    width: 30%;\r\n    margin: 100px auto;\r\n    color: white;\r\n}"]}
