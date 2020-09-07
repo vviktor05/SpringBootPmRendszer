@@ -5,7 +5,9 @@ Az első Spring Boot projektem.
 
 A működéshez az üres adatbázisnak léteznie kell lokálisan PostgreSQL szerveren "pmrendszer" néven. 
 
-Második indítás elött az application-dev.properties fájlban át kell állítani jpa.hibernate.ddl-auto=update és datasource.initialization-mode=never állapotba.
+Első indításnál src/main/resources/application-dev.properties fájlban át kell állítani jpa.hibernate.ddl-auto=create és datasource.initialization-mode=always állapotba, hogy automatikusan létrehozza az adatbázis struktúrát és feltöltse tesztadatokkal.
+
+Második indítás elött a jpa.hibernate.ddl-auto=update és datasource.initialization-mode=never állapotba kell állítani.
 
 ## Teszt adatok:
 
@@ -20,9 +22,9 @@ jelszó: admin
 
 ## Live szerver URL: 
 
-https://pmrendszer.herokuapp.com/api/project_manager/projects
+https://pmrendszer.herokuapp.com
 
-A front end részét a projektnek React-ban fejlesztem az src/main/webapp mappán belül, de még kezdetleges ezért nem aktív.
+A frontend része a projektnek React-ban készűl és a webapp mappában található. Ez még kezdetleges, fejlesztés alatt áll. Indításkor a Maven automatikusan legenerálja belőle a buildet és átmásolja a megfelelő helyre.
 
 # CRUD REST-API útvonalak:
 
