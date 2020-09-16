@@ -3,7 +3,7 @@ Az első Spring Boot projektem.
 
 ## Helyi indítás:
 
-Backend:
+**Backend:**
 
 A működéshez az üres adatbázisnak léteznie kell lokálisan PostgreSQL szerveren "pmrendszer" néven. 
 
@@ -11,13 +11,15 @@ Első indításnál src/main/resources/application-dev.properties fájlban át k
 
 Második indítás elött a jpa.hibernate.ddl-auto=update és datasource.initialization-mode=never állapotba kell állítani.
 
-Build: mvn install
+Build: `mvn install`
 
-Indítás: java -jar target/PmRendszer-0.1.jar
+Indítás: `java -jar target/PmRendszer-0.1.jar`
 
-Frontend:
+**Frontend:**
 
-Dev szerver indítása a webapp mappán belül: npm run dev
+Futtatható környezet kialakítása: `npm install`
+
+Indítás: `npm run dev`
 
 ## Teszt adatok:
 
@@ -32,9 +34,9 @@ jelszó: admin
 
 ## Live szerver URL: 
 
-REST-API: https://pmrendszer.herokuapp.com
+**REST-API:** https://pmrendszer.herokuapp.com
 
-React: https://pmrendszer-react.herokuapp.com
+**React:** https://pmrendszer-react.herokuapp.com
 
 A frontend része a projektnek React-ban készűl és a webapp mappában található. Ez még kezdetleges, fejlesztés alatt áll.
 
