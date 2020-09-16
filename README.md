@@ -3,11 +3,21 @@ Az első Spring Boot projektem.
 
 ## Helyi indítás:
 
+Backend:
+
 A működéshez az üres adatbázisnak léteznie kell lokálisan PostgreSQL szerveren "pmrendszer" néven. 
 
 Első indításnál src/main/resources/application-dev.properties fájlban át kell állítani jpa.hibernate.ddl-auto=create és datasource.initialization-mode=always állapotba, hogy automatikusan létrehozza az adatbázis struktúrát és feltöltse tesztadatokkal.
 
 Második indítás elött a jpa.hibernate.ddl-auto=update és datasource.initialization-mode=never állapotba kell állítani.
+
+Build: mvn install
+
+Indítás: java -jar target/PmRendszer-0.1.jar
+
+Frontend:
+
+Dev szerver indítása a webapp mappán belül: npm run dev
 
 ## Teszt adatok:
 
@@ -22,15 +32,17 @@ jelszó: admin
 
 ## Live szerver URL: 
 
-https://pmrendszer.herokuapp.com
+REST-API: https://pmrendszer.herokuapp.com
+
+React: https://pmrendszer-react.herokuapp.com
+
+A frontend része a projektnek React-ban készűl és a webapp mappában található. Ez még kezdetleges, fejlesztés alatt áll.
 
 ###### Swagger UI:
 
 https://pmrendszer.herokuapp.com/swagger-ui.html
 
-A frontend része a projektnek React-ban készűl és a webapp mappában található. Ez még kezdetleges, fejlesztés alatt áll. Indításkor a Maven automatikusan legenerálja belőle a buildet és átmásolja a megfelelő helyre.
-
-# CRUD REST-API útvonalak:
+# REST-API útvonalak:
 
 ## GET
 
@@ -162,7 +174,11 @@ http://localhost:8080/api/api/project_manager/priorities
 
 http://localhost:8080/api/api/project_manager/statuses
 
+http://localhost:8080/logout
+
 ## POST
+
+http://localhost:8080/api/auth/signin
 
 http://localhost:8080/api/project_manager/projects
 
