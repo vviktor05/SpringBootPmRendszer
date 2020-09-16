@@ -4,7 +4,6 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +33,13 @@ public class EmployeeApiController {
 			throws EntityNotFoundException {
 
 		return employeeService.getEmployeeById(id);
+	}
+	
+	@GetMapping("/project_manager/employees/email/{email}")
+	public Employee getEmployeeByEmail(@PathVariable(value = "email") String email)
+			throws EntityNotFoundException {
+
+		return employeeService.getEmployeeByEmail(email);
 	}
 
 	@GetMapping("/project_manager/employees/in_team/team_id/{id}")

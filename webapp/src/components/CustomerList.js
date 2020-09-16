@@ -14,13 +14,13 @@ export default class CustomerList extends Component {
     }
 
     componentDidMount() {
-        axios.get(url("api/project_manager/customers"))
+        axios.get(url("api/project_manager/customers"), { withCredentials: true })
             .then(response => response.data)
             .then((data) => this.setState({ customers: data }));
     }
 
     deleteCustomer = (customerId) => {
-        axios.delete(url("api/project_manager/customers/" + customerId))
+        axios.delete(url("api/project_manager/customers/" + customerId), { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     alert("A megrendelő törölve!");

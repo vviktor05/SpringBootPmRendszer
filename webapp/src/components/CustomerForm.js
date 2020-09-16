@@ -36,7 +36,7 @@ export default class CustomerForm extends Component {
     }
 
     findCustomerById(customerId) {
-        axios.get(url("api/project_manager/customers/id/" + customerId))
+        axios.get(url("api/project_manager/customers/id/" + customerId), { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     this.setState({
@@ -78,7 +78,7 @@ export default class CustomerForm extends Component {
     }
 
     addCustomer(customer) {
-        axios.post(url("api/project_manager/customers"), customer)
+        axios.post(url("api/project_manager/customers"), { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     this.resetCustomer();
@@ -89,7 +89,7 @@ export default class CustomerForm extends Component {
     }
 
     editCustomer(customer) {
-        axios.put(url("api/project_manager/customers/" + this.state.id), customer)
+        axios.put(url("api/project_manager/customers/" + this.state.id), { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     this.resetCustomer();
@@ -103,22 +103,18 @@ export default class CustomerForm extends Component {
         if (this.state.name.length >= 5) {
             if (this.state.phone.length >= 5) {
                 if (this.state.email.length >= 5) {
-                    if (this.state.website.length >= 5) {
-                        if (this.state.zipCode.length >= 3) {
-                            if (this.state.locality.length >= 3) {
-                                if (this.state.streetAddress.length >= 5) {
-                                    return true;
-                                } else {
-                                    alert("Az utca, házszám nem lehet rövidebb 5 karakternél!");
-                                }
+                    if (this.state.zipCode.length >= 3) {
+                        if (this.state.locality.length >= 3) {
+                            if (this.state.streetAddress.length >= 5) {
+                                return true;
                             } else {
-                                alert("A helység neve nem lehet rövidebb 3 karakternél!");
+                                alert("Az utca, házszám nem lehet rövidebb 5 karakternél!");
                             }
                         } else {
-                            alert("Az irányítószám nem lehet rövidebb 3 karakternél!");
+                            alert("A helység neve nem lehet rövidebb 3 karakternél!");
                         }
                     } else {
-                        alert("A weboldal nem lehet rövidebb 5 karakternél!");
+                        alert("Az irányítószám nem lehet rövidebb 3 karakternél!");
                     }
                 } else {
                     alert("Az email nem lehet rövidebb 5 karakternél!");
@@ -186,7 +182,7 @@ export default class CustomerForm extends Component {
                             </Form.Group>
                             <Form.Group as={Col} controlId="formName">
                                 <Form.Label>Megrendelő weboldala</Form.Label>
-                                <Form.Control required
+                                <Form.Control
                                     type="text" name="website" value={website}
                                     autoComplete="off"
                                     onChange={this.customerChange}

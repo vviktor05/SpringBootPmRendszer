@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
 import './LoginForm.css';
-// import { Link } from 'react-router-dom';
 import { Card, Form, Button, Col } from 'react-bootstrap';
-// import axios from 'axios';
-// import { url } from '../util/BackendURL';
-// import { userService } from '../services/userService';
+import authService from '../services/AuthService';
 
-export default class Project extends Component {
+export default class LoginForm extends Component {
     constructor(props) {
         super(props);
 
-        // userService.logout();
-
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            loginFailed: false,
+            showSuccessMessage: false
         };
 
         this.loginChange = this.loginChange.bind(this);
@@ -24,21 +21,21 @@ export default class Project extends Component {
     onSubmit(event) {
         event.preventDefault();
 
-        if (this.checkDetails()) {
-            // const user = {
-            //     email: this.state.email,
-            //     password: this.state.password,
-            // }
+        const { email, password } = this.state;
 
-            // axios.post(url("api/project_manager/projects"), project)
-            //     .then(response => {
-            //         if (response.status === 200) {
-            //             this.resetProject();
-            //             alert("A project elmentve!");
-            //             this.projectList();
-            //         }
-            //     });
-            this.props.history.push("/projects");
+        if (this.checkDetails()) {
+            authService.executeBasicAuth(email, password)
+                .then((response) => {
+                    authService.registerSuccessfulLogin(JSON.stringify(response.data));
+                })
+                .catch(() => {
+                    alert("Nem megfelelő adatok!");
+                    this.setState({
+                        showSuccessMessage: false,
+                        hasLoginFailed: true,
+                        password: ''
+                    });
+                })
         }
     }
 
@@ -58,13 +55,17 @@ export default class Project extends Component {
     }
 
     render() {
-        const { email, password } = this.state;
+        const { email, password, loginFailed, showSuccessMessage } = this.state;
 
         return (
             <Card id="loginFormContainer" className="border border-dark bg-dark text-white">
                 <Card.Header> Bejelentkezés </Card.Header>
                 <Form onSubmit={this.onSubmit} id="projektForm">
                     <Card.Body>
+                        <Form.Row>
+                            {loginFailed && <div className="alert alert-warning">Sikertelen bejelentkezés!</div>}
+                            {showSuccessMessage && <div>Sikeres bejelentkezés!</div>}
+                        </Form.Row>
                         <Form.Row>
                             <Form.Group as={Col} controlId="formEmail">
                                 <Form.Label>Email</Form.Label>

@@ -1,5 +1,6 @@
 package com.pmrendszer.config;
 
+import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,12 +12,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.session.SessionManagementFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import com.pmrendszer.service.UserDetailsServiceImpl;
 
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
 	@Autowired
 	private UserDetailsServiceImpl userDetailsServiceImpl;
 
@@ -28,18 +32,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSec) throws Exception {
 		httpSec
-			.addFilterBefore(crossFilter(), SessionManagementFilter.class)
+			.addFilterBefore(corsFilterBean(), SessionManagementFilter.class)
 			.authorizeRequests()
 					.antMatchers("/").permitAll()
-//					.antMatchers("/api/project_manager/**").hasRole("PROJECT_MANAGER")
-//					.antMatchers("/api/team_leader/**").hasRole("TEAM_LEADER")
-//					.antMatchers("/api/developer/**").hasRole("DEVELOPER")
-//					.anyRequest().authenticated()
+					.antMatchers("/api/project_manager/**").hasRole("PROJECT_MANAGER")
+					.antMatchers("/api/team_leader/**").hasRole("TEAM_LEADER")
+					.antMatchers("/api/developer/**").hasRole("DEVELOPER")
+					.anyRequest().authenticated()
 			.and()
 				.httpBasic()
 			.and()
 				.logout().permitAll()
 				.logoutUrl("/logout")
+				.clearAuthentication(true)
 				.invalidateHttpSession(true)
 				.deleteCookies("JSESSIONID")
 			.and()
@@ -47,9 +52,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	public CorsFilter crossFilter() {
-		CorsFilter filter = new CorsFilter();
-		return filter;
+	public CorsFilter corsFilterBean() {
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        
+        config.setAllowCredentials(true);
+        config.setAllowedOrigins(Arrays.asList("https://pmrendszer-react.herokuapp.com", "http://localhost:3000"));
+        config.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Headers","Access-Control-Allow-Origin","Access-Control-Request-Method", 
+        		"Access-Control-Request-Headers","Origin","Cache-Control", "Content-Type", "Authorization"));
+        config.setAllowedMethods(Arrays.asList("DELETE", "OPTIONS", "GET", "POST", "PATCH", "PUT"));
+        source.registerCorsConfiguration("/**", config);
+        
+        return new CorsFilter(source);
 	}
 
 	@Bean

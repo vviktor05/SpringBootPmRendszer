@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { Container, Row, Col } from 'reactstrap';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 import { PrivateRoute } from './components/PrivateRoute'
 import NavigationBar from './components/NavigationBar';
 import LoginForm from './components/LoginForm';

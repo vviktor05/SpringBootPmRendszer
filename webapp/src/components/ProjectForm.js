@@ -11,13 +11,13 @@ export default class Project extends Component {
         this.state = {
             id: '',
             name: '',
-            customerId: 1,
+            customerId: 0,
             orderDate: '',
             deadline: '',
-            developmentAreaId: 1,
-            projectStatusId: 1,
-            priorityId: 1,
-            statusId: 1,
+            developmentAreaId: 0,
+            projectStatusId: 0,
+            priorityId: 0,
+            statusId: 0,
             description: '',
             customerList: [],
             developmentAreaList: [],
@@ -31,7 +31,7 @@ export default class Project extends Component {
     }
 
     initialState = {
-        id: '', name: '', customerId: 1, orderDate: '', deadline: '', developmentAreaId: 1, projectStatusId: 1, priorityId: 1, statusId: 1, description: ''
+        id: '', name: '', customerId: 0, orderDate: '', deadline: '', developmentAreaId: 0, projectStatusId: 0, priorityId: 0, statusId: 0, description: ''
     }
 
     componentDidMount() {
@@ -44,41 +44,41 @@ export default class Project extends Component {
     }
 
     findAllLists() {
-        axios.get(url("api/project_manager/customers"))
+        axios.get(url("api/project_manager/customers"), { withCredentials: true })
             .then(response => response.data)
             .then((data) => this.setState({ customerList: data }));
 
-        axios.get(url("api/project_manager/development_areas"))
+        axios.get(url("api/project_manager/development_areas"), { withCredentials: true })
             .then(response => response.data)
             .then((data) => this.setState({ developmentAreaList: data }));
 
-        axios.get(url("api/project_manager/project_statuses"))
+        axios.get(url("api/project_manager/project_statuses"), { withCredentials: true })
             .then(response => response.data)
             .then((data) => this.setState({ projectStatusList: data }));
 
-        axios.get(url("api/project_manager/priorities"))
+        axios.get(url("api/project_manager/priorities"), { withCredentials: true })
             .then(response => response.data)
             .then((data) => this.setState({ priorityList: data }));
 
-        axios.get(url("api/project_manager/statuses"))
+        axios.get(url("api/project_manager/statuses"), { withCredentials: true })
             .then(response => response.data)
             .then((data) => this.setState({ statusList: data }));
     }
 
-    findProjectById(projectId) {
-        axios.get(url("api/project_manager/projects/id/" + projectId))
+    findProjectById = (projectId) => {
+        axios.get(url("api/project_manager/projects/id/" + projectId), { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     this.setState({
                         id: response.data.id,
                         name: response.data.name,
-                        customerId: this.findProjectIndexInArray(this.state.customerList, response.data.customer.id),
+                        customerId: response.data.customer.id,
                         orderDate: response.data.orderDate,
                         deadline: response.data.deadline,
-                        developmentAreaId: this.findProjectIndexInArray(this.state.developmentAreaList, response.data.developmentArea.id),
-                        projectStatusId: this.findProjectIndexInArray(this.state.projectStatusList, response.data.projectStatus.id),
-                        priorityId: this.findProjectIndexInArray(this.state.priorityList, response.data.priority.id),
-                        statusId: this.findProjectIndexInArray(this.state.statusList, response.data.status.id),
+                        developmentAreaId: response.data.developmentArea.id,
+                        projectStatusId: response.data.projectStatus.id,
+                        priorityId: response.data.priority.id,
+                        statusId: response.data.status.id,
                         description: response.data.description
                     });
                 }
@@ -87,17 +87,7 @@ export default class Project extends Component {
             });
     }
 
-    findProjectIndexInArray(array, id) {
-        for (let i = 0; i < array.length; i++) {
-            if (array[i].id === id) {
-                return i + 1;
-            }
-        }
-
-        return 0;
-    }
-
-    onSubmit(event) {
+    onSubmit = (event) => {
         event.preventDefault();
 
         const testProjectLeader = {
@@ -122,17 +112,20 @@ export default class Project extends Component {
         };
 
         if (this.checkDetails()) {
+            const { name, customerId, orderDate, deadline, developmentAreaId, projectStatusId, priorityId, statusId, description, customerList,
+                developmentAreaList, projectStatusList, priorityList, statusList } = this.state;
+
             const project = {
-                name: this.state.name,
-                customer: this.state.customerList[this.state.customerId - 1],
-                orderDate: this.state.orderDate,
-                deadline: this.state.deadline,
-                developmentArea: this.state.developmentAreaList[this.state.developmentAreaId - 1],
-                projectStatus: this.state.projectStatusList[this.state.projectStatusId - 1],
-                priority: this.state.priorityList[this.state.priorityId - 1],
+                name: name,
+                customer: this.findObjectInArray(customerId, customerList),
+                orderDate: orderDate,
+                deadline: deadline,
+                developmentArea: this.findObjectInArray(developmentAreaId, developmentAreaList),
+                projectStatus: this.findObjectInArray(projectStatusId, projectStatusList),
+                priority: this.findObjectInArray(priorityId, priorityList),
                 projectLeader: testProjectLeader,
-                status: this.state.statusList[this.state.statusId - 1],
-                description: this.state.description
+                status: this.findObjectInArray(statusId, statusList),
+                description: description
             }
 
             if (this.state.id) {
@@ -143,23 +136,31 @@ export default class Project extends Component {
         }
     }
 
-    addProject(project) {
-        axios.post(url("api/project_manager/projects"), project)
+    findObjectInArray(id, array) {
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].id == id) {
+                return array[i];
+            }
+        }
+    }
+
+    addProject = (project) => {
+        axios.post(url("api/project_manager/projects"), { withCredentials: true, data: project })
             .then(response => {
                 if (response.status === 200) {
-                    this.resetProject();
                     alert("A project elmentve!");
+                    this.resetProject();
                     this.projectList();
                 }
             });
     }
 
-    editProject(project) {
-        axios.put(url("api/project_manager/projects/" + this.state.id), project)
+    editProject = (project) => {
+        axios.put(url("api/project_manager/projects/" + this.state.id), { withCredentials: true, data: project })
             .then(response => {
                 if (response.status === 200) {
-                    this.resetProject();
                     alert("A project elmentve!");
+                    this.resetProject();
                     this.projectList();
                 }
             });

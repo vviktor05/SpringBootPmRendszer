@@ -1,27 +1,30 @@
 import React, { Component } from 'react';
-import { Card, Table, Button } from 'react-bootstrap';
+import { Card, Table, Button, Form, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { url } from '../util/BackendURL';
+import './ProjectList.css';
 
 export default class ProjectLista extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            projects: []
+            projects: [],
+            projectName: "",
+            activeProjects: false
         };
     }
 
     componentDidMount() {
-        axios.get(url("api/project_manager/projects"))
+        axios.get(url("api/project_manager/projects"), { withCredentials: true })
             .then(response => response.data)
             .then((data) => this.setState({ projects: data }));
     }
 
     deleteProject = (projectId) => {
         if (window.confirm('Biztosan törli a kiválasztott projektet?')) {
-            axios.delete(url("api/project_manager/projects/" + projectId))
+            axios.delete(url("api/project_manager/projects/" + projectId), { withCredentials: true })
                 .then(response => {
                     if (response.status === 200) {
                         this.setState({
@@ -33,12 +36,48 @@ export default class ProjectLista extends Component {
         }
     }
 
-    render() { 
+    projectListChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
+    searchProject = () => {
+
+    }
+
+    refreshProjects = () => {
+
+    }
+
+    render() {
+        const { projectName, activeProjects } = this.state;
+
         return (
             <Card className="border border-dark bg-dark text-white">
                 <Card.Header>Projektek</Card.Header>
                 <Card.Body>
                     <Link to={"/projects/add"}><Button variant="success">Projekt hozzáadása</Button></Link>
+                    <Form onSubmit={this.searchProject()} id="projektForm">
+                        <Form.Row>
+                            <Col xs="auto">
+                                <Form.Label>Projekt neve</Form.Label>
+                            </Col>
+                            <Col xs="auto">
+                                <Form.Control required
+                                    id="projectName"
+                                    type="text" name="projectName"
+                                    value={projectName}
+                                    autoComplete="off"
+                                    onChange={this.projectListChange}
+                                    className={"bg-dark text-white"}
+                                    placeholder="Add meg a projekt nevét" />
+                            </Col>
+                            <Col xs="auto">
+                                <Button className="mr-2 btn btn-sm btn-primary disabled" type="submit">Keresés</Button>
+                            </Col>
+                        </Form.Row>
+                    </Form>
                     <Table className="marginTop" bordered hover striped variant="dark">
                         <thead>
                             <tr>
@@ -83,6 +122,21 @@ export default class ProjectLista extends Component {
                         </tbody>
                     </Table>
                 </Card.Body>
+                <Card.Footer>
+                    <Form onSubmit={this.refreshProjects()} id="projektForm">
+                        <div id="projectListFooter">
+                            <span>Aktív projektek </span>
+                            <Form.Check
+                                type="checkbox" name="activeProjects"
+                                inline
+                                value={activeProjects}
+                                autoComplete="off"
+                                onChange={this.projectListChange}
+                                className={"bg-dark text-white"} />
+                            <Button className="mr-2 btn btn-sm btn-primary disabled" type="submit">Frissítés</Button>
+                        </div>
+                    </Form>
+                </Card.Footer>
             </Card>
         )
     }
