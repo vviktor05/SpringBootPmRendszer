@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { Card, Form, Button, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { url } from '../util/BackendURL';
+import authHeader from '../helpers/authHeader';
+import authService from '../services/AuthService';
 
 export default class Project extends Component {
     constructor(props) {
@@ -11,13 +13,13 @@ export default class Project extends Component {
         this.state = {
             id: '',
             name: '',
-            customerId: 0,
+            customerId: 1,
             orderDate: '',
             deadline: '',
-            developmentAreaId: 0,
-            projectStatusId: 0,
-            priorityId: 0,
-            statusId: 0,
+            developmentAreaId: 1,
+            projectStatusId: 1,
+            priorityId: 1,
+            statusId: 1,
             description: '',
             customerList: [],
             developmentAreaList: [],
@@ -31,7 +33,7 @@ export default class Project extends Component {
     }
 
     initialState = {
-        id: '', name: '', customerId: 0, orderDate: '', deadline: '', developmentAreaId: 0, projectStatusId: 0, priorityId: 0, statusId: 0, description: ''
+        id: '', name: '', customerId: 1, orderDate: '', deadline: '', developmentAreaId: 1, projectStatusId: 1, priorityId: 1, statusId: 1, description: ''
     }
 
     componentDidMount() {
@@ -44,29 +46,29 @@ export default class Project extends Component {
     }
 
     findAllLists() {
-        axios.get(url("api/project_manager/customers"), { withCredentials: true })
+        axios.get(url("api/project_manager/customers"), { headers: authHeader() })
             .then(response => response.data)
             .then((data) => this.setState({ customerList: data }));
 
-        axios.get(url("api/project_manager/development_areas"), { withCredentials: true })
+        axios.get(url("api/project_manager/development_areas"), { headers: authHeader() })
             .then(response => response.data)
             .then((data) => this.setState({ developmentAreaList: data }));
 
-        axios.get(url("api/project_manager/project_statuses"), { withCredentials: true })
+        axios.get(url("api/project_manager/project_statuses"), { headers: authHeader() })
             .then(response => response.data)
             .then((data) => this.setState({ projectStatusList: data }));
 
-        axios.get(url("api/project_manager/priorities"), { withCredentials: true })
+        axios.get(url("api/project_manager/priorities"), { headers: authHeader() })
             .then(response => response.data)
             .then((data) => this.setState({ priorityList: data }));
 
-        axios.get(url("api/project_manager/statuses"), { withCredentials: true })
+        axios.get(url("api/project_manager/statuses"), { headers: authHeader() })
             .then(response => response.data)
             .then((data) => this.setState({ statusList: data }));
     }
 
     findProjectById = (projectId) => {
-        axios.get(url("api/project_manager/projects/id/" + projectId), { withCredentials: true })
+        axios.get(url("api/project_manager/projects/id/" + projectId), { headers: authHeader() })
             .then(response => {
                 if (response.status === 200) {
                     this.setState({
@@ -90,27 +92,6 @@ export default class Project extends Component {
     onSubmit = (event) => {
         event.preventDefault();
 
-        const testProjectLeader = {
-            id: 1,
-            name: "Horváth Krisztina",
-            email: "manager@gmail.com",
-            job: {
-                id: 1,
-                name: "Projektvezető"
-            },
-            developmentArea: {
-                id: 1,
-                name: "Asztali alkalmazás"
-            },
-            skill: {
-                id: 4,
-                name: "Senior"
-            },
-            startDate: "2020-01-31",
-            phoneNumber: "06701122345",
-            lastLoginDate: "2020-03-07 18:28:22"
-        };
-
         if (this.checkDetails()) {
             const { name, customerId, orderDate, deadline, developmentAreaId, projectStatusId, priorityId, statusId, description, customerList,
                 developmentAreaList, projectStatusList, priorityList, statusList } = this.state;
@@ -123,7 +104,7 @@ export default class Project extends Component {
                 developmentArea: this.findObjectInArray(developmentAreaId, developmentAreaList),
                 projectStatus: this.findObjectInArray(projectStatusId, projectStatusList),
                 priority: this.findObjectInArray(priorityId, priorityList),
-                projectLeader: testProjectLeader,
+                projectLeader: authService.getLoggedInUser().employee,
                 status: this.findObjectInArray(statusId, statusList),
                 description: description
             }
@@ -145,7 +126,8 @@ export default class Project extends Component {
     }
 
     addProject = (project) => {
-        axios.post(url("api/project_manager/projects"), { withCredentials: true, data: project })
+        console.log(project);
+        axios.post(url("api/project_manager/projects"), project, { headers: authHeader() })
             .then(response => {
                 if (response.status === 200) {
                     alert("A project elmentve!");
@@ -156,7 +138,7 @@ export default class Project extends Component {
     }
 
     editProject = (project) => {
-        axios.put(url("api/project_manager/projects/" + this.state.id), { withCredentials: true, data: project })
+        axios.put(url("api/project_manager/projects/" + this.state.id), project, { headers: authHeader() })
             .then(response => {
                 if (response.status === 200) {
                     alert("A project elmentve!");

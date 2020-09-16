@@ -129,7 +129,7 @@ public class ProjectService {
 		project.setDeadline(projectDetails.getDeadline());
 		project.setProjectStatus(projectDetails.getProjectStatus());
 		project.setPriority(projectDetails.getPriority());
-		project.setProjectLeader(projectDetails.getProjectLeader());
+//		project.setProjectLeader(projectDetails.getProjectLeader());
 		project.setStatus(projectDetails.getStatus());
 		project.setDescription(projectDetails.getDescription());
 		project.setUpdateMode(true);

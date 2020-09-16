@@ -1,42 +1,55 @@
-package com.pmrendszer.config;
+package com.pmrendszer.security;
 
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.session.SessionManagementFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import com.pmrendszer.service.UserDetailsServiceImpl;
+import com.pmrendszer.security.jwt.AuthEntryPointJwt;
+import com.pmrendszer.security.jwt.AuthTokenFilter;
+import com.pmrendszer.security.services.UserDetailsServiceImpl;
 
 @EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private UserDetailsServiceImpl userDetailsServiceImpl;
+	private UserDetailsServiceImpl userDetailsService;
+
+	@Bean
+	public AuthTokenFilter authenticationJwtTokenFilter() {
+		return new AuthTokenFilter();
+	}
 
 	@Autowired
 	public void configureAuth(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(authProvider());
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 	@Override
 	protected void configure(HttpSecurity httpSec) throws Exception {
-		httpSec
+		httpSec.cors().and()
 			.addFilterBefore(corsFilterBean(), SessionManagementFilter.class)
+			.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
 			.authorizeRequests()
 					.antMatchers("/").permitAll()
-					.antMatchers(HttpMethod.OPTIONS).permitAll()
+					.antMatchers("/api/auth/**").permitAll()
 					.antMatchers("/api/project_manager/**").hasRole("PROJECT_MANAGER")
 					.antMatchers("/api/team_leader/**").hasRole("TEAM_LEADER")
 					.antMatchers("/api/developer/**").hasRole("DEVELOPER")
@@ -50,7 +63,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.invalidateHttpSession(true)
 				.deleteCookies("JSESSIONID")
 			.and()
-				.csrf().disable();
+				.csrf().disable()
+				.exceptionHandling().authenticationEntryPoint(new AuthEntryPointJwt())
+			.and()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 
 	@Bean
@@ -69,11 +85,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	public DaoAuthenticationProvider authProvider() {
-		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-		authProvider.setUserDetailsService(userDetailsServiceImpl);
-		authProvider.setPasswordEncoder(passwordEncoder());
-		return authProvider;
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
 	}
 
 	@Bean

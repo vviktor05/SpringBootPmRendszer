@@ -31,4 +31,5 @@ public interface EmployeeRepo extends CrudRepository<Employee, Integer> {
 			+ "(SELECT employee_id FROM team_memberships tm, teams t "
 			+ "WHERE tm.team_id = t.id AND t.team_leader_id = ?2)", nativeQuery = true)
 	Employee findMyEmployeeById(int employeeId, int teamLeaderId);
+	Boolean existsByEmail(String email);
 }

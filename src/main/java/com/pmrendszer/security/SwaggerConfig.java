@@ -1,4 +1,4 @@
-package com.pmrendszer.config;
+package com.pmrendszer.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

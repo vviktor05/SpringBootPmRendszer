@@ -3,6 +3,7 @@ import './App.css';
 import { Container, Row, Col } from 'reactstrap';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import ProfilePage from './components/ProfilePage'
 import { PrivateRoute } from './components/PrivateRoute'
 import NavigationBar from './components/NavigationBar';
 import LoginForm from './components/LoginForm';
@@ -22,6 +23,7 @@ function App() {
           <Col lg={12}>
             <Switch>
               <Route path="/login" exact component={LoginForm} />
+              <PrivateRoute path="/profile" exact component={ProfilePage} />
               <PrivateRoute path={["/", "/projects"]} exact component={ProjectList} />
               <PrivateRoute path="/projects/add" exact component={ProjectForm} />
               <PrivateRoute path="/projects/edit/:id" exact component={ProjectForm} />

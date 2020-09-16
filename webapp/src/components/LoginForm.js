@@ -10,8 +10,8 @@ export default class LoginForm extends Component {
         this.state = {
             email: '',
             password: '',
-            loginFailed: false,
-            showSuccessMessage: false
+            loading: false,
+            message: ""
         };
 
         this.loginChange = this.loginChange.bind(this);
@@ -21,27 +21,46 @@ export default class LoginForm extends Component {
     onSubmit(event) {
         event.preventDefault();
 
+        this.setState({
+            message: "",
+            loading: true
+        });
+
         const { email, password } = this.state;
 
         if (this.checkDetails()) {
-            authService.executeBasicAuth(email, password)
-                .then((response) => {
-                    authService.registerSuccessfulLogin(JSON.stringify(response.data));
-                })
-                .catch(() => {
-                    alert("Nem megfelelő adatok!");
+            authService.login(email, password).then(
+                () => {
+                    window.location.replace("/projects");
+                },
+                error => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+                    console.log(resMessage);
+
                     this.setState({
-                        showSuccessMessage: false,
-                        hasLoginFailed: true,
-                        password: ''
+                        password: '',
+                        loading: false,
+                        message: "Nem megfelelő adatok!"
                     });
-                })
+                }
+            );
+        } else {
+            this.setState({
+                loading: false
+            });
         }
     }
 
     checkDetails() {
         if (this.state.email.length < 5) {
-            alert("Az email nem lehet rövidebb 5 karakternél!");
+            this.setState({
+                message: "Az email nem lehet rövidebb 5 karakternél!"
+            });
             return false;
         }
 
@@ -55,17 +74,20 @@ export default class LoginForm extends Component {
     }
 
     render() {
-        const { email, password, loginFailed, showSuccessMessage } = this.state;
+        const { email, password, loading, message } = this.state;
 
         return (
             <Card id="loginFormContainer" className="border border-dark bg-dark text-white">
                 <Card.Header> Bejelentkezés </Card.Header>
                 <Form onSubmit={this.onSubmit} id="projektForm">
                     <Card.Body>
-                        <Form.Row>
-                            {loginFailed && <div className="alert alert-warning">Sikertelen bejelentkezés!</div>}
-                            {showSuccessMessage && <div>Sikeres bejelentkezés!</div>}
-                        </Form.Row>
+                        {message && (
+                            <div className="form-group">
+                                <div className="alert alert-danger" role="alert">
+                                    {message}
+                                </div>
+                            </div>
+                        )}
                         <Form.Row>
                             <Form.Group as={Col} controlId="formEmail">
                                 <Form.Label>Email</Form.Label>
@@ -92,7 +114,10 @@ export default class LoginForm extends Component {
                         </Form.Row>
                     </Card.Body>
                     <Card.Footer>
-                        <Button variant="primary" type="submit">Bejelentkezés</Button>
+                        <Button variant="primary" type="submit" disabled={loading}>
+                            Bejelentkezés
+                            {loading && (<span className="spinner-border spinner-border-sm"> </span>)}
+                        </Button>
                     </Card.Footer>
                 </Form>
             </Card >

@@ -1,16 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { CookiesProvider } from 'react-cookie';
+// import { CookiesProvider } from 'react-cookie';
 
 ReactDOM.render(
   <React.StrictMode>
-    <CookiesProvider>
+    {/* <CookiesProvider> */}
+    <BrowserRouter>
       <App />
-    </CookiesProvider>
+    </BrowserRouter>
+    {/* </CookiesProvider> */}
   </React.StrictMode>,
   document.getElementById('root')
 );

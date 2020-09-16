@@ -4,7 +4,34 @@ import { Link } from 'react-router-dom';
 import authService from '../services/AuthService';
 
 export default class NavigationBar extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            loggedInUser: null
+        };
+
+        this.logout = this.logout.bind(this);
+    }
+
+    componentDidMount() {
+        const user = authService.getLoggedInUser();
+
+        if (user) {
+            this.setState({
+                loggedInUser: user
+            });
+        }
+    }
+
+    logout() {
+        authService.logout();
+        window.location.replace("/login");
+    }
+
     render() {
+        const { loggedInUser } = this.state;
+
         return (
             <Navbar bg="dark" variant="dark" >
                 <Link to={"/"} className="navbar-brand">
@@ -28,8 +55,10 @@ export default class NavigationBar extends React.Component {
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text id="menu_text">
-                        {authService.isUserLoggedIn() &&
-                            <span>Belépve : {authService.getLoggedInUsername()} | <Link to="/login" onClick={() => { authService.logout() }}>Kijelentkezés</Link> </span>
+                        {loggedInUser ?
+                            (<span>Belépve : <Link to={"/profile"}>{loggedInUser.employee.name}</Link> | <Link to="" onClick={() => this.logout()}>Kijelentkezés</Link> </span>)
+                            :
+                            (<Link to="/login">Bejelentkezés</Link>)
                         }
                     </Navbar.Text>
                 </Navbar.Collapse>

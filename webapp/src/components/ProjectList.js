@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { url } from '../util/BackendURL';
 import './ProjectList.css';
+import authHeader from '../helpers/authHeader';
 
 export default class ProjectLista extends Component {
 
@@ -17,14 +18,14 @@ export default class ProjectLista extends Component {
     }
 
     componentDidMount() {
-        axios.get(url("api/project_manager/projects"), { withCredentials: true })
+        axios.get(url("api/project_manager/projects"), { headers: authHeader() })
             .then(response => response.data)
             .then((data) => this.setState({ projects: data }));
     }
 
     deleteProject = (projectId) => {
         if (window.confirm('Biztosan törli a kiválasztott projektet?')) {
-            axios.delete(url("api/project_manager/projects/" + projectId), { withCredentials: true })
+            axios.delete(url("api/project_manager/projects/" + projectId), { headers: authHeader() })
                 .then(response => {
                     if (response.status === 200) {
                         this.setState({
@@ -61,7 +62,7 @@ export default class ProjectLista extends Component {
                     <Form onSubmit={this.searchProject()} id="projektForm">
                         <Form.Row>
                             <Col xs="auto">
-                                <Form.Label>Projekt neve</Form.Label>
+                                <Form.Label>Projekt neve:</Form.Label>
                             </Col>
                             <Col xs="auto">
                                 <Form.Control required
@@ -125,7 +126,7 @@ export default class ProjectLista extends Component {
                 <Card.Footer>
                     <Form onSubmit={this.refreshProjects()} id="projektForm">
                         <div id="projectListFooter">
-                            <span>Aktív projektek </span>
+                            <span>Aktív projektek: </span>
                             <Form.Check
                                 type="checkbox" name="activeProjects"
                                 inline

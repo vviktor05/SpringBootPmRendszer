@@ -3,6 +3,7 @@ import { Card, Table, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { url } from '../util/BackendURL';
+import authHeader from '../helpers/authHeader';
 
 export default class CustomerList extends Component {
 
@@ -14,13 +15,13 @@ export default class CustomerList extends Component {
     }
 
     componentDidMount() {
-        axios.get(url("api/project_manager/customers"), { withCredentials: true })
+        axios.get(url("api/project_manager/customers"), { headers: authHeader() })
             .then(response => response.data)
             .then((data) => this.setState({ customers: data }));
     }
 
     deleteCustomer = (customerId) => {
-        axios.delete(url("api/project_manager/customers/" + customerId), { withCredentials: true })
+        axios.delete(url("api/project_manager/customers/" + customerId), { headers: authHeader() })
             .then(response => {
                 if (response.status === 200) {
                     alert("A megrendelő törölve!");

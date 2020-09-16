@@ -6,21 +6,18 @@ export const SESSION_STORAGE_LOGGED_IN_EMPLOYEE = 'authenticatedEmployee';
 
 class AuthService {
 
-    executeBasicAuth(email, password) {
-        return axios.get(url("api/basicauth"),
-            {
-                headers: { Authorization: this.createBasicAuthHeader(email, password) },
-                withCredentials: true
+    login(email, password) {
+        return axios.post(url("api/auth/signin"), {
+                email,
+                password
+            })
+            .then(response => {
+                if (response.data.token) {
+                    sessionStorage.setItem(SESSION_STORAGE_LOGGED_IN_EMPLOYEE, JSON.stringify(response.data));
+                }
+
+                return response.data;
             });
-    }
-
-    createBasicAuthHeader(email, password) {
-        return 'Basic ' + window.btoa(email + ":" + password);
-    }
-
-    registerSuccessfulLogin(employee) {
-        sessionStorage.setItem(SESSION_STORAGE_LOGGED_IN_EMPLOYEE, employee);
-        window.location.replace("/projects");
     }
 
     isUserLoggedIn() {
@@ -59,7 +56,6 @@ class AuthService {
         sessionStorage.removeItem(SESSION_STORAGE_LOGGED_IN_EMPLOYEE);
         Cookies.remove("JSESSIONID");
         axios.get(url("logout"), { withCredentials: true });
-        window.location.replace("/login");
     }
 }
 

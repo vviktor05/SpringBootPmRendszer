@@ -1,9 +1,11 @@
-export function authHeader() {
-    let user = JSON.parse(localStorage.getItem('user'));
+import { SESSION_STORAGE_LOGGED_IN_EMPLOYEE } from '../services/AuthService';
 
-    if (user && user.authdata) {
-        return { 'Authorization': 'Basic ' + user.authdata };
+export default function authHeader() {
+    const user = JSON.parse(sessionStorage.getItem(SESSION_STORAGE_LOGGED_IN_EMPLOYEE));
+  
+    if (user && user.token) {
+      return { Authorization: 'Bearer ' + user.token };
     } else {
-        return {};
+      return {};
     }
-}
+  }

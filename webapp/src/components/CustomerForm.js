@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Card, Form, Button, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { url } from '../util/BackendURL';
+import authHeader from '../helpers/authHeader';
 
 export default class CustomerForm extends Component {
 
@@ -36,7 +37,7 @@ export default class CustomerForm extends Component {
     }
 
     findCustomerById(customerId) {
-        axios.get(url("api/project_manager/customers/id/" + customerId), { withCredentials: true })
+        axios.get(url("api/project_manager/customers/id/" + customerId), { headers: authHeader() })
             .then(response => {
                 if (response.status === 200) {
                     this.setState({
@@ -78,7 +79,7 @@ export default class CustomerForm extends Component {
     }
 
     addCustomer(customer) {
-        axios.post(url("api/project_manager/customers"), { withCredentials: true })
+        axios.post(url("api/project_manager/customers"), customer, { headers: authHeader() })
             .then(response => {
                 if (response.status === 200) {
                     this.resetCustomer();
@@ -89,7 +90,7 @@ export default class CustomerForm extends Component {
     }
 
     editCustomer(customer) {
-        axios.put(url("api/project_manager/customers/" + this.state.id), { withCredentials: true })
+        axios.put(url("api/project_manager/customers/" + this.state.id), customer, { headers: authHeader() })
             .then(response => {
                 if (response.status === 200) {
                     this.resetCustomer();
@@ -174,7 +175,7 @@ export default class CustomerForm extends Component {
                             <Form.Group as={Col} controlId="formName">
                                 <Form.Label>Megrendelő email címe</Form.Label>
                                 <Form.Control required
-                                    type="text" name="email" value={email}
+                                    type="email" name="email" value={email}
                                     autoComplete="off"
                                     onChange={this.customerChange}
                                     className={"bg-dark text-white"}

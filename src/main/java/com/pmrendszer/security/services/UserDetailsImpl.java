@@ -1,4 +1,4 @@
-package com.pmrendszer.service;
+package com.pmrendszer.security.services;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -15,12 +15,16 @@ public class UserDetailsImpl implements UserDetails, Roles {
 		this.employee = employee;
 	}
 
+	public static UserDetailsImpl build(Employee employee) {
+		return new UserDetailsImpl(employee);
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
 		String jobName = employee.getJob().getName();
 		String role;
-		
+
 		if (jobName.equals("Projektvezető")) {
 			role = PROJECT_MANAGER;
 		} else if (jobName.equals("Csapatvezető")) {
@@ -61,5 +65,9 @@ public class UserDetailsImpl implements UserDetails, Roles {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public Employee getEmployee() {
+		return employee;
 	}
 }
