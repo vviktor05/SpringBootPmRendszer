@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         
         config.setAllowCredentials(true);
         config.setAllowedOrigins(Arrays.asList("https://pmrendszer-react.herokuapp.com", "http://localhost:3000"));
-        config.setAllowedHeaders(Arrays.asList("XMLHttpRequest", "Access-Control-Allow-Headers","Access-Control-Allow-Origin","Access-Control-Request-Method", 
+        config.setAllowedHeaders(Arrays.asList("XMLHttpRequest", "X-Requested-With", "Access-Control-Allow-Headers","Access-Control-Allow-Origin","Access-Control-Request-Method", 
         		"Access-Control-Request-Headers","Origin","Cache-Control", "Content-Type", "Authorization"));
         config.setAllowedMethods(Arrays.asList("DELETE", "OPTIONS", "GET", "POST", "PATCH", "PUT"));
         source.registerCorsConfiguration("/**", config);
