@@ -4,6 +4,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -35,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.addFilterBefore(corsFilterBean(), SessionManagementFilter.class)
 			.authorizeRequests()
 					.antMatchers("/").permitAll()
+					.antMatchers(HttpMethod.OPTIONS).permitAll()
 					.antMatchers("/api/project_manager/**").hasRole("PROJECT_MANAGER")
 					.antMatchers("/api/team_leader/**").hasRole("TEAM_LEADER")
 					.antMatchers("/api/developer/**").hasRole("DEVELOPER")
@@ -58,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         
         config.setAllowCredentials(true);
         config.setAllowedOrigins(Arrays.asList("https://pmrendszer-react.herokuapp.com", "http://localhost:3000"));
-        config.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Headers","Access-Control-Allow-Origin","Access-Control-Request-Method", 
+        config.setAllowedHeaders(Arrays.asList("XMLHttpRequest", "Access-Control-Allow-Headers","Access-Control-Allow-Origin","Access-Control-Request-Method", 
         		"Access-Control-Request-Headers","Origin","Cache-Control", "Content-Type", "Authorization"));
         config.setAllowedMethods(Arrays.asList("DELETE", "OPTIONS", "GET", "POST", "PATCH", "PUT"));
         source.registerCorsConfiguration("/**", config);
