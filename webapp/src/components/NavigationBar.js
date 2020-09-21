@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import authService from '../services/AuthService';
 
@@ -33,7 +33,7 @@ export default class NavigationBar extends React.Component {
         const { loggedInUser } = this.state;
 
         return (
-            <Navbar bg="dark" variant="dark" >
+            <Navbar bg="dark" variant="dark">
                 <Link to={"/"} className="navbar-brand">
                     Projektmenedzsment rendszer
                 </Link>
@@ -41,15 +41,19 @@ export default class NavigationBar extends React.Component {
                 <Navbar.Collapse id="basic-navbar-nav">
                     {authService.isUserLoggedIn() &&
                         <Nav className="mr-auto">
-                            <Link to={"/projects"} className="nav-link">Projektek</Link>
-                            {/* Projekten dolgozó csapatok */}
-                            {/* Részletes keresés */}
+                            <NavDropdown title="Projektek" id="collasible-nav-dropdown">
+                                <NavDropdown.Item as={Link} to="/projects">Projektek</NavDropdown.Item>
+                                {/* <NavDropdown.Divider /> */}
+                                <NavDropdown.Item as={Link} to="/projects" className="disabled">Projekten dolgozó csapatok</NavDropdown.Item>
+                                {/* Projekten dolgozó csapatok összeállítása */}
+                            </NavDropdown>
                             <Link to={"/customers"} className="nav-link">Megrendelők</Link>
-                            <Link to={"/tasks"} className="nav-link disabled">Feladatok</Link>
+                            <Link to={"/tasks"} className="nav-link">Feladatok</Link>
                             <Link to={"/reports"} className="nav-link disabled">Jelentések</Link>
                             <Link to={"/employees"} className="nav-link disabled">Dolgozók</Link>
-                            <Link to={"/teams"} className="nav-link disabled">Csapatok</Link>
+                            <Link to={"/teams"} className="nav-link">Csapatok</Link>
                             {/* Csapatok összeállítása */}
+                            {/* Jelszóváltoztatás */}
                         </Nav>
                     }
                 </Navbar.Collapse>

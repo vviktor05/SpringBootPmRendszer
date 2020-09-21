@@ -7,18 +7,22 @@ import ProfilePage from './components/ProfilePage'
 import { PrivateRoute } from './components/PrivateRoute'
 import NavigationBar from './components/NavigationBar';
 import LoginForm from './components/LoginForm';
-import ProjectList from './components/ProjectList';
-import ProjectForm from './components/ProjectForm';
-// import ProjectDetails from './components/ProjectDetails';
-import CustomerList from './components/CustomerList';
-import CustomerForm from './components/CustomerForm';
+import ProjectList from './components/projects/ProjectList';
+import ProjectForm from './components/projects/ProjectForm';
+import CustomerList from './components/customers/CustomerList';
+import CustomerForm from './components/customers/CustomerForm';
+import TaskList from './components/tasks/TaskList';
+// import ReportList from './components/reports/ReportList';
+// import EmployeeList from './components/employees/EmployeeList';
+import TeamList from './components/teams/TeamList';
+import TeamForm from './components/teams/TeamForm';
 import NotFound from './components/NotFound'
 
 function App() {
   return (
     <Router>
       <NavigationBar />
-      <Container className="marginTop" fluid={true}>
+      <Container className="marginTop marginButton" fluid={true}>
         <Row>
           <Col lg={12}>
             <Switch>
@@ -27,10 +31,15 @@ function App() {
               <PrivateRoute path={["/", "/projects"]} exact component={ProjectList} />
               <PrivateRoute path="/projects/add" exact component={ProjectForm} />
               <PrivateRoute path="/projects/edit/:id" exact component={ProjectForm} />
-              {/* <PrivateRoute path="/projects/details/:id" exact component={ProjectDetails} /> */}
               <PrivateRoute path="/customers" exact component={CustomerList} />
               <PrivateRoute path="/customers/add" exact component={CustomerForm} />
               <PrivateRoute path="/customers/edit/:id" exact component={CustomerForm} />
+              <PrivateRoute path="/tasks" exact component={TaskList} />
+              {/* <PrivateRoute path="/reports" exact component={ReportList} /> */}
+              {/* <PrivateRoute path="/employees" exact component={EmployeeList} /> */}
+              <PrivateRoute path="/teams" exact component={TeamList} />
+              <PrivateRoute path="/teams/add" exact component={TeamForm} />
+              <PrivateRoute path="/teams/edit/:id" exact component={TeamForm} />
               <Route exact component={NotFound} />
             </Switch>
           </Col>

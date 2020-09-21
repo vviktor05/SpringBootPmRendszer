@@ -81,13 +81,6 @@ export default class LoginForm extends Component {
                 <Card.Header> Bejelentkezés </Card.Header>
                 <Form onSubmit={this.onSubmit} id="projektForm">
                     <Card.Body>
-                        {message && (
-                            <div className="form-group">
-                                <div className="alert alert-danger" role="alert">
-                                    {message}
-                                </div>
-                            </div>
-                        )}
                         <Form.Row>
                             <Form.Group as={Col} controlId="formEmail">
                                 <Form.Label>Email</Form.Label>
@@ -112,6 +105,13 @@ export default class LoginForm extends Component {
                                     placeholder="Add meg a jelszavad" />
                             </Form.Group>
                         </Form.Row>
+                        {message && (
+                            <div className="form-group">
+                                <div className="alert alert-danger" role="alert">
+                                    {message}
+                                </div>
+                            </div>
+                        )}
                     </Card.Body>
                     <Card.Footer>
                         <Button variant="primary" type="submit" disabled={loading}>

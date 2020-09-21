@@ -8,13 +8,13 @@ import * as serviceWorker from './serviceWorker';
 // import { CookiesProvider } from 'react-cookie';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <React.Fragment>
     {/* <CookiesProvider> */}
     <BrowserRouter>
       <App />
     </BrowserRouter>
     {/* </CookiesProvider> */}
-  </React.StrictMode>,
+  </React.Fragment>,
   document.getElementById('root')
 );
 

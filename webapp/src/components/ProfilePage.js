@@ -18,7 +18,7 @@ export default class Profile extends Component {
             <div id="profile_container" className="container">
                 <header className="jumbotron">
                     <h3>
-                        <strong>{loggedInUser.employee.name}</strong> Profile
+                        <strong>{loggedInUser.employee.name}</strong> profilja
                     </h3>
                 </header>
                 <p>
@@ -34,7 +34,7 @@ export default class Profile extends Component {
                     <strong>Email:</strong>{" "}
                     {loggedInUser.employee.email}
                 </p>
-                <strong>Authorities:</strong>
+                <strong>Jogosultság:</strong>
                 <ul>
                     {loggedInUser.role && <li>{loggedInUser.role}</li>}
                 </ul>

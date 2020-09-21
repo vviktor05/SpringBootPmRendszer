@@ -11,9 +11,7 @@ Első indításnál src/main/resources/application-dev.properties fájlban át k
 
 Második indítás elött a jpa.hibernate.ddl-auto=update és datasource.initialization-mode=never állapotba kell állítani.
 
-Build: `mvn install`
-
-Indítás: `java -jar target/PmRendszer-0.1.jar`
+Indítás: `mvn spring-boot:run`
 
 **Frontend:**
 
@@ -151,6 +149,8 @@ http://localhost:8080/api/project_manager/employees/in_team/team_id/{id}
 A megadott csapat id-vel rendelkező csapatban dolgozó fejlesztőket adja vissza.
 
 http://localhost:8080/api/project_manager/employees/not_in_team/team_id/{id}
+
+http://localhost:8080/api/project_manager/employees/team_leaders
 
 http://localhost:8080/api/team_leader/employees
 
