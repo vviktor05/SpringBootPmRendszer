@@ -211,7 +211,7 @@ export default class ProjectLista extends Component {
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody className="clickable">
+                        <tbody>
                             {
                                 currentProjects.length === 0 ?
                                     <tr align="center">
@@ -219,13 +219,13 @@ export default class ProjectLista extends Component {
                                     </tr>
                                     :
                                     currentProjects.map((project) => (
-                                        <tr key={project.id} onClick={() => this.showProjectDetails(project)}>
-                                            <td>{project.name}</td>
-                                            <td>{project.customer.name}</td>
-                                            <td>{project.orderDate}</td>
-                                            <td>{project.deadline}</td>
-                                            <td>{project.projectLeader.name}</td>
-                                            <td>{project.status.name}</td>
+                                        <tr key={project.id}>
+                                            <td className="clickable" onClick={() => this.showProjectDetails(project)}>{project.name}</td>
+                                            <td className="clickable" onClick={() => this.showProjectDetails(project)}>{project.customer.name}</td>
+                                            <td className="clickable" onClick={() => this.showProjectDetails(project)}>{project.orderDate}</td>
+                                            <td className="clickable" onClick={() => this.showProjectDetails(project)}>{project.deadline}</td>
+                                            <td className="clickable" onClick={() => this.showProjectDetails(project)}>{project.projectLeader.name}</td>
+                                            <td className="clickable" onClick={() => this.showProjectDetails(project)}>{project.status.name}</td>
                                             <td>
                                                 <Link to={"projects/edit/" + project.id} className="mr-2 btn btn-sm btn-outline-primary">Módosít</Link>
                                                 <Button variant="outline-danger" onClick={this.deleteProject.bind(this, project.id)} size="sm">Töröl</Button>
