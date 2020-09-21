@@ -13,7 +13,7 @@ export default class TeamForm extends Component {
         this.state = {
             id: '',
             name: '',
-            teamLeaderId: 1,
+            teamLeaderId: -1,
             teamLeaderList: []
         };
 
@@ -22,7 +22,7 @@ export default class TeamForm extends Component {
     }
 
     initialState = {
-        id: '', name: '', teamLeaderId: 1
+        id: '', name: '', teamLeaderId: -1
     }
 
     componentDidMount() {
@@ -57,7 +57,11 @@ export default class TeamForm extends Component {
 
     onSubmit(event) {
         event.preventDefault();
-        const { name, teamLeaderId, teamLeaderList } = this.state;
+        var { name, teamLeaderId, teamLeaderList } = this.state;
+
+        if(teamLeaderId === -1){
+            teamLeaderId = teamLeaderList[0].id;
+        }
 
         if (this.checkDetails()) {
             const team = {
@@ -154,9 +158,9 @@ export default class TeamForm extends Component {
                                     value={teamLeaderId}
                                     onChange={this.teamChange}>
                                     {
-                                        teamLeaderList.map((team) => (
-                                            <option key={team.id} value={team.id}>
-                                                {team.name}
+                                        teamLeaderList.map((teamLeader) => (
+                                            <option key={teamLeader.id} value={teamLeader.id}>
+                                                {teamLeader.name}
                                             </option>
                                         ))
                                     }

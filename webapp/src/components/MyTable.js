@@ -97,9 +97,9 @@ export default class MyTable extends Component {
         if (jsonFieldName.includes(".")) {
             let fieldNameArray = jsonFieldName.split(".");
 
-            return data[fieldNameArray[0]][fieldNameArray[1]];
+            return data[fieldNameArray[0]][fieldNameArray[1]] + "";
         }
-        return data[jsonFieldName];
+        return data[jsonFieldName] + "";
     }
 
     render() {
@@ -119,7 +119,10 @@ export default class MyTable extends Component {
 
         return (
             <div>
-                <Link to={addButtonLink}><Button variant="success" className={addButtonLink ? "" : "disabled"}>{addButtonTitle}</Button></Link>
+                {
+                    addButtonLink &&
+                    <Link to={addButtonLink}><Button variant="success">{addButtonTitle}</Button></Link>
+                }
                 <div id="projektSearch" className="marginButton">
                     <span>Keresés:</span>
                     <Form.Control required
@@ -160,7 +163,7 @@ export default class MyTable extends Component {
                                             ))
                                         }
                                         <td>
-                                            {<Link to={editButtonLink + "/" + data.id} className={editButtonLink ? "mr-2 btn btn-sm btn-outline-primary" : "mr-2 btn btn-sm btn-outline-primary disabled"}>Módosít</Link>}
+                                            {<Link to={(editButtonLink ? editButtonLink : "") + "/" + data.id} className={editButtonLink ? "mr-2 btn btn-sm btn-outline-primary" : "mr-2 btn btn-sm btn-outline-primary disabled"}>Módosít</Link>}
                                             <Button variant="outline-danger" onClick={() => deleteButtonOnClick(data.id)} size="sm">Töröl</Button>
                                         </td>
                                     </tr>

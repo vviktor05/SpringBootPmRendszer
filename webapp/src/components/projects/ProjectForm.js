@@ -13,7 +13,7 @@ export default class Project extends Component {
         this.state = {
             id: '',
             name: '',
-            customerId: 1,
+            customerId: -1,
             orderDate: '',
             deadline: '',
             developmentAreaId: 1,
@@ -33,7 +33,7 @@ export default class Project extends Component {
     }
 
     initialState = {
-        id: '', name: '', customerId: 1, orderDate: '', deadline: '', developmentAreaId: 1, projectStatusId: 1, priorityId: 1, statusId: 1, description: ''
+        id: '', name: '', customerId: -1, orderDate: '', deadline: '', developmentAreaId: 1, projectStatusId: 1, priorityId: 1, statusId: 1, description: ''
     }
 
     componentDidMount() {
@@ -93,8 +93,12 @@ export default class Project extends Component {
         event.preventDefault();
 
         if (this.checkDetails()) {
-            const { name, customerId, orderDate, deadline, developmentAreaId, projectStatusId, priorityId, statusId, description, customerList,
+            var { name, customerId, orderDate, deadline, developmentAreaId, projectStatusId, priorityId, statusId, description, customerList,
                 developmentAreaList, projectStatusList, priorityList, statusList } = this.state;
+
+            if (customerId === -1) {
+                customerId = customerList[0].id;
+            }
 
             const project = {
                 name: name,
