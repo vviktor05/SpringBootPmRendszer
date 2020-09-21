@@ -29,6 +29,10 @@ public class EmployeeService {
 
 		return employee;
 	}
+	
+	public List<Employee> getAllTeamLeaderEmployees() {
+		return employeeRepo.findAllTeamLeader();
+	}
 
 	public List<Employee> getTeamMembers(int id) throws EntityNotFoundException {
 		List<Employee> employees = employeeRepo.findTeamMembers(id);

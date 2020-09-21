@@ -52,7 +52,7 @@ public class Team {
 	@JsonIgnore
 	@AssertTrue(message = "{team.name.min}")
 	public boolean isValidNameMinLength() {
-		return CheckerClass.isValidMinLength(name, 5);
+		return CheckerClass.isValidMinLength(name, 3);
 	}
 
 	public int getId() {

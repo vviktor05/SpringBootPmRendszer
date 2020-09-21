@@ -42,6 +42,11 @@ public class EmployeeApiController {
 		return employeeService.getEmployeeByEmail(email);
 	}
 
+	@GetMapping("/project_manager/employees/team_leaders")
+	public List<Employee> getAllTeamLeaderEmployees() {
+		return employeeService.getAllTeamLeaderEmployees();
+	}
+	
 	@GetMapping("/project_manager/employees/in_team/team_id/{id}")
 	public List<Employee> getTeamMembers(
 			@PathVariable(value = "id") @Min(value = 1, message = "{id.path.valid}") int id)
