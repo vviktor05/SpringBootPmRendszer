@@ -4,9 +4,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -49,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
 			.authorizeRequests()
 					.antMatchers("/").permitAll()
-					.antMatchers("/swagger-ui.html").permitAll()
+					.antMatchers("/swagger-ui.html", "/favicon.ico", "/swagger-resources/**", "/webjars/springfox-swagger-ui/**", "/v2/api-docs", "/csrf").permitAll()
 					.antMatchers("/api/auth/**").permitAll()
 					.antMatchers("/api/project_manager/**").hasRole("PROJECT_MANAGER")
 					.antMatchers("/api/team_leader/**").hasRole("TEAM_LEADER")
