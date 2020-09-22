@@ -32,6 +32,8 @@ jelszó: admin
 
 ## Live szerver URL: 
 
+### A szerver esetleges lassúsága az ingyenes host miatt fordulhat elő.
+
 **REST-API:** https://pmrendszer.herokuapp.com
 
 **React:** https://pmrendszer-react.herokuapp.com
