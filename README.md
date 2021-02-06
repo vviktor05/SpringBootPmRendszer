@@ -19,15 +19,9 @@ Futtatható környezet kialakítása: `npm install`
 
 Indítás: `npm run dev`
 
-## Teszt adatok:
+## Tesztadat:
 
 felhasználónév: manager@gmail.com
-jelszó: admin
-
-felhasználónév: leader@gmail.com
-jelszó: admin
-
-felhasználónév: developer@gmail.com
 jelszó: admin
 
 ## Live szerver URL: 
@@ -59,6 +53,10 @@ http://localhost:8080/api/project_manager/projects/name/{name}
 http://localhost:8080/api/project_manager/projects/search?customerId=1&developmentAreaId=1&orderDateMin=1&orderDateMax=1&projectStatusId=1&priorityId=1&projectLeaderId=1&statusId=1
 
 0-tól az összes paraméter használatával lehet szűrni, sorrend nem számít.
+
+http://localhost:8080/api/project_manager/jobs
+
+http://localhost:8080/api/project_manager/skills
 
 http://localhost:8080/api/team_leader/projects
 
@@ -230,7 +228,19 @@ A csapatvezető csak a saját maga által felvitt jelentést tudja módosítani.
 
 http://localhost:8080/api/project_manager/employees/{id}
 
+http://localhost:8080/api/project_manager/employees/team_membership/team_id/{id}
+
+Elmenti a dolgozókat a csapatba.
+
+http://localhost:8080/api/team_leader/employees/team_membership/team_id/{id}
+
 http://localhost:8080/api/project_manager/teams/{id}
+
+http://localhost:8080/api/project_manager/teams/working_on/project_id/{id}
+
+Elmenti a projekten dolgozó csapatokat.
+
+http://localhost:8080/api/team_leader/teams/working_on/project_id/{id}
 
 http://localhost:8080/api/project_manager/team_memberships/team_id/{teamId}/employee_id/{employeeId}
 

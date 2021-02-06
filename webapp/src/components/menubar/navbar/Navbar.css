@@ -1,0 +1,80 @@
+.navigationBar {
+    height: 7vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.navigationBar__left, .navigationBar__right {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.navigationBar a {
+    color: white;
+    text-decoration: none;
+}
+
+.navigationBar__title {
+    margin-left: 20px;
+    font-size: x-large;
+    cursor: default;
+}
+
+.navigationBar__hamburgerIcon {
+    height: 100%;
+    margin: 0px 10px;
+    cursor: pointer;
+}
+
+.navigationBar__employee {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0px 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.navigationBar__employee:hover {
+    background: rgba(135, 143, 151, 0.096);
+}
+
+.navigationBar__employeeNameAndJob {
+    letter-spacing: 1px;
+    text-align: right;
+}
+
+.navigationBar__job {
+    font-size: 10px;
+}
+
+.navigationBar__icon {
+    margin: 0px 3px 0px 10px;
+}
+
+.navigationBar__dropdown {
+    position: absolute;
+    top: 60px;
+    right: 0px;
+    background: rgba(52, 58, 64, 0.95);
+    border: 1px solid rgb(68, 75, 82);
+    z-index: 2000;
+    letter-spacing: .5px;
+}
+
+.navigationBar__dropdown a {
+    display: flex;
+    align-items: center;
+    padding: 10px 25px;
+}
+
+.navigationBar__dropdown a:hover {
+    background: rgba(135, 143, 151, 0.205);
+}
+
+.navigationBar__dropdown .navigationBar__icon {
+    margin-right: 5px;
+}

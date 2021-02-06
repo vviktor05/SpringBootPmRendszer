@@ -27,7 +27,7 @@ public class Task {
 	private String topic;
 	@NotNull
 	@Column(columnDefinition = "timestamp")
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date deadline;
 	@NotNull
 	@ManyToOne

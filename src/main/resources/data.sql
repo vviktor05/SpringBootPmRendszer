@@ -113,7 +113,7 @@ INSERT INTO tasks (topic, deadline, team_leader_id, project_id, status_id, descr
 ('Business Card Designer program létrehozása', '2020-04-10', 7, 4, 3, '');
 
 INSERT INTO reports (project_id, recording_date, employee_id, text) VALUES
-(2, '2020-02-02 13:46:05', 4, 'Elkezdtük a web alkalmazással szemben támasztott pontos vevői elvárások definiálását.'),
+(2, '2020-02-02 13:46:05', 4, 'Elkezdtük a webalkalmazással szemben támasztott pontos vevői elvárások definiálását.'),
 (1, '2020-02-12 20:41:04', 1, 'asxsx'),
 (3, '2020-02-17 00:33:33', 1, 'fdsss'),
 (6, '2020-02-18 10:07:50', 1, 'qweqe'),

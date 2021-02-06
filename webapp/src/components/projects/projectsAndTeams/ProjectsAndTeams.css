@@ -1,0 +1,14 @@
+.projectsAndTeams__dragDropContext {
+    display: flex;
+    justify-content: center;
+}
+
+.projectsAndTeams {
+    width: 75%;
+    margin: 0px auto;
+}
+
+.projectsAndTeams___icon {
+    margin-right: 10px;
+    color: 94E1BF;
+}

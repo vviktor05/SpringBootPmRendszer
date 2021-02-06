@@ -1,0 +1,14 @@
+.teamMembership__dragDropContext {
+    display: flex;
+    justify-content: center;
+}
+
+.teamMembership {
+    width: 75%;
+    margin: 0px auto;
+}
+
+.teamMembership___icon {
+    margin-right: 10px;
+    color: 94E1BF;
+}

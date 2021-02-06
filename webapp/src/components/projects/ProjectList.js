@@ -266,6 +266,7 @@ export default class ProjectLista extends Component {
                     </div>
                 </Card.Body>
                 <Card.Footer>
+                    <span>*Több információért kattints egy projektre.</span>
                     <div id="projectListRefresh">
                         <span className="clickable" onClick={() => this.activeProjectsChange()}>Aktív projektek:</span>
                         <input type="checkbox" className="clickable" name="activeProjects" id="activeProjects" checked={activeProjects} value={activeProjects} onChange={this.activeProjectsChange} />

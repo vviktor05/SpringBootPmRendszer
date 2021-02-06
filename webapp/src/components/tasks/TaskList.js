@@ -59,9 +59,9 @@ export default class TaskList extends Component {
                         }
                     ]}
                         datas={this.state.tasks}
-                        // addButtonLink={"/tasks/add"}
+                        addButtonLink={"/tasks/add"}
                         addButtonTitle={"Feladat hozzáadása"}
-                        // editButtonLink={"/tasks/edit"}
+                        editButtonLink={"/tasks/edit"}
                         deleteButtonOnClick={this.deleteTask} />
                 </Card.Body>
             </Card>

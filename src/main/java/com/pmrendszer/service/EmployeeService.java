@@ -1,5 +1,6 @@
 package com.pmrendszer.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,14 +37,14 @@ public class EmployeeService {
 
 	public List<Employee> getTeamMembers(int id) throws EntityNotFoundException {
 		List<Employee> employees = employeeRepo.findTeamMembers(id);
-		CheckerClass.ifEmptyThrowException(employees);
+//		CheckerClass.ifEmptyThrowException(employees);
 
 		return employees;
 	}
 
 	public List<Employee> getNotTeamMembers(int id) throws EntityNotFoundException {
 		List<Employee> employees = employeeRepo.findNotTeamMembers(id);
-		CheckerClass.ifEmptyThrowException(employees);
+//		CheckerClass.ifEmptyThrowException(employees);
 
 		return employees;
 	}
@@ -61,6 +62,13 @@ public class EmployeeService {
 
 		return employeeRepo.save(updateEmployeeDetails(employee, employeeDetails));
 	}
+	
+	public Employee updateEmployeeLastLoginDate(Employee employee) {
+		employee.setLastLoginDate(LocalDateTime.now());
+		employee.setUpdateMode(true);
+		
+		return employeeRepo.save(employee);
+	}
 
 	public void deleteEmployee(int id) throws EntityNotFoundException {
 		Employee employee = employeeRepo.findById(id);
@@ -69,6 +77,17 @@ public class EmployeeService {
 		employeeRepo.delete(employee);
 	}
 
+	public void updateTeamMemberships(int teamId, List<Employee> employees) {
+		employeeRepo.deleteTeamMemberships(teamId);
+		
+		Employee employee;
+		for (int i = 0; i < employees.size(); i++) {
+			employee = employees.get(i);
+			employee.setUpdateMode(true);
+			employeeRepo.saveTeamMemberships(employee.getId(), teamId);
+		}
+	}
+	
 	public List<Employee> getMyEmployees() {
 		return employeeRepo.findMyEmployees(getAuthenticatedEmployee().getId());
 	}
@@ -86,13 +105,11 @@ public class EmployeeService {
 
 	private Employee updateEmployeeDetails(Employee employee, Employee employeeDetails) {
 		employee.setName(employeeDetails.getName());
-		employee.setPassword(employeeDetails.getPassword());
 		employee.setJob(employeeDetails.getJob());
 		employee.setDevelopmentArea(employeeDetails.getDevelopmentArea());
 		employee.setSkill(employeeDetails.getSkill());
 		employee.setStartDate(employeeDetails.getStartDate());
 		employee.setPhoneNumber(employeeDetails.getPhoneNumber());
-		employee.setStartDate(employeeDetails.getLastLoginDate());
 		employee.setUpdateMode(true);
 		return employee;
 	}

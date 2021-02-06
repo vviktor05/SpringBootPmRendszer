@@ -1,6 +1,7 @@
 package com.pmrendszer.service;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pmrendszer.controller.api.error.EntityNotFoundException;
@@ -24,14 +25,14 @@ public class TeamService {
 
 	public List<Team> getTeamsWorkingOnProject(int id) throws EntityNotFoundException {
 		List<Team> teams = teamRepo.findTeamsWorkingOnProject(id);
-		CheckerClass.ifEmptyThrowException(teams);
+//		CheckerClass.ifEmptyThrowException(teams);
 
 		return teams;
 	}
 
 	public List<Team> getTeamsNotWorkingOnProject(int id) throws EntityNotFoundException {
 		List<Team> teams = teamRepo.findTeamsNotWorkingOnProject(id);
-		CheckerClass.ifEmptyThrowException(teams);
+//		CheckerClass.ifEmptyThrowException(teams);
 
 		return teams;
 	}
@@ -54,13 +55,24 @@ public class TeamService {
 		teamRepo.delete(team);
 	}
 
+	public void updateTeamsWorkingOnProject(int projectId, List<Team> teams) {
+		teamRepo.deleteTeamsWorkingOnProject(projectId);
+		
+		Team team;
+		for (int i = 0; i < teams.size(); i++) {
+			team = teams.get(i);
+			team.setUpdateMode(true);
+			teamRepo.saveTeamsWorkingOnProject(team.getId(), projectId);
+		}
+	}
+
 	private Team updateTeamDetails(Team team, Team teamDetails) {
 		team.setName(teamDetails.getName());
 		team.setTeamLeader(teamDetails.getTeamLeader());
 		team.setUpdateMode(true);
 		return team;
 	}
-	
+
 	@Autowired
 	public void setTeamRepo(TeamRepo teamRepo) {
 		this.teamRepo = teamRepo;

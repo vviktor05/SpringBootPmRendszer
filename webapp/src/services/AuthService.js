@@ -5,12 +5,11 @@ import Cookies from 'js-cookie';
 export const SESSION_STORAGE_LOGGED_IN_EMPLOYEE = 'authenticatedEmployee';
 
 class AuthService {
-
     login(email, password) {
         return axios.post(url("api/auth/signin"), {
-                email,
-                password
-            })
+            email,
+            password
+        })
             .then(response => {
                 if (response.data.token) {
                     sessionStorage.setItem(SESSION_STORAGE_LOGGED_IN_EMPLOYEE, JSON.stringify(response.data));
@@ -21,42 +20,40 @@ class AuthService {
     }
 
     isUserLoggedIn() {
-        let user = sessionStorage.getItem(SESSION_STORAGE_LOGGED_IN_EMPLOYEE);
-        if (user === null)
-            return false;
+        if (this.getLoggedInUser())
+            return true;
 
-        return true;
+        return false;
     }
 
     getLoggedInUserEmail() {
-        let user = sessionStorage.getItem(SESSION_STORAGE_LOGGED_IN_EMPLOYEE);
-        if (user === null)
-            return '';
+        let user = this.getLoggedInUser();
+        if (user)
+            return JSON.parse(user).email;
 
-        return JSON.parse(user).email;
+        return "";
     }
 
     getLoggedInUsername() {
-        let user = sessionStorage.getItem(SESSION_STORAGE_LOGGED_IN_EMPLOYEE);
-        if (user === null)
-            return '';
+        let user = this.getLoggedInUser();
+        if (user)
+            return JSON.parse(user).name;
 
-        return JSON.parse(user).name;
+        return "";
     }
 
     getLoggedInUser() {
         let user = sessionStorage.getItem(SESSION_STORAGE_LOGGED_IN_EMPLOYEE);
-        if (user === null)
-            return '';
+        if (user)
+            return JSON.parse(user);
 
-        return JSON.parse(user);
+        return null;
     }
 
     logout() {
         sessionStorage.removeItem(SESSION_STORAGE_LOGGED_IN_EMPLOYEE);
         Cookies.remove("JSESSIONID");
-        axios.get(url("logout"), { withCredentials: true });
     }
 }
 
-export default new AuthService()
+export default new AuthService();

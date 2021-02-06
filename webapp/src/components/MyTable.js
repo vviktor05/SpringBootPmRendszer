@@ -103,7 +103,7 @@ export default class MyTable extends Component {
     }
 
     render() {
-        const { columns, datas, addButtonLink, addButtonTitle, editButtonLink, deleteButtonOnClick } = this.props;
+        const { columns, datas, addButtonLink, addButtonTitle, editButtonLink, deleteButtonOnClick, clickable, handleRowClick } = this.props;
         const { search, currentPage, pageSize, inputCurrentPage } = this.state;
 
         let filteredDatas = datas.filter(
@@ -118,7 +118,7 @@ export default class MyTable extends Component {
         this.totalPages = Math.ceil(filteredDatas.length / pageSize);
 
         return (
-            <div>
+            <div className={this.props.className}>
                 {
                     addButtonLink &&
                     <Link to={addButtonLink}><Button variant="success">{addButtonTitle}</Button></Link>
@@ -146,7 +146,6 @@ export default class MyTable extends Component {
                         </tr>
                     </thead>
                     <tbody
-                    // className="clickable"
                     >
                         {
                             currentDatas.length === 0 ?
@@ -155,11 +154,10 @@ export default class MyTable extends Component {
                                 </tr>
                                 :
                                 currentDatas.map((data) => (
-                                    <tr key={data.id} //{/* onClick={() => this.showProjectDetails(project)} */}
-                                    >
+                                    <tr key={data.id}>
                                         {
                                             columns.map((col, i) => (
-                                                <td key={i}>{this.getDataValue(data, col.jsonFieldName)}</td>
+                                                <td key={i} className={clickable && "clickable"} onClick={handleRowClick && (() => handleRowClick(data))}>{this.getDataValue(data, col.jsonFieldName)}</td>
                                             ))
                                         }
                                         <td>
@@ -201,7 +199,7 @@ export default class MyTable extends Component {
                         </InputGroup.Prepend>
                     </InputGroup>
                 </div>
-            </div>
+            </div >
         )
     }
 }

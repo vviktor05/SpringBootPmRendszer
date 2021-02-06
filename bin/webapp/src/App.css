@@ -1,0 +1,16 @@
+.marginTop{
+  margin-top: 20px;
+}
+
+.marginButton{
+  margin-bottom: 20px;
+}
+
+.formButtonsRight{
+  display: inline;
+  float: right;
+}
+
+.defaultButtonMarginLeft{
+  margin-left: 10px;
+}

@@ -26,7 +26,16 @@ export default class ProjectDetailsModal extends Component {
   getTeams = () => {
     axios.get(url("api/project_manager/teams/working_on/project_id/" + this.state.projectId), { headers: authHeader() })
       .then(response => response.data)
-      .then((data) => { this.setState({ teams: data, teamLeaderName: data[0].teamLeader.name }); this.getEmployees(data[0].id) });
+      .then((data) => {
+        if (data[0]) {
+          this.setState({
+            teams: data,
+            teamLeaderName: data[0].teamLeader.name
+          });
+
+          this.getEmployees(data[0].id)
+        }
+      });
   }
 
   setSelectedTeamID = (selectedTeamID) => {

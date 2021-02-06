@@ -1,9 +1,22 @@
+.app__sidebarAndContent{
+  display: flex;
+}
+
+.app__content{
+  height: 93vh;
+  overflow: auto;
+}
+
 .marginTop{
   margin-top: 20px;
 }
 
 .marginButton{
   margin-bottom: 20px;
+}
+
+.paddingTop{
+  padding-top: 20px;
 }
 
 .formButtonsRight{

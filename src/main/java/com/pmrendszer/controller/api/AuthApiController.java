@@ -19,6 +19,7 @@ import com.pmrendszer.security.jwt.JwtUtils;
 import com.pmrendszer.security.payload.JwtResponse;
 import com.pmrendszer.security.payload.LoginRequest;
 import com.pmrendszer.security.services.UserDetailsImpl;
+import com.pmrendszer.service.EmployeeService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -33,6 +34,8 @@ public class AuthApiController {
 
 	@Autowired
 	JwtUtils jwtUtils;
+	
+	EmployeeService employeeService;
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -46,8 +49,15 @@ public class AuthApiController {
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
-
+		
+		employeeService.updateEmployeeLastLoginDate(userDetails.getEmployee());
+		
 		return ResponseEntity.ok(
 				new JwtResponse(jwt, userDetails.getEmployee(), roles.get(0)));
+	}
+	
+	@Autowired
+	public void setEmployeeService(EmployeeService employeeService) {
+		this.employeeService = employeeService;
 	}
 }

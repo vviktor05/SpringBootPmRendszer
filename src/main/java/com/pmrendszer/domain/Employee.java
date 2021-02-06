@@ -1,5 +1,6 @@
 package com.pmrendszer.domain;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,7 +54,7 @@ public class Employee {
 	@Nullable
 	@Column(columnDefinition = "timestamp")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date lastLoginDate;
+	private LocalDateTime lastLoginDate;
 	@Transient
 	@JsonIgnore
 	private boolean updateMode;
@@ -63,7 +64,7 @@ public class Employee {
 	}
 
 	public Employee(int id, String name, String password, Job job, DevelopmentArea developmentArea, Skill skill,
-			Date startDate, String phoneNumber, Date lastLoginDate) {
+			Date startDate, String phoneNumber, LocalDateTime lastLoginDate) {
 		this.id = id;
 		this.name = name;
 		this.password = password;
@@ -180,11 +181,11 @@ public class Employee {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Date getLastLoginDate() {
+	public LocalDateTime getLastLoginDate() {
 		return lastLoginDate;
 	}
 
-	public void setLastLoginDate(Date lastLoginDate) {
+	public void setLastLoginDate(LocalDateTime lastLoginDate) {
 		this.lastLoginDate = lastLoginDate;
 	}
 

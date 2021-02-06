@@ -20,7 +20,7 @@ public abstract class CheckerClass {
 		}
 	}
 
-	public static void ifEmptyThrowException(List list) throws EntityNotFoundException {
+	public static void ifEmptyThrowException(List<?> list) throws EntityNotFoundException {
 		if (list == null || list.isEmpty()) {
 			throw new EntityNotFoundException("Nincs találat!");
 		}
@@ -33,7 +33,7 @@ public abstract class CheckerClass {
 	public static boolean isValidName(String name) {
 		return name.matches(NAME_REGEX);
 	}
-	
+
 	public static boolean isValidDates(Date date1, Date date2) {
 		return date1.before(date2);
 	}
