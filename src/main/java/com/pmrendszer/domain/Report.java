@@ -1,6 +1,6 @@
 package com.pmrendszer.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +25,7 @@ public class Report {
 	@NotNull
 	@Column(columnDefinition = "timestamp")
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private Date recordingDate;
+	private LocalDateTime recordingDate;
 	@NotNull
 	@ManyToOne
 	private Employee employee;
@@ -40,7 +40,7 @@ public class Report {
 		;
 	}
 
-	public Report(int id, Project project, Date recordingDate, Employee employee, String text) {
+	public Report(int id, Project project, LocalDateTime recordingDate, Employee employee, String text) {
 		this.id = id;
 		this.project = project;
 		this.recordingDate = recordingDate;
@@ -73,11 +73,11 @@ public class Report {
 		this.project = project;
 	}
 
-	public Date getRecordingDate() {
+	public LocalDateTime getRecordingDate() {
 		return recordingDate;
 	}
 
-	public void setRecordingDate(Date recordingDate) {
+	public void setRecordingDate(LocalDateTime recordingDate) {
 		this.recordingDate = recordingDate;
 	}
 

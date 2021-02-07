@@ -1,6 +1,6 @@
 package com.pmrendszer.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +28,7 @@ public class Task {
 	@NotNull
 	@Column(columnDefinition = "timestamp")
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
-	private Date deadline;
+	private LocalDateTime deadline;
 	@NotNull
 	@ManyToOne
 	private Employee teamLeader;
@@ -49,7 +49,7 @@ public class Task {
 		;
 	}
 
-	public Task(int id, String topic, Date deadline, Employee teamLeader, Project project, Status status,
+	public Task(int id, String topic, LocalDateTime deadline, Employee teamLeader, Project project, Status status,
 			String description) {
 		this.id = id;
 		this.topic = topic;
@@ -91,11 +91,11 @@ public class Task {
 		this.topic = topic;
 	}
 
-	public Date getDeadline() {
+	public LocalDateTime getDeadline() {
 		return deadline;
 	}
 
-	public void setDeadline(Date deadline) {
+	public void setDeadline(LocalDateTime deadline) {
 		this.deadline = deadline;
 	}
 

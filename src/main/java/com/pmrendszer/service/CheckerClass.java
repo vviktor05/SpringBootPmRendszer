@@ -2,6 +2,7 @@ package com.pmrendszer.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import com.pmrendszer.controller.api.error.EntityNotFoundException;
@@ -34,8 +35,8 @@ public abstract class CheckerClass {
 		return name.matches(NAME_REGEX);
 	}
 
-	public static boolean isValidDates(Date date1, Date date2) {
-		return date1.before(date2);
+	public static boolean isValidDates(LocalDate date1, LocalDate date2) {
+		return date1.isBefore(date2);
 	}
 
 	public static boolean isValidDate(String date) {

@@ -1,7 +1,7 @@
 package com.pmrendszer.domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -47,7 +47,7 @@ public class Employee {
 	@NotNull
 	@Column(columnDefinition = "date")
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date startDate;
+	private LocalDate startDate;
 	@Size(max = 15, message = "{employee.phoneNumber.max}")
 	@NotNull
 	private String phoneNumber;
@@ -64,7 +64,7 @@ public class Employee {
 	}
 
 	public Employee(int id, String name, String password, Job job, DevelopmentArea developmentArea, Skill skill,
-			Date startDate, String phoneNumber, LocalDateTime lastLoginDate) {
+			LocalDate startDate, String phoneNumber, LocalDateTime lastLoginDate) {
 		this.id = id;
 		this.name = name;
 		this.password = password;
@@ -165,11 +165,11 @@ public class Employee {
 		this.skill = skill;
 	}
 
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 

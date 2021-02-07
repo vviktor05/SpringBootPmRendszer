@@ -7,7 +7,7 @@ INSERT INTO development_areas (name) VALUES
 ('Asztali alkalmazás'),
 ('Adatbázisok fejlesztése'),
 ('Alkalmazás iOS és Android'),
-('Web fejlesztés'),
+('Webfejlesztés'),
 ('Mesterséges intelligencia'),
 ('Adatbányászat');
 

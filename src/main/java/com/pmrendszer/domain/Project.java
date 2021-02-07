@@ -1,6 +1,6 @@
 package com.pmrendszer.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,11 +34,11 @@ public class Project {
 	@NotNull
 	@Column(columnDefinition = "date")
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date orderDate;
+	private LocalDate orderDate;
 	@NotNull
 	@Column(columnDefinition = "date")
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date deadline;
+	private LocalDate deadline;
 	@NotNull
 	@ManyToOne
 	private ProjectStatus projectStatus;
@@ -61,8 +61,8 @@ public class Project {
 		;
 	}
 
-	public Project(int id, String name, Customer customer, DevelopmentArea developmentArea, Date orderDate,
-			Date deadline, ProjectStatus projectStatus, Priority priority, Employee projectLeader, Status status,
+	public Project(int id, String name, Customer customer, DevelopmentArea developmentArea, LocalDate orderDate,
+			LocalDate deadline, ProjectStatus projectStatus, Priority priority, Employee projectLeader, Status status,
 			String description) {
 		this.id = id;
 		this.name = name;
@@ -130,19 +130,19 @@ public class Project {
 		this.developmentArea = developmentArea;
 	}
 
-	public Date getOrderDate() {
+	public LocalDate getOrderDate() {
 		return orderDate;
 	}
 
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(LocalDate orderDate) {
 		this.orderDate = orderDate;
 	}
 
-	public Date getDeadline() {
+	public LocalDate getDeadline() {
 		return deadline;
 	}
 
-	public void setDeadline(Date deadline) {
+	public void setDeadline(LocalDate deadline) {
 		this.deadline = deadline;
 	}
 
