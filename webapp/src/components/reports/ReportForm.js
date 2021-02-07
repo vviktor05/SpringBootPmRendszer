@@ -185,8 +185,8 @@ export default class Project extends Component {
                     <Card.Footer>
                         <Link to={"/reports"}><Button variant="primary">Vissza</Button></Link>
                         <div className="formButtonsRight">
-                            <Button size="bg" variant="success" type="submit">Mentés</Button>
-                            {id ? null : <Button className="defaultButtonMarginLeft" size="bg" variant="info" type="reset">Alaphelyzet</Button>}
+                            {id ? null : <Button size="bg" variant="info" type="reset">Alaphelyzet</Button>}
+                            <Button className="defaultButtonMarginLeft" size="bg" variant="success" type="submit">Mentés</Button>
                         </div>
                     </Card.Footer>
                 </Form>

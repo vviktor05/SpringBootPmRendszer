@@ -162,7 +162,7 @@ export default class ProjectLista extends Component {
 
     render() {
         const { search, activeProjects, projects, pageSize, currentPage, inputCurrentPage, selectedProject, showModal } = this.state;
-
+        
         let filteredProjects = projects.filter(
             (project) => {
                 return project.name.toLowerCase().indexOf(search.toLowerCase()) !== -1

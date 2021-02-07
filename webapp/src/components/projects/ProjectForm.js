@@ -96,7 +96,7 @@ export default class Project extends Component {
             var { name, customerId, orderDate, deadline, developmentAreaId, projectStatusId, priorityId, statusId, description, customerList,
                 developmentAreaList, projectStatusList, priorityList, statusList } = this.state;
 
-            if (customerId) {
+            if (customerId === 1) {
                 customerId = customerList[0].id;
             }
 
@@ -205,7 +205,7 @@ export default class Project extends Component {
                                     value={customerId}
                                     onChange={this.projectChange}>
                                     {
-                                        this.state.customerList.map((customer) => (
+                                        this.state.customerList.sort((a, b) => a.id - b.id).map((customer) => (
                                             <option key={customer.id} value={customer.id}>
                                                 {customer.name}
                                             </option>
@@ -305,8 +305,8 @@ export default class Project extends Component {
                     <Card.Footer>
                         <Link to={"/projects"}><Button variant="primary">Vissza</Button></Link>
                         <div className="formButtonsRight">
-                            <Button size="bg" variant="success" type="submit">Mentés</Button>
-                            {this.state.id ? null : <Button className="defaultButtonMarginLeft" size="bg" variant="info" type="reset">Alaphelyzet</Button>}
+                            {this.state.id ? null : <Button size="bg" variant="info" type="reset">Alaphelyzet</Button>}
+                            <Button className="defaultButtonMarginLeft" size="bg" variant="success" type="submit">Mentés</Button>
                         </div>
                     </Card.Footer>
                 </Form>

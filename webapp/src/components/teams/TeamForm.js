@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../customers/CustomerForm.css';
+import './TeamForm.css';
 import { Link } from 'react-router-dom';
 import { Card, Form, Button, Col } from 'react-bootstrap';
 import axios from 'axios';
@@ -171,8 +171,8 @@ export default class TeamForm extends Component {
                     <Card.Footer>
                         <Link to={"/teams"}><Button variant="primary">Vissza</Button></Link>
                         <div className="formButtonsRight">
-                            <Button size="bg" variant="success" type="submit">Mentés</Button>
-                            {this.state.id ? null : <Button className="defaultButtonMarginLeft" size="bg" variant="info" type="reset">Alaphelyzet</Button>}
+                            {this.state.id ? null : <Button size="bg" variant="info" type="reset">Alaphelyzet</Button>}
+                            <Button className="defaultButtonMarginLeft" size="bg" variant="success" type="submit">Mentés</Button>
                         </div>
                     </Card.Footer>
                 </Form>

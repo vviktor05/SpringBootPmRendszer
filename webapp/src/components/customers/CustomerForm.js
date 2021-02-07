@@ -226,8 +226,8 @@ export default class CustomerForm extends Component {
                     <Card.Footer>
                         <Link to={"/customers"}><Button variant="primary">Vissza</Button></Link>
                         <div className="formButtonsRight">
-                            <Button size="bg" variant="success" type="submit">Mentés</Button>
-                            {this.state.id ? null : <Button className="defaultButtonMarginLeft" size="bg" variant="info" type="reset">Alaphelyzet</Button>}
+                            {this.state.id ? null : <Button size="bg" variant="info" type="reset">Alaphelyzet</Button>}
+                            <Button className="defaultButtonMarginLeft" size="bg" variant="success" type="submit">Mentés</Button>
                         </div>
                     </Card.Footer>
                 </Form>

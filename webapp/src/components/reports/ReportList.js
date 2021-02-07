@@ -73,13 +73,11 @@ export default class TaskList extends Component {
                         <Form.Control as="textarea"
                             value={this.state.selectedReport.text}
                             className={"bg-dark text-white"}
+                            placeholder="A jelentés leírásáért kattints egy sorra."
                             name="selectedReport"
                             disabled />
                     </div>
                 </Card.Body>
-                <Card.Footer>
-                    <span>*A jelentés leírásáért kattints egy sorra.</span>
-                </Card.Footer>
             </Card>
         )
     }
