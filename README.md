@@ -4,7 +4,7 @@
 
 **Backend:**
 
-A működéshez az üres adatbázisnak léteznie kell lokálisan PostgreSQL szerveren "pmrendszer" néven. 
+A működéshez az üres adatbázisnak léteznie kell lokálisan PostgreSQL szerveren "**pmrendszer**" néven. 
 
 Első indításnál *src/main/resources/application-dev.properties* fájlban át kell állítani **jpa.hibernate.ddl-auto=create** és **datasource.initialization-mode=always** állapotba, hogy automatikusan létrehozza az adatbázis struktúrát és feltöltse tesztadatokkal.
 
