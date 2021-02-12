@@ -107,7 +107,6 @@ public class ReportService implements Roles {
 
 	private Report updateReportDetails(Report report, Report reportDetails) {
 		report.setProject(reportDetails.getProject());
-		report.setRecordingDate(reportDetails.getRecordingDate());
 		report.setEmployee(reportDetails.getEmployee());
 		report.setText(reportDetails.getText());
 		report.setUpdateMode(true);
