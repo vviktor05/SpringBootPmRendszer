@@ -1,0 +1,158 @@
+.dashboard {}
+
+.dashboard__mainCards {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0 40px 0px;
+}
+
+.dashboard__card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(113, 120, 127, 0.295);
+    box-shadow: rgb(0 0 0 / 20%) 0 0 4px;
+    width: 350px;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+.dashboard__icon {
+    color: rgb(9, 190, 9);
+}
+
+.dashboard__cardLeft {}
+
+.dashboard__cardLeft p {
+    margin: 0;
+    font-size: x-large;
+    letter-spacing: 1px;
+}
+
+.dashboard__card span {
+    font-weight: 600;
+    font-size: 65px;
+}
+
+.dashboard__tableContainer {
+    padding: 20px;
+    box-shadow: rgb(0 0 0 / 20%) 0 0 4px;
+    background-color: rgba(113, 120, 127, 0.295);
+}
+
+.dashboard__table {
+    display: block;
+    overflow: auto;
+    height: 392px;
+    margin-bottom: 30px;
+}
+
+.progress {
+    min-width: 250px;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+}
+
+.progress-red::-webkit-progress-value {
+    background: rgba(255, 99, 132, 1);
+}
+
+.progress-purple::-webkit-progress-value {
+    background: rgba(131, 79, 233, 1);
+}
+
+.progress-blue::-webkit-progress-value {
+    background: rgba(54, 162, 235, 1);
+}
+
+.progress-yellow::-webkit-progress-value {
+    background: rgba(255, 206, 86, 1);
+}
+
+.progress-green::-webkit-progress-value {
+    background: rgba(75, 192, 192, 1);
+}
+
+.progress-orange::-webkit-progress-value {
+    background: rgba(255, 159, 64, 1);
+}
+
+.progress-red::-moz-progress-value {
+    background: rgba(255, 99, 132, 1);
+}
+
+.progress-purple::-moz-progress-value {
+    background: rgb(131, 79, 233);
+}
+
+.progress-blue::-moz-progress-value {
+    background: rgba(54, 162, 235, 1);
+}
+
+.progress-yellow::-moz-progress-value {
+    background: rgba(255, 206, 86, 1);
+}
+
+.progress-green::-moz-progress-value {
+    background: rgba(75, 192, 192, 1);
+}
+
+.progress-orange::-moz-progress-value {
+    background: rgba(255, 159, 64, 1);
+}
+
+.dashboard__chart {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.dashboard__chartLeft {
+    background-color: rgba(113, 120, 127, 0.295);
+    box-shadow: rgb(0 0 0 / 20%) 0 0 4px;
+    width: 50%;
+    padding: 20px;
+    margin-right: 70px;
+}
+
+.dashboard__chartRight {
+    padding: 20px;
+    background-color: rgba(113, 120, 127, 0.295);
+    box-shadow: rgb(0 0 0 / 20%) 0 0 4px;
+    width: 50%;
+}
+
+.dashboard-chart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 1860px) {
+    .dashboard__card {
+        width: 250px;
+    }
+
+    .dashboard__cardLeft p {
+        font-size: large;
+    }
+
+    .dashboard__card span {
+        font-size: 45px;
+    }
+
+    .dashboard__chart {
+        /* justify-content: space-around; */
+    }
+
+    .dashboard__chartLeft {
+        width: 50%;
+        margin-right: 20px;
+    }
+    
+    .dashboard__chartRight {
+        width: 50%;
+    }
+}

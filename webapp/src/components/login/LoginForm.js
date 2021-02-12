@@ -37,7 +37,7 @@ export default class LoginForm extends Component {
                 data => {
                     globalDispatch({ type: "LOGIN", payload: data });
                     globalDispatch({ type: "SHOW_SIDEBAR" });
-                    this.props.history.push("/projects");
+                    this.props.history.push("/");
                 },
                 error => {
                     const resMessage =

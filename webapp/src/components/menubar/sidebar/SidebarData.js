@@ -6,11 +6,11 @@ import * as RiIcons from 'react-icons/ri';
 import * as TiIcons from 'react-icons/ti';
 
 export const SidebarData = [
-    // {
-    //     title: "Irányítópult",
-    //     path: "/dashboard",
-    //     icon: <AiIcons.AiFillDashboard />
-    // },
+    {
+        title: "Irányítópult",
+        path: "/dashboard",
+        icon: <AiIcons.AiFillDashboard />
+    },
     {
         title: "Projektek",
         path: "/projects",

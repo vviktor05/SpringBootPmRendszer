@@ -8,7 +8,7 @@ import Navbar from './components/menubar/navbar/Navbar';
 import Sidebar from './components/menubar/sidebar/Sidebar';
 
 import LoginForm from './components/login/LoginForm';
-// import Dashboard from './components/dashboard/Dashboard';
+import Dashboard from './components/dashboard/Dashboard';
 import ProjectList from './components/projects/ProjectList';
 import ProjectForm from './components/projects/ProjectForm';
 import ProjectsAndTeams from './components/projects/projectsAndTeams/ProjectsAndTeams';
@@ -38,8 +38,8 @@ function App() {
               <Col lg={12}>
                 <Switch>
                   <Route path="/login" exact component={LoginForm} />
-                  {/* <PrivateRoute path={["/", "/dashboard"]} exact component={Dashboard} /> */}
-                  <PrivateRoute path={["/", "/projects"]} exact component={ProjectList} />
+                  <PrivateRoute path={["/", "/dashboard"]} exact component={Dashboard} />
+                  <PrivateRoute path="/projects" exact component={ProjectList} />
                   <PrivateRoute path="/projects/add" exact component={ProjectForm} />
                   <PrivateRoute path="/projects/edit/:id" exact component={ProjectForm} />
                   <PrivateRoute path="/projects/projects_and_teams" exact component={ProjectsAndTeams} />

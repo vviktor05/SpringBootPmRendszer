@@ -67,7 +67,6 @@ export default class Project extends Component {
 
             const report = {
                 project: this.findObjectInArray(projectId, projectList),
-                recordingDate: this.getDateTime(),
                 employee: authService.getLoggedInUser().employee,
                 text: text
             }
@@ -78,15 +77,6 @@ export default class Project extends Component {
                 this.addReport(report);
             }
         }
-    }
-
-    getDateTime() {
-        const today = new Date();
-        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        var dateTime = date + ' ' + time;
-
-        return dateTime;
     }
 
     findObjectInArray(id, array) {
@@ -121,15 +111,12 @@ export default class Project extends Component {
     }
 
     checkDetails() {
-        // if (this.state.topic.length >= 5) {
-        //     if (new Date() < new Date(this.state.deadline)) {
-        //         return true;
-        //     } else {
-        //         alert("A határidőnek késöbbi időpontnak kell lennie, mint a jelenlegi dátum!");
-        //     }
-        // } else {
-        //     alert("A feladat neve nem lehet rövidebb 5 karakternél!");
-        // }
+        if (this.state.text.length >= 5) {
+            return true;
+
+        } else {
+            alert("A jelentés szövege nem lehet rövidebb 5 karakternél!");
+        }
         return true;
     }
 

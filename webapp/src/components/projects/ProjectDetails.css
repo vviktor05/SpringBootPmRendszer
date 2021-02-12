@@ -55,3 +55,6 @@
 .tableHeight{
     min-height: 350px;
 }
+.modalFooter{
+    justify-content: space-between;
+}

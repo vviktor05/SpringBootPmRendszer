@@ -96,7 +96,8 @@ export default class ProjectDetailsModal extends Component {
               <ModalEmployeeTable employees={employees} />
             </div>
           </ModalBody>
-          <ModalFooter>
+          <ModalFooter className="modalFooter">
+            <span>*Kattints egy csapatra, hogy lásd a benne dolgozókat.</span>
             <Button color="secondary" onClick={closeProjectDetails}>Bezárás</Button>
           </ModalFooter>
         </Modal>
