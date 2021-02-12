@@ -1,6 +1,7 @@
 package com.pmrendszer.service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -54,7 +55,7 @@ public class EmployeeService {
 	}
 
 	public Employee addEmployee(Employee employee) {
-		String startDate = CheckerClass.DATE_FORMAT.format(employee.getStartDate());
+		String startDate = employee.getStartDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		employee.setPassword(new BCryptPasswordEncoder(10).encode(startDate));
 		
 		return employeeRepo.save(employee);
