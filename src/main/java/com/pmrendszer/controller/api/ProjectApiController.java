@@ -2,10 +2,7 @@ package com.pmrendszer.controller.api;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,31 +23,36 @@ import com.pmrendszer.service.ProjectService;
 @RestController
 @Validated
 @RequestMapping("/api")
-public class ProjectApiController implements Roles{
+public class ProjectApiController implements Roles {
 	private ProjectService projectService;
-	
-	@GetMapping({"/project_manager/projects", "/team_leader/projects"})
+
+	@GetMapping({ "/project_manager/projects", "/team_leader/projects" })
 	public List<Project> getAllProjects() {
 		return projectService.getAllProjects();
 	}
 
-	@GetMapping({"/project_manager/projects/active", "/team_leader/projects/active"})
+	@GetMapping({ "/project_manager/projects/active", "/team_leader/projects/active" })
 	public List<Project> getActiveProjects() {
 		return projectService.getActiveProjects();
 	}
 
-	@GetMapping({"/project_manager/projects/id/{id}", "/team_leader/projects/id/{id}"})
+	@GetMapping("/project_manager/projects/active/number_of")
+	public int getNumberOfActiveProjects() {
+		return projectService.getNumberOfActiveProjects();
+	}
+
+	@GetMapping({ "/project_manager/projects/id/{id}", "/team_leader/projects/id/{id}" })
 	public Project getProjectById(@PathVariable("id") @Min(value = 1, message = "{id.path.valid}") int id)
 			throws EntityNotFoundException {
 		return projectService.getProjectById(id);
 	}
 
-	@GetMapping({"/project_manager/projects/name/{name}", "/team_leader/projects/name/{name}"})
+	@GetMapping({ "/project_manager/projects/name/{name}", "/team_leader/projects/name/{name}" })
 	public List<Project> getProjectsByName(@PathVariable("name") String name) throws EntityNotFoundException {
 		return projectService.getProjectsByName(name);
 	}
 
-	@GetMapping({"/project_manager/projects/search", "/team_leader/projects/search"})
+	@GetMapping({ "/project_manager/projects/search", "/team_leader/projects/search" })
 	public List<Project> getProjectsByDetailedSearch(
 			@RequestParam(value = "customerId", defaultValue = "-1") int customerId,
 			@RequestParam(value = "developmentAreaId", defaultValue = "-1") int developmentAreaId,

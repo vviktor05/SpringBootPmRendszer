@@ -33,6 +33,11 @@ public class TaskApiController {
 	public List<Task> getActiveTasks() {
 		return taskService.getActiveTasks();
 	}
+	
+	@GetMapping("/project_manager/tasks/active/number_of")
+	public int getNumberOfActiveTasks() {
+		return taskService.getNumberOfActiveTasks();
+	}
 
 	@GetMapping("/project_manager/tasks/id/{id}")
 	public Task getTaskById(@PathVariable("id") @Min(value = 1, message = "{id.path.valid}") int id)

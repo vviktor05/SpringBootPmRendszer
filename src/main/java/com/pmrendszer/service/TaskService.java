@@ -24,6 +24,10 @@ public class TaskService {
 		return taskRepo.findByStatusId(ACTIVE_STATUS_ID);
 	}
 
+	public int getNumberOfActiveTasks() {
+		return taskRepo.countTasksByStatusId(ACTIVE_STATUS_ID);
+	}
+	
 	public Task getTaskById(int id) throws EntityNotFoundException {
 		Task task = taskRepo.findById(id);
 		CheckerClass.ifEmptyThrowException(task);

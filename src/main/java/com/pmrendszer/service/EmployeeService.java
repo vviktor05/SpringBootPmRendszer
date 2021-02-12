@@ -23,6 +23,10 @@ public class EmployeeService {
 
 		return employee;
 	}
+	
+	public int getNumberOfEmployees() {
+		return employeeRepo.countEmployees();
+	}
 
 	public Employee getEmployeeByEmail(String email) throws EntityNotFoundException {
 		Employee employee = employeeRepo.findByEmail(email);

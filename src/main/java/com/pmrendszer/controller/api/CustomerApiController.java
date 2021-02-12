@@ -35,6 +35,11 @@ public class CustomerApiController implements Roles{
 		return customerService.getCustomerById(id);
 	}
 
+	@GetMapping("/project_manager/customers/number_of")
+	public int getNumberOfCustomers() {
+		return customerService.getNumberOfCustomers();
+	}
+	
 	@PostMapping("/project_manager/customers")
 	public Customer addCustomer(@Valid @RequestBody Customer customer) {
 		return customerService.addCustomer(customer);

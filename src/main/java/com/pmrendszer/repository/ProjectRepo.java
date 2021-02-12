@@ -14,6 +14,10 @@ public interface ProjectRepo extends CrudRepository<Project, Integer> {
 	List<Project> findAll();
 	List<Project> findByStatusId(int id);
 	Project findById(int id);
+	
+	@Query(value = "SELECT count(*) FROM projects WHERE status_id = ?1", nativeQuery = true)
+	int countProjectsByStatusId(int id);
+	
 	List<Project> findByNameContainingOrderByName(String name);
 
 	@Query(value = "SELECT * FROM projects WHERE "

@@ -22,6 +22,10 @@ public class CustomerService {
 
 		return customer;
 	}
+	
+	public int getNumberOfCustomers() {
+		return customerRepo.countCustomers();
+	}
 
 	public Customer addCustomer(Customer customer) {
 		return customerRepo.save(customer);

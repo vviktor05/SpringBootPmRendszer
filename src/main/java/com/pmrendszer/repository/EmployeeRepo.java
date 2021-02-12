@@ -18,6 +18,9 @@ public interface EmployeeRepo extends CrudRepository<Employee, Integer> {
 	List<Employee> findAll();
 
 	Employee findById(int id);
+	
+	@Query(value = "SELECT count(*) FROM employees", nativeQuery = true)
+	int countEmployees();
 
 	@Query(value = "SELECT * FROM employees WHERE job_id=" + JOB_TEAM_LEADER_ID, nativeQuery = true)
 	List<Employee> findAllTeamLeader();

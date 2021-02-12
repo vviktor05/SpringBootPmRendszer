@@ -22,6 +22,10 @@ public class ProjectService {
 	public List<Project> getActiveProjects() {
 		return projectRepo.findByStatusId(ACTIVE_STATUS_ID);
 	}
+	
+	public int getNumberOfActiveProjects() {
+		return projectRepo.countProjectsByStatusId(ACTIVE_STATUS_ID);
+	}
 
 	public Project getProjectById(int id) throws EntityNotFoundException {
 		Project project = projectRepo.findById(id);

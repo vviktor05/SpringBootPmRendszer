@@ -10,6 +10,10 @@ import com.pmrendszer.domain.Task;
 public interface TaskRepo extends CrudRepository<Task, Integer> {
 	List<Task> findAll();
 	List<Task> findByStatusId(int id);
+	
+	@Query(value = "SELECT count(*) FROM tasks WHERE status_id = ?1", nativeQuery = true)
+	int countTasksByStatusId(int id);
+	
 	Task findById(int id);
 	List<Task> findByTopicContainingOrderByTopic(String topic);
 

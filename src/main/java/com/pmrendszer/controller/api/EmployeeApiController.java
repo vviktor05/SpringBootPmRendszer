@@ -34,6 +34,11 @@ public class EmployeeApiController {
 		return employeeService.getEmployeeById(id);
 	}
 	
+	@GetMapping("/project_manager/employees/number_of")
+	public int getNumberOfEmployees() {
+		return employeeService.getNumberOfEmployees();
+	}
+	
 	@GetMapping("/project_manager/employees/email/{email}")
 	public Employee getEmployeeByEmail(@PathVariable(value = "email") String email)
 			throws EntityNotFoundException {
