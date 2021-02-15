@@ -1,5 +1,23 @@
 # Spring Boot Projektmenedzsment rendszer
 
+## Live szerver URL: 
+
+**A szerver esetleges lassúsága az ingyenes host miatt fordulhat elő.**
+
+**REST-API:** https://pmrendszer.herokuapp.com
+
+**React:** https://pmrendszer-react.herokuapp.com
+
+A frontend része a projektnek React-ban készül és a *webapp* mappában található. Ez jelenleg még nem használja ki a backend összes funkcióját (fejlesztés alatt áll).
+
+###### Swagger UI: https://pmrendszer.herokuapp.com/swagger-ui.html
+
+## Tesztadat:
+
+e-mail: **manager@gmail.com**
+
+jelszó: **admin**
+
 ## Helyi indítás:
 
 **Backend:**
@@ -17,24 +35,6 @@ Indítás: `mvn spring-boot:run`
 Futtatható környezet kialakítása: `npm install`
 
 Indítás: `npm run dev`
-
-## Tesztadat:
-
-e-mail: **manager@gmail.com**
-
-jelszó: **admin**
-
-## Live szerver URL: 
-
-### A szerver esetleges lassúsága az ingyenes host miatt fordulhat elő.
-
-**REST-API:** https://pmrendszer.herokuapp.com
-
-**React:** https://pmrendszer-react.herokuapp.com
-
-A frontend része a projektnek React-ban készül és a *webapp* mappában található. Ez jelenleg még nem használja ki a backend összes funkcióját (fejlesztés alatt áll).
-
-###### Swagger UI: https://pmrendszer.herokuapp.com/swagger-ui.html
 
 # REST-API útvonalak:
 

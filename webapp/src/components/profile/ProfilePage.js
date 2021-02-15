@@ -40,7 +40,7 @@ export default class Profile extends Component {
                     <strong>Jogosultság: </strong>
                     {loggedInUser.role && loggedInUser.role}
                 </p>
-                <Link to={"/projects"}><Button variant="primary">Vissza</Button></Link>
+                <Link to={"/"}><Button variant="primary">Vissza</Button></Link>
             </div>
         );
     }
