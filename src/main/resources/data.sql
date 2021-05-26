@@ -11,7 +11,6 @@ INSERT INTO development_areas (name) VALUES
 ('Mesterséges intelligencia'),
 ('Adatbányászat');
 
-
 INSERT INTO project_statuses (name) VALUES
 ('Vevői Specifikáció'),
 ('Szoftveres Specifikáció'),
