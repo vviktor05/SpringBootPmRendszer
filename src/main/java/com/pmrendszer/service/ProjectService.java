@@ -133,7 +133,6 @@ public class ProjectService {
 		project.setDeadline(projectDetails.getDeadline());
 		project.setProjectStatus(projectDetails.getProjectStatus());
 		project.setPriority(projectDetails.getPriority());
-//		project.setProjectLeader(projectDetails.getProjectLeader());
 		project.setStatus(projectDetails.getStatus());
 		project.setDescription(projectDetails.getDescription());
 		project.setUpdateMode(true);
@@ -148,5 +147,9 @@ public class ProjectService {
 	@Autowired
 	public void setProjectRepo(ProjectRepo projectRepo) {
 		this.projectRepo = projectRepo;
+	}
+	
+	public int getActiveStatusId() {
+		return ACTIVE_STATUS_ID;
 	}
 }

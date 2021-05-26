@@ -28,27 +28,31 @@ public abstract class CheckerClass {
 	}
 
 	public static boolean isValidMinLength(String text, int minLength) {
-		return text.trim().length() >= minLength && text != null;
+		return text != null && text.replaceAll(" ", "").length() >= minLength;
 	}
 
 	public static boolean isValidName(String name) {
-		return name.matches(NAME_REGEX);
+		return name != null && name.matches(NAME_REGEX);
 	}
 
 	public static boolean isValidDates(LocalDate date1, LocalDate date2) {
+		if(date1 == null || date2 == null) {
+			return false;
+		}
+		
 		return date1.isBefore(date2);
 	}
 
 	public static boolean isValidDate(String date) {
-		return date.matches(DATE_REGEX);
+		return date != null && date.matches(DATE_REGEX);
 	}
 
 	public static boolean isValidDateTime(String dateTime) {
-		return dateTime.matches(DATE_TIME_REGEX);
+		return dateTime != null && dateTime.matches(DATE_TIME_REGEX);
 	}
 
 	public static boolean isValidPhoneNumber(String phoneNumber) {
-		return phoneNumber.matches(NUMBER_REGEX);
+		return phoneNumber != null && phoneNumber.matches(NUMBER_REGEX);
 	}
 
 	public static Date parseDate(String date, SimpleDateFormat simpleDateFormat) {

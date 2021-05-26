@@ -1,44 +1,31 @@
 package com.pmrendszer;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import com.pmrendszer.controller.api.ProjectApiController;
-import com.pmrendszer.service.ProjectService;
 
-@SpringBootTest
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@SpringBootTest(properties = {"spring.profiles.active=test"})
 @AutoConfigureMockMvc
-class MainTests {
-
+public class TestContext {
+	
 	@Autowired
-	private ProjectApiController projectApiController;
-
-	@MockBean
-	private ProjectService projectService;
-
-	@Autowired
-	private MockMvc mockMvc;
-
-	@Test
-	public void contextLoads() {
-		assertThat(projectApiController).isNotNull();
+	private ObjectMapper objectMapper;
+	
+	public String toJson(Object obj) {
+		try {
+			return objectMapper.writeValueAsString(obj);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
-
-//	@Test
-//	public void mainPage_shouldReturnNotFound() throws Exception {
-//		mockMvc.perform(get("/")).andExpect(status().isOk());
-//	}
-
-//	@Test
-//	public void apiURL_shouldReturnUnauthorized() throws Exception {
-//		mockMvc.perform(get("/api")).andExpect(status().isUnauthorized());
-//	}
-
+	
+	public <T> T toObj(String obj, Class<T> aClass) {
+		try {
+			return objectMapper.readValue(obj, aClass);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

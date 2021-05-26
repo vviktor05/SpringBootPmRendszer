@@ -36,6 +36,12 @@ Futtatható környezet kialakítása: `npm install`
 
 Indítás: `npm run dev`
 
+**Teszt:**
+
+Az integrációs tesztekhez az üres adatbázisnak léteznie kell lokálisan PostgreSQL szerveren "**tesztdb**" néven.
+
+Indítás: `mvn test` | `mvn test -P unit` | `mvn test -P integration`
+
 # REST-API útvonalak:
 
 *http://localhost:8080/api/...*

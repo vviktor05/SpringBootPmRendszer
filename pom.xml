@@ -98,6 +98,41 @@
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>unit</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.22.0</version>
+						<configuration>
+							<excludes>
+								<exclude>**/*IntegrationTest</exclude>
+							</excludes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>integration</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.22.0</version>
+						<configuration>
+							<includes>
+								<include>**/*IntegrationTest</include>
+							</includes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 	<!-- <profiles> -->
 	<!-- <profile> -->
 	<!-- <id>dev</id> -->

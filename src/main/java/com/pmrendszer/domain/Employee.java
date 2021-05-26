@@ -63,10 +63,11 @@ public class Employee {
 		;
 	}
 
-	public Employee(int id, String name, String password, Job job, DevelopmentArea developmentArea, Skill skill,
+	public Employee(int id, String name, String email, String password, Job job, DevelopmentArea developmentArea, Skill skill,
 			LocalDate startDate, String phoneNumber, LocalDateTime lastLoginDate) {
 		this.id = id;
 		this.name = name;
+		this.email = email;
 		this.password = password;
 		this.job = job;
 		this.developmentArea = developmentArea;
