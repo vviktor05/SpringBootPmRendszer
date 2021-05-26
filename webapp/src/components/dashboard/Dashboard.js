@@ -30,7 +30,7 @@ class Dashboard extends Component {
             .then(response => response.data)
             .then((data) => this.setState({ activeProjects: data }));
 
-        axios.get(url("api/project_manager/projects/active/number_of"), { headers: authHeader() })
+        axios.get(url("api/project_manager/tasks/active/number_of"), { headers: authHeader() })
             .then(response => response.data)
             .then((data) => this.setState({ activeTasks: data }));
 
@@ -166,7 +166,7 @@ class Dashboard extends Component {
                                                         <td>{project.customer.name}</td>
                                                         <td>{project.deadline}</td>
                                                         <td>{project.status.name}</td>
-                                                        <td><progress className={"progress progress-" + this.getColor(project.projectStatus.id)} value={project.projectStatus.id * 100} max="600"></progress></td>
+                                                        <td><progress className={"progress progress-" + this.getColor(project.projectStatus.id)} value={project.projectStatus.id} max="6"></progress></td>
                                                     </tr>
                                                 ))
                                         }
