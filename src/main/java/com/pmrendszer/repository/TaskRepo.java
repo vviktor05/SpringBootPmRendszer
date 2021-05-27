@@ -1,9 +1,13 @@
 package com.pmrendszer.repository;
 
 import java.util.List;
+
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.pmrendszer.domain.Task;
 
 @Repository
@@ -60,4 +64,9 @@ public interface TaskRepo extends CrudRepository<Task, Integer> {
 			+ "AND  t.id IN "
 				+ "(SELECT team_id FROM team_memberships WHERE employee_id = ?2)) ORDER BY topic", nativeQuery = true)
 	List<Task> findMyDeveloperTasksByTopic(String topic, int developerId);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "DELETE FROM tasks WHERE project_id = ?1", nativeQuery = true)
+	void deleteByProjectId(int projectId);
 }

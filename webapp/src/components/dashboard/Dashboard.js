@@ -97,7 +97,7 @@ class Dashboard extends Component {
                                     <TiIcons.TiBusinessCard className="dashboard__icon" size="50px" />
                                     <p>Megrendelők</p>
                                 </div>
-                                <span>{employees}</span>
+                                <span>{customers}</span>
                             </div>
 
                             <div className="dashboard__card">
@@ -105,7 +105,7 @@ class Dashboard extends Component {
                                     <IoIcons.IoMdPeople className="dashboard__icon" size="50px" />
                                     <p>Dolgozók</p>
                                 </div>
-                                <span>{customers}</span>
+                                <span>{employees}</span>
                             </div>
                         </div>
 

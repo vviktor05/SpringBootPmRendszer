@@ -59,6 +59,10 @@ public class TaskService {
 
 		taskRepo.delete(task);
 	}
+	
+	public void deleteAllTaskByProjectId(int projectId) throws EntityNotFoundException {
+		taskRepo.deleteByProjectId(projectId);
+	}
 
 	public List<Task> getMyTeamLeaderTasks() {
 		return taskRepo.findMyTeamLeaderTasks(getAuthenticatedEmployee().getId());

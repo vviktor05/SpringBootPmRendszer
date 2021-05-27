@@ -13,6 +13,9 @@ import com.pmrendszer.repository.ProjectRepo;
 public class ProjectService {
 	private ProjectRepo projectRepo;
 	private EmployeeService employeeService;
+	private ProjectTeamService projectTeamService;
+	private TaskService taskService;
+	private ReportService reportService;
 	private final int ACTIVE_STATUS_ID = 3;
 
 	public List<Project> getAllProjects() {
@@ -75,7 +78,12 @@ public class ProjectService {
 	public void deleteProject(int id) throws EntityNotFoundException {
 		Project project = projectRepo.findById(id);
 		CheckerClass.ifEmptyThrowException(project);
-
+		
+		int projectId = project.getId();
+		projectTeamService.deleteAllProjectTeamByProjectId(projectId);
+		taskService.deleteAllTaskByProjectId(projectId);
+		reportService.deleteAllReportByProjectId(projectId);
+		
 		projectRepo.delete(project);
 	}
 
@@ -149,6 +157,21 @@ public class ProjectService {
 		this.projectRepo = projectRepo;
 	}
 	
+	@Autowired
+	public void setProjectTeamService(ProjectTeamService projectTeamService) {
+		this.projectTeamService = projectTeamService;
+	}
+
+	@Autowired
+	public void setTaskService(TaskService taskService) {
+		this.taskService = taskService;
+	}
+
+	@Autowired
+	public void setReportService(ReportService reportService) {
+		this.reportService = reportService;
+	}
+
 	public int getActiveStatusId() {
 		return ACTIVE_STATUS_ID;
 	}

@@ -43,6 +43,10 @@ public class ProjectTeamService {
 
 		projectTeamRepo.delete(projectTeam);
 	}
+	
+	public void deleteAllProjectTeamByProjectId(int projectId) throws EntityNotFoundException {
+		projectTeamRepo.deleteByProjectId(projectId);
+	}
 
 	@Autowired
 	public void setProjectTeamRepo(ProjectTeamRepo projectTeamRepo) {

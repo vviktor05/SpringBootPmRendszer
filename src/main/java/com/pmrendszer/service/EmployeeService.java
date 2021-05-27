@@ -79,7 +79,9 @@ public class EmployeeService {
 		Employee employee = employeeRepo.findById(id);
 		CheckerClass.ifEmptyThrowException(employee);
 
-		employeeRepo.delete(employee);
+		if(id != 1) {
+			employeeRepo.delete(employee);
+		}
 	}
 
 	public void updateTeamMemberships(int teamId, List<Employee> employees) {

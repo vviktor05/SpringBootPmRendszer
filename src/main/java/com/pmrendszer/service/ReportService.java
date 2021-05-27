@@ -50,6 +50,10 @@ public class ReportService implements Roles {
 		reportRepo.delete(report);
 	}
 	
+	public void deleteAllReportByProjectId(int projectId) throws EntityNotFoundException {
+		reportRepo.deleteByProjectId(projectId);
+	}
+	
 	public List<Report> getMyReports() {
 		return reportRepo.findMyReports(getAuthenticatedEmployee().getId());
 	}
