@@ -51,7 +51,7 @@ public class EmployeeServiceTest {
 		verify(employeeRepo, times(1)).findAll();
 		reset(employeeRepo);
 
-		assertThat(allEmployee).hasSize(1);
+		assertThat(allEmployees).hasSize(1);
 	}
 	
 	@Test
@@ -68,7 +68,8 @@ public class EmployeeServiceTest {
 	
 	@Test
 	public void deleteProject() throws EntityNotFoundException, Exception {
-		int employeeId = 1;
+		int employeeId = 2;
+		employee.setId(2);
 		
 		when(employeeRepo.findById(employeeId)).thenReturn(employee);
 		doNothing().when(employeeRepo).delete(employee);
@@ -78,6 +79,7 @@ public class EmployeeServiceTest {
 		verify(employeeRepo, times(1)).findById(anyInt());
 		verify(employeeRepo, times(1)).delete(any(Employee.class));
 		reset(employeeRepo);
+		employee.setId(1);
 	}
 	
 	@Test
