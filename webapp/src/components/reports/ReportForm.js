@@ -117,7 +117,7 @@ export default class Project extends Component {
         } else {
             alert("A jelentés szövege nem lehet rövidebb 5 karakternél!");
         }
-        return true;
+        return false;
     }
 
     reportChange = (event) => {
